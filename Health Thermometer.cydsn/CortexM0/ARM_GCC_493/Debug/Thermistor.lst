@@ -1,0 +1,3397 @@
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"Thermistor.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_idiv
+  18              		.section	.text.Thermistor_GetResistance,"ax",%progbits
+  19              		.align	2
+  20              		.global	Thermistor_GetResistance
+  21              		.code	16
+  22              		.thumb_func
+  23              		.type	Thermistor_GetResistance, %function
+  24              	Thermistor_GetResistance:
+  25              	.LFB2:
+  26              		.file 1 ".\\Generated_Source\\PSoC4\\Thermistor.c"
+   1:.\Generated_Source\PSoC4/Thermistor.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/Thermistor.c **** * File Name: Thermistor.c
+   3:.\Generated_Source\PSoC4/Thermistor.c **** * Version 1.20
+   4:.\Generated_Source\PSoC4/Thermistor.c **** *
+   5:.\Generated_Source\PSoC4/Thermistor.c **** * Description:
+   6:.\Generated_Source\PSoC4/Thermistor.c **** *  This file provides the source code to the API for the ThermistorCalc
+   7:.\Generated_Source\PSoC4/Thermistor.c **** *  Component.
+   8:.\Generated_Source\PSoC4/Thermistor.c **** *
+   9:.\Generated_Source\PSoC4/Thermistor.c **** * Note:
+  10:.\Generated_Source\PSoC4/Thermistor.c **** *  None.
+  11:.\Generated_Source\PSoC4/Thermistor.c **** *
+  12:.\Generated_Source\PSoC4/Thermistor.c **** ********************************************************************************
+  13:.\Generated_Source\PSoC4/Thermistor.c **** * Copyright 2013, Cypress Semiconductor Corporation.  All rights reserved.
+  14:.\Generated_Source\PSoC4/Thermistor.c **** * You may use this file only in accordance with the license, terms, conditions,
+  15:.\Generated_Source\PSoC4/Thermistor.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:.\Generated_Source\PSoC4/Thermistor.c **** * the software package with which this file was provided.
+  17:.\Generated_Source\PSoC4/Thermistor.c **** *******************************************************************************/
+  18:.\Generated_Source\PSoC4/Thermistor.c **** 
+  19:.\Generated_Source\PSoC4/Thermistor.c **** #include "Thermistor.h"
+  20:.\Generated_Source\PSoC4/Thermistor.c **** 
+  21:.\Generated_Source\PSoC4/Thermistor.c **** 
+  22:.\Generated_Source\PSoC4/Thermistor.c **** /*******************************************************************************
+  23:.\Generated_Source\PSoC4/Thermistor.c **** * Function Name: Thermistor_GetResistance
+  24:.\Generated_Source\PSoC4/Thermistor.c **** ********************************************************************************
+  25:.\Generated_Source\PSoC4/Thermistor.c **** *
+  26:.\Generated_Source\PSoC4/Thermistor.c **** * Summary:
+  27:.\Generated_Source\PSoC4/Thermistor.c **** *  The digital values of the voltages across the reference resistor and the
+  28:.\Generated_Source\PSoC4/Thermistor.c **** *  thermistor are passed to this function as parameters. The function returns
+  29:.\Generated_Source\PSoC4/Thermistor.c **** *  the resistance, based on the voltage values.
+  30:.\Generated_Source\PSoC4/Thermistor.c **** *
+  31:.\Generated_Source\PSoC4/Thermistor.c **** * Parameters:
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 2
+
+
+  32:.\Generated_Source\PSoC4/Thermistor.c **** *  vReference: the voltage across the reference resistor;
+  33:.\Generated_Source\PSoC4/Thermistor.c **** *  vThermistor: the voltage across the thermistor.
+  34:.\Generated_Source\PSoC4/Thermistor.c **** *  The ratio of these two voltages is used by this function. Therefore, the
+  35:.\Generated_Source\PSoC4/Thermistor.c **** *  units for both parameters must be the same.
+  36:.\Generated_Source\PSoC4/Thermistor.c **** *
+  37:.\Generated_Source\PSoC4/Thermistor.c **** * Return:
+  38:.\Generated_Source\PSoC4/Thermistor.c **** *  The return value is the resistance across the thermistor. The value returned
+  39:.\Generated_Source\PSoC4/Thermistor.c **** *  is the resistance in Ohms.
+  40:.\Generated_Source\PSoC4/Thermistor.c **** *
+  41:.\Generated_Source\PSoC4/Thermistor.c **** *******************************************************************************/
+  42:.\Generated_Source\PSoC4/Thermistor.c **** uint32 Thermistor_GetResistance(int16 vReference, int16 vThermistor)
+  43:.\Generated_Source\PSoC4/Thermistor.c ****                                       
+  44:.\Generated_Source\PSoC4/Thermistor.c **** {
+  27              		.loc 1 44 0
+  28              		.cfi_startproc
+  29 0000 90B5     		push	{r4, r7, lr}
+  30              		.cfi_def_cfa_offset 12
+  31              		.cfi_offset 4, -12
+  32              		.cfi_offset 7, -8
+  33              		.cfi_offset 14, -4
+  34 0002 85B0     		sub	sp, sp, #20
+  35              		.cfi_def_cfa_offset 32
+  36 0004 00AF     		add	r7, sp, #0
+  37              		.cfi_def_cfa_register 7
+  38 0006 021C     		mov	r2, r0
+  39 0008 BB1D     		add	r3, r7, #6
+  40 000a 1A80     		strh	r2, [r3]
+  41 000c 3B1D     		add	r3, r7, #4
+  42 000e 0A1C     		add	r2, r1, #0
+  43 0010 1A80     		strh	r2, [r3]
+  45:.\Generated_Source\PSoC4/Thermistor.c ****     int32 resT;
+  46:.\Generated_Source\PSoC4/Thermistor.c ****     int16 temp;
+  47:.\Generated_Source\PSoC4/Thermistor.c **** 
+  48:.\Generated_Source\PSoC4/Thermistor.c ****     /* Calculate thermistor resistance from the voltages */
+  49:.\Generated_Source\PSoC4/Thermistor.c ****   /*  resT = Thermistor_REF_RESISTOR * ((int32)vThermistor);
+  50:.\Generated_Source\PSoC4/Thermistor.c ****     if (vReference < 0)
+  51:.\Generated_Source\PSoC4/Thermistor.c ****     {
+  52:.\Generated_Source\PSoC4/Thermistor.c ****         temp = -vReference;
+  53:.\Generated_Source\PSoC4/Thermistor.c ****         temp = (int16)((uint16)((uint16)temp >> 1u));
+  54:.\Generated_Source\PSoC4/Thermistor.c ****         temp = -temp;
+  55:.\Generated_Source\PSoC4/Thermistor.c ****     }
+  56:.\Generated_Source\PSoC4/Thermistor.c ****     else
+  57:.\Generated_Source\PSoC4/Thermistor.c ****     {
+  58:.\Generated_Source\PSoC4/Thermistor.c ****         temp = (int16)((uint16)((uint16)vReference >> 1u));
+  59:.\Generated_Source\PSoC4/Thermistor.c ****     }
+  60:.\Generated_Source\PSoC4/Thermistor.c ****     resT += temp;
+  61:.\Generated_Source\PSoC4/Thermistor.c ****     resT /= vReference;
+  62:.\Generated_Source\PSoC4/Thermistor.c **** */
+  63:.\Generated_Source\PSoC4/Thermistor.c ****     /* The ordering of Reference resistor value is specifically designed to keep the result from ov
+  64:.\Generated_Source\PSoC4/Thermistor.c ****       resT = (Thermistor_REF_RESISTOR*Thermistor_REF_RESISTOR+Thermistor_REF_RESISTOR*(Thermistor_R
+  44              		.loc 1 64 0
+  45 0012 3B1D     		add	r3, r7, #4
+  46 0014 0022     		mov	r2, #0
+  47 0016 9B5E     		ldrsh	r3, [r3, r2]
+  48 0018 181C     		mov	r0, r3
+  49 001a 0A21     		mov	r1, #10
+  50 001c FFF7FEFF 		bl	__aeabi_idiv
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 3
+
+
+  51 0020 031C     		mov	r3, r0
+  52 0022 9BB2     		uxth	r3, r3
+  53 0024 1BB2     		sxth	r3, r3
+  54 0026 174A     		ldr	r2, .L3
+  55 0028 5A43     		mul	r2, r3
+  56 002a BB1D     		add	r3, r7, #6
+  57 002c 0021     		mov	r1, #0
+  58 002e 5B5E     		ldrsh	r3, [r3, r1]
+  59 0030 101C     		mov	r0, r2
+  60 0032 191C     		mov	r1, r3
+  61 0034 FFF7FEFF 		bl	__aeabi_idiv
+  62 0038 031C     		mov	r3, r0
+  63 003a 134A     		ldr	r2, .L3+4
+  64 003c 9C18     		add	r4, r3, r2
+  65 003e 3B1D     		add	r3, r7, #4
+  66 0040 0022     		mov	r2, #0
+  67 0042 9B5E     		ldrsh	r3, [r3, r2]
+  68 0044 181C     		mov	r0, r3
+  69 0046 0A21     		mov	r1, #10
+  70 0048 FFF7FEFF 		bl	__aeabi_idiv
+  71 004c 031C     		mov	r3, r0
+  72 004e 9BB2     		uxth	r3, r3
+  73 0050 1BB2     		sxth	r3, r3
+  74 0052 0E4A     		ldr	r2, .L3+8
+  75 0054 5A43     		mul	r2, r3
+  76 0056 BB1D     		add	r3, r7, #6
+  77 0058 0021     		mov	r1, #0
+  78 005a 5B5E     		ldrsh	r3, [r3, r1]
+  79 005c 101C     		mov	r0, r2
+  80 005e 191C     		mov	r1, r3
+  81 0060 FFF7FEFF 		bl	__aeabi_idiv
+  82 0064 031C     		mov	r3, r0
+  83 0066 1A1C     		mov	r2, r3
+  84 0068 094B     		ldr	r3, .L3+12
+  85 006a 9B1A     		sub	r3, r3, r2
+  86 006c 201C     		mov	r0, r4
+  87 006e 191C     		mov	r1, r3
+  88 0070 FFF7FEFF 		bl	__aeabi_idiv
+  89 0074 031C     		mov	r3, r0
+  90 0076 FB60     		str	r3, [r7, #12]
+  65:.\Generated_Source\PSoC4/Thermistor.c **** 
+  66:.\Generated_Source\PSoC4/Thermistor.c ****     return ((uint32)((uint32)resT << Thermistor_REF_RES_SHIFT));
+  91              		.loc 1 66 0
+  92 0078 FB68     		ldr	r3, [r7, #12]
+  67:.\Generated_Source\PSoC4/Thermistor.c **** }
+  93              		.loc 1 67 0
+  94 007a 181C     		mov	r0, r3
+  95 007c BD46     		mov	sp, r7
+  96 007e 05B0     		add	sp, sp, #20
+  97              		@ sp needed
+  98 0080 90BD     		pop	{r4, r7, pc}
+  99              	.L4:
+ 100 0082 C046     		.align	2
+ 101              	.L3:
+ 102 0084 00C2EB0B 		.word	200000000
+ 103 0088 00E1F505 		.word	100000000
+ 104 008c 204E0000 		.word	20000
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 4
+
+
+ 105 0090 10270000 		.word	10000
+ 106              		.cfi_endproc
+ 107              	.LFE2:
+ 108              		.size	Thermistor_GetResistance, .-Thermistor_GetResistance
+ 109              		.section	.text.Thermistor_GetTemperature,"ax",%progbits
+ 110              		.align	2
+ 111              		.global	Thermistor_GetTemperature
+ 112              		.code	16
+ 113              		.thumb_func
+ 114              		.type	Thermistor_GetTemperature, %function
+ 115              	Thermistor_GetTemperature:
+ 116              	.LFB3:
+  68:.\Generated_Source\PSoC4/Thermistor.c **** 
+  69:.\Generated_Source\PSoC4/Thermistor.c **** 
+  70:.\Generated_Source\PSoC4/Thermistor.c **** /*******************************************************************************
+  71:.\Generated_Source\PSoC4/Thermistor.c **** * Function Name: Thermistor_GetTemperature
+  72:.\Generated_Source\PSoC4/Thermistor.c **** ********************************************************************************
+  73:.\Generated_Source\PSoC4/Thermistor.c **** *
+  74:.\Generated_Source\PSoC4/Thermistor.c **** * Summary:
+  75:.\Generated_Source\PSoC4/Thermistor.c **** *  The value of the thermistor resistance is passed to this function as a
+  76:.\Generated_Source\PSoC4/Thermistor.c **** *  parameter. The function returns the temperature, based on the resistance
+  77:.\Generated_Source\PSoC4/Thermistor.c **** *  value. The method used to calculate the temperature is dependent on whether
+  78:.\Generated_Source\PSoC4/Thermistor.c **** *  Equation or LUT was selected in the Customizer.
+  79:.\Generated_Source\PSoC4/Thermistor.c **** *
+  80:.\Generated_Source\PSoC4/Thermistor.c **** * Parameters:
+  81:.\Generated_Source\PSoC4/Thermistor.c **** *  resT: the resistance across the thermistor in Ohms.
+  82:.\Generated_Source\PSoC4/Thermistor.c **** *
+  83:.\Generated_Source\PSoC4/Thermistor.c **** * Return:
+  84:.\Generated_Source\PSoC4/Thermistor.c **** *  The return value is the temperature in 1/100ths of degrees C. For example,
+  85:.\Generated_Source\PSoC4/Thermistor.c **** *  the return value is 2345, when the actual temperature is 23.45 degrees C.
+  86:.\Generated_Source\PSoC4/Thermistor.c **** *
+  87:.\Generated_Source\PSoC4/Thermistor.c **** *******************************************************************************/
+  88:.\Generated_Source\PSoC4/Thermistor.c **** int16 Thermistor_GetTemperature(uint32 resT) 
+  89:.\Generated_Source\PSoC4/Thermistor.c **** {
+ 117              		.loc 1 89 0
+ 118              		.cfi_startproc
+ 119 0000 80B5     		push	{r7, lr}
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 7, -8
+ 122              		.cfi_offset 14, -4
+ 123 0002 84B0     		sub	sp, sp, #16
+ 124              		.cfi_def_cfa_offset 24
+ 125 0004 00AF     		add	r7, sp, #0
+ 126              		.cfi_def_cfa_register 7
+ 127 0006 7860     		str	r0, [r7, #4]
+  90:.\Generated_Source\PSoC4/Thermistor.c ****     int16 tempTR;
+  91:.\Generated_Source\PSoC4/Thermistor.c ****     static const uint32 CYCODE Thermistor_LUT[] = { 12492u, 12486u, 12481u, 12475u, 12469u, 12464u,
+  92:.\Generated_Source\PSoC4/Thermistor.c ****  12441u, 12436u, 12430u, 12424u, 12419u, 12413u, 12408u, 12402u, 12396u, 12391u, 12385u, 12380u, 12
+  93:.\Generated_Source\PSoC4/Thermistor.c ****  12357u, 12352u, 12346u, 12341u, 12335u, 12330u, 12324u, 12318u, 12313u, 12307u, 12302u, 12296u, 12
+  94:.\Generated_Source\PSoC4/Thermistor.c ****  12274u, 12269u, 12263u, 12257u, 12252u, 12246u, 12241u, 12235u, 12230u, 12224u, 12219u, 12213u, 12
+  95:.\Generated_Source\PSoC4/Thermistor.c ****  12191u, 12186u, 12180u, 12175u, 12169u, 12164u, 12159u, 12153u, 12148u, 12142u, 12137u, 12131u, 12
+  96:.\Generated_Source\PSoC4/Thermistor.c ****  12109u, 12104u, 12098u, 12093u, 12088u, 12082u, 12077u, 12071u, 12066u, 12060u, 12055u, 12050u, 12
+  97:.\Generated_Source\PSoC4/Thermistor.c ****  12028u, 12023u, 12017u, 12012u, 12006u, 12001u, 11996u, 11990u, 11985u, 11979u, 11974u, 11969u, 11
+  98:.\Generated_Source\PSoC4/Thermistor.c ****  11947u, 11942u, 11936u, 11931u, 11926u, 11920u, 11915u, 11910u, 11904u, 11899u, 11894u, 11888u, 11
+  99:.\Generated_Source\PSoC4/Thermistor.c ****  11867u, 11862u, 11856u, 11851u, 11846u, 11840u, 11835u, 11830u, 11824u, 11819u, 11814u, 11809u, 11
+ 100:.\Generated_Source\PSoC4/Thermistor.c ****  11787u, 11782u, 11777u, 11772u, 11766u, 11761u, 11756u, 11750u, 11745u, 11740u, 11735u, 11729u, 11
+ 101:.\Generated_Source\PSoC4/Thermistor.c ****  11708u, 11703u, 11698u, 11693u, 11687u, 11682u, 11677u, 11672u, 11667u, 11661u, 11656u, 11651u, 11
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 5
+
+
+ 102:.\Generated_Source\PSoC4/Thermistor.c ****  11630u, 11625u, 11620u, 11614u, 11609u, 11604u, 11599u, 11594u, 11588u, 11583u, 11578u, 11573u, 11
+ 103:.\Generated_Source\PSoC4/Thermistor.c ****  11552u, 11547u, 11542u, 11537u, 11532u, 11526u, 11521u, 11516u, 11511u, 11506u, 11501u, 11496u, 11
+ 104:.\Generated_Source\PSoC4/Thermistor.c ****  11475u, 11470u, 11465u, 11460u, 11455u, 11449u, 11444u, 11439u, 11434u, 11429u, 11424u, 11419u, 11
+ 105:.\Generated_Source\PSoC4/Thermistor.c ****  11398u, 11393u, 11388u, 11383u, 11378u, 11373u, 11368u, 11363u, 11358u, 11353u, 11348u, 11343u, 11
+ 106:.\Generated_Source\PSoC4/Thermistor.c ****  11322u, 11317u, 11312u, 11307u, 11302u, 11297u, 11292u, 11287u, 11282u, 11277u, 11272u, 11267u, 11
+ 107:.\Generated_Source\PSoC4/Thermistor.c ****  11247u, 11242u, 11237u, 11232u, 11227u, 11222u, 11217u, 11212u, 11207u, 11202u, 11197u, 11192u, 11
+ 108:.\Generated_Source\PSoC4/Thermistor.c ****  11172u, 11167u, 11162u, 11157u, 11152u, 11147u, 11142u, 11137u, 11132u, 11127u, 11123u, 11118u, 11
+ 109:.\Generated_Source\PSoC4/Thermistor.c ****  11098u, 11093u, 11088u, 11083u, 11078u, 11073u, 11068u, 11063u, 11058u, 11053u, 11049u, 11044u, 11
+ 110:.\Generated_Source\PSoC4/Thermistor.c ****  11024u, 11019u, 11014u, 11009u, 11004u, 11000u, 10995u, 10990u, 10985u, 10980u, 10975u, 10970u, 10
+ 111:.\Generated_Source\PSoC4/Thermistor.c ****  10951u, 10946u, 10941u, 10936u, 10931u, 10927u, 10922u, 10917u, 10912u, 10907u, 10902u, 10898u, 10
+ 112:.\Generated_Source\PSoC4/Thermistor.c ****  10878u, 10873u, 10869u, 10864u, 10859u, 10854u, 10849u, 10844u, 10840u, 10835u, 10830u, 10825u, 10
+ 113:.\Generated_Source\PSoC4/Thermistor.c ****  10806u, 10801u, 10797u, 10792u, 10787u, 10782u, 10777u, 10773u, 10768u, 10763u, 10758u, 10754u, 10
+ 114:.\Generated_Source\PSoC4/Thermistor.c ****  10735u, 10730u, 10725u, 10720u, 10716u, 10711u, 10706u, 10701u, 10697u, 10692u, 10687u, 10682u, 10
+ 115:.\Generated_Source\PSoC4/Thermistor.c ****  10663u, 10659u, 10654u, 10649u, 10645u, 10640u, 10635u, 10631u, 10626u, 10621u, 10616u, 10612u, 10
+ 116:.\Generated_Source\PSoC4/Thermistor.c ****  10593u, 10588u, 10584u, 10579u, 10574u, 10570u, 10565u, 10560u, 10556u, 10551u, 10546u, 10542u, 10
+ 117:.\Generated_Source\PSoC4/Thermistor.c ****  10523u, 10518u, 10514u, 10509u, 10504u, 10500u, 10495u, 10491u, 10486u, 10481u, 10477u, 10472u, 10
+ 118:.\Generated_Source\PSoC4/Thermistor.c ****  10454u, 10449u, 10444u, 10440u, 10435u, 10431u, 10426u, 10421u, 10417u, 10412u, 10408u, 10403u, 10
+ 119:.\Generated_Source\PSoC4/Thermistor.c ****  10385u, 10380u, 10376u, 10371u, 10366u, 10362u, 10357u, 10353u, 10348u, 10344u, 10339u, 10334u, 10
+ 120:.\Generated_Source\PSoC4/Thermistor.c ****  10316u, 10312u, 10307u, 10303u, 10298u, 10294u, 10289u, 10285u, 10280u, 10275u, 10271u, 10266u, 10
+ 121:.\Generated_Source\PSoC4/Thermistor.c ****  10248u, 10244u, 10239u, 10235u, 10230u, 10226u, 10221u, 10217u, 10212u, 10208u, 10203u, 10199u, 10
+ 122:.\Generated_Source\PSoC4/Thermistor.c ****  10181u, 10176u, 10172u, 10168u, 10163u, 10159u, 10154u, 10150u, 10145u, 10141u, 10136u, 10132u, 10
+ 123:.\Generated_Source\PSoC4/Thermistor.c ****  10114u, 10110u, 10105u, 10101u, 10096u, 10092u, 10087u, 10083u, 10079u, 10074u, 10070u, 10065u, 10
+ 124:.\Generated_Source\PSoC4/Thermistor.c ****  10048u, 10043u, 10039u, 10034u, 10030u, 10026u, 10021u, 10017u, 10012u, 10008u, 10004u, 9999u, 999
+ 125:.\Generated_Source\PSoC4/Thermistor.c ****  9982u, 9977u, 9973u, 9969u, 9964u, 9960u, 9956u, 9951u, 9947u, 9942u, 9938u, 9934u, 9929u, 9925u, 
+ 126:.\Generated_Source\PSoC4/Thermistor.c ****  9908u, 9903u, 9899u, 9895u, 9890u, 9886u, 9882u, 9877u, 9873u, 9869u, 9864u, 9860u, 9856u, 9851u, 
+ 127:.\Generated_Source\PSoC4/Thermistor.c ****  9834u, 9830u, 9826u, 9821u, 9817u, 9813u, 9808u, 9804u, 9800u, 9796u, 9791u, 9787u, 9783u, 9778u, 
+ 128:.\Generated_Source\PSoC4/Thermistor.c ****  9761u, 9757u, 9753u, 9749u, 9744u, 9740u, 9736u, 9732u, 9727u, 9723u, 9719u, 9715u, 9710u, 9706u, 
+ 129:.\Generated_Source\PSoC4/Thermistor.c ****  9689u, 9685u, 9681u, 9676u, 9672u, 9668u, 9664u, 9660u, 9655u, 9651u, 9647u, 9643u, 9639u, 9634u, 
+ 130:.\Generated_Source\PSoC4/Thermistor.c ****  9617u, 9613u, 9609u, 9605u, 9601u, 9597u, 9592u, 9588u, 9584u, 9580u, 9576u, 9571u, 9567u, 9563u, 
+ 131:.\Generated_Source\PSoC4/Thermistor.c ****  9546u, 9542u, 9538u, 9534u, 9530u, 9526u, 9522u, 9517u, 9513u, 9509u, 9505u, 9501u, 9497u, 9493u, 
+ 132:.\Generated_Source\PSoC4/Thermistor.c ****  9476u, 9472u, 9468u, 9464u, 9460u, 9455u, 9451u, 9447u, 9443u, 9439u, 9435u, 9431u, 9427u, 9423u, 
+ 133:.\Generated_Source\PSoC4/Thermistor.c ****  9406u, 9402u, 9398u, 9394u, 9390u, 9386u, 9382u, 9378u, 9374u, 9369u, 9365u, 9361u, 9357u, 9353u, 
+ 134:.\Generated_Source\PSoC4/Thermistor.c ****  9337u, 9333u, 9329u, 9325u, 9321u, 9317u, 9313u, 9309u, 9305u, 9300u, 9296u, 9292u, 9288u, 9284u, 
+ 135:.\Generated_Source\PSoC4/Thermistor.c ****  9268u, 9264u, 9260u, 9256u, 9252u, 9248u, 9244u, 9240u, 9236u, 9232u, 9228u, 9224u, 9220u, 9216u, 
+ 136:.\Generated_Source\PSoC4/Thermistor.c ****  9200u, 9196u, 9192u, 9188u, 9184u, 9180u, 9176u, 9172u, 9168u, 9164u, 9160u, 9156u, 9152u, 9148u, 
+ 137:.\Generated_Source\PSoC4/Thermistor.c ****  9133u, 9129u, 9125u, 9121u, 9117u, 9113u, 9109u, 9105u, 9101u, 9097u, 9093u, 9089u, 9085u, 9081u, 
+ 138:.\Generated_Source\PSoC4/Thermistor.c ****  9066u, 9062u, 9058u, 9054u, 9050u, 9046u, 9042u, 9038u, 9034u, 9030u, 9026u, 9023u, 9019u, 9015u, 
+ 139:.\Generated_Source\PSoC4/Thermistor.c ****  8999u, 8995u, 8991u, 8988u, 8984u, 8980u, 8976u, 8972u, 8968u, 8964u, 8960u, 8956u, 8953u, 8949u, 
+ 140:.\Generated_Source\PSoC4/Thermistor.c ****  8933u, 8929u, 8926u, 8922u, 8918u, 8914u, 8910u, 8906u, 8902u, 8899u, 8895u, 8891u, 8887u, 8883u, 
+ 141:.\Generated_Source\PSoC4/Thermistor.c ****  8868u, 8864u, 8860u, 8856u, 8853u, 8849u, 8845u, 8841u, 8837u, 8834u, 8830u, 8826u, 8822u, 8818u, 
+ 142:.\Generated_Source\PSoC4/Thermistor.c ****  8803u, 8799u, 8796u, 8792u, 8788u, 8784u, 8780u, 8777u, 8773u, 8769u, 8765u, 8762u, 8758u, 8754u, 
+ 143:.\Generated_Source\PSoC4/Thermistor.c ****  8739u, 8735u, 8731u, 8728u, 8724u, 8720u, 8716u, 8713u, 8709u, 8705u, 8701u, 8698u, 8694u, 8690u, 
+ 144:.\Generated_Source\PSoC4/Thermistor.c ****  8675u, 8671u, 8668u, 8664u, 8660u, 8657u, 8653u, 8649u, 8645u, 8642u, 8638u, 8634u, 8631u, 8627u, 
+ 145:.\Generated_Source\PSoC4/Thermistor.c ****  8612u, 8608u, 8605u, 8601u, 8597u, 8594u, 8590u, 8586u, 8582u, 8579u, 8575u, 8571u, 8568u, 8564u, 
+ 146:.\Generated_Source\PSoC4/Thermistor.c ****  8549u, 8546u, 8542u, 8538u, 8535u, 8531u, 8527u, 8524u, 8520u, 8516u, 8513u, 8509u, 8505u, 8502u, 
+ 147:.\Generated_Source\PSoC4/Thermistor.c ****  8487u, 8484u, 8480u, 8476u, 8473u, 8469u, 8465u, 8462u, 8458u, 8455u, 8451u, 8447u, 8444u, 8440u, 
+ 148:.\Generated_Source\PSoC4/Thermistor.c ****  8426u, 8422u, 8418u, 8415u, 8411u, 8408u, 8404u, 8400u, 8397u, 8393u, 8390u, 8386u, 8382u, 8379u, 
+ 149:.\Generated_Source\PSoC4/Thermistor.c ****  8364u, 8361u, 8357u, 8354u, 8350u, 8347u, 8343u, 8339u, 8336u, 8332u, 8329u, 8325u, 8322u, 8318u, 
+ 150:.\Generated_Source\PSoC4/Thermistor.c ****  8304u, 8300u, 8297u, 8293u, 8290u, 8286u, 8283u, 8279u, 8275u, 8272u, 8268u, 8265u, 8261u, 8258u, 
+ 151:.\Generated_Source\PSoC4/Thermistor.c ****  8244u, 8240u, 8237u, 8233u, 8230u, 8226u, 8223u, 8219u, 8216u, 8212u, 8209u, 8205u, 8202u, 8198u, 
+ 152:.\Generated_Source\PSoC4/Thermistor.c ****  8184u, 8181u, 8177u, 8174u, 8170u, 8167u, 8163u, 8160u, 8156u, 8153u, 8149u, 8146u, 8142u, 8139u, 
+ 153:.\Generated_Source\PSoC4/Thermistor.c ****  8125u, 8121u, 8118u, 8115u, 8111u, 8108u, 8104u, 8101u, 8097u, 8094u, 8090u, 8087u, 8084u, 8080u, 
+ 154:.\Generated_Source\PSoC4/Thermistor.c ****  8066u, 8063u, 8059u, 8056u, 8053u, 8049u, 8046u, 8042u, 8039u, 8035u, 8032u, 8029u, 8025u, 8022u, 
+ 155:.\Generated_Source\PSoC4/Thermistor.c ****  8008u, 8005u, 8001u, 7998u, 7995u, 7991u, 7988u, 7984u, 7981u, 7978u, 7974u, 7971u, 7967u, 7964u, 
+ 156:.\Generated_Source\PSoC4/Thermistor.c ****  7950u, 7947u, 7944u, 7940u, 7937u, 7934u, 7930u, 7927u, 7923u, 7920u, 7917u, 7913u, 7910u, 7907u, 
+ 157:.\Generated_Source\PSoC4/Thermistor.c ****  7893u, 7890u, 7887u, 7883u, 7880u, 7876u, 7873u, 7870u, 7866u, 7863u, 7860u, 7856u, 7853u, 7850u, 
+ 158:.\Generated_Source\PSoC4/Thermistor.c ****  7836u, 7833u, 7830u, 7826u, 7823u, 7820u, 7817u, 7813u, 7810u, 7807u, 7803u, 7800u, 7797u, 7793u, 
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 6
+
+
+ 159:.\Generated_Source\PSoC4/Thermistor.c ****  7780u, 7777u, 7774u, 7770u, 7767u, 7764u, 7760u, 7757u, 7754u, 7751u, 7747u, 7744u, 7741u, 7737u, 
+ 160:.\Generated_Source\PSoC4/Thermistor.c ****  7724u, 7721u, 7718u, 7715u, 7711u, 7708u, 7705u, 7701u, 7698u, 7695u, 7692u, 7688u, 7685u, 7682u, 
+ 161:.\Generated_Source\PSoC4/Thermistor.c ****  7669u, 7666u, 7662u, 7659u, 7656u, 7653u, 7650u, 7646u, 7643u, 7640u, 7637u, 7633u, 7630u, 7627u, 
+ 162:.\Generated_Source\PSoC4/Thermistor.c ****  7614u, 7611u, 7608u, 7604u, 7601u, 7598u, 7595u, 7592u, 7588u, 7585u, 7582u, 7579u, 7576u, 7572u, 
+ 163:.\Generated_Source\PSoC4/Thermistor.c ****  7560u, 7556u, 7553u, 7550u, 7547u, 7544u, 7540u, 7537u, 7534u, 7531u, 7528u, 7525u, 7521u, 7518u, 
+ 164:.\Generated_Source\PSoC4/Thermistor.c ****  7506u, 7502u, 7499u, 7496u, 7493u, 7490u, 7487u, 7483u, 7480u, 7477u, 7474u, 7471u, 7468u, 7464u, 
+ 165:.\Generated_Source\PSoC4/Thermistor.c ****  7452u, 7449u, 7446u, 7442u, 7439u, 7436u, 7433u, 7430u, 7427u, 7424u, 7421u, 7417u, 7414u, 7411u, 
+ 166:.\Generated_Source\PSoC4/Thermistor.c ****  7399u, 7396u, 7393u, 7389u, 7386u, 7383u, 7380u, 7377u, 7374u, 7371u, 7368u, 7365u, 7361u, 7358u, 
+ 167:.\Generated_Source\PSoC4/Thermistor.c ****  7346u, 7343u, 7340u, 7337u, 7334u, 7331u, 7328u, 7324u, 7321u, 7318u, 7315u, 7312u, 7309u, 7306u, 
+ 168:.\Generated_Source\PSoC4/Thermistor.c ****  7294u, 7291u, 7288u, 7285u, 7281u, 7278u, 7275u, 7272u, 7269u, 7266u, 7263u, 7260u, 7257u, 7254u, 
+ 169:.\Generated_Source\PSoC4/Thermistor.c ****  7242u, 7239u, 7236u, 7233u, 7230u, 7227u, 7224u, 7221u, 7218u, 7215u, 7212u, 7208u, 7205u, 7202u, 
+ 170:.\Generated_Source\PSoC4/Thermistor.c ****  7190u, 7187u, 7184u, 7181u, 7178u, 7175u, 7172u, 7169u, 7166u, 7163u, 7160u, 7157u, 7154u, 7151u, 
+ 171:.\Generated_Source\PSoC4/Thermistor.c ****  7139u, 7136u, 7133u, 7130u, 7127u, 7124u, 7121u, 7118u, 7115u, 7112u, 7109u, 7107u, 7104u, 7101u, 
+ 172:.\Generated_Source\PSoC4/Thermistor.c ****  7089u, 7086u, 7083u, 7080u, 7077u, 7074u, 7071u, 7068u, 7065u, 7062u, 7059u, 7056u, 7053u, 7050u, 
+ 173:.\Generated_Source\PSoC4/Thermistor.c ****  7038u, 7036u, 7033u, 7030u, 7027u, 7024u, 7021u, 7018u, 7015u, 7012u, 7009u, 7006u, 7003u, 7000u, 
+ 174:.\Generated_Source\PSoC4/Thermistor.c ****  6989u, 6986u, 6983u, 6980u, 6977u, 6974u, 6971u, 6968u, 6965u, 6962u, 6960u, 6957u, 6954u, 6951u, 
+ 175:.\Generated_Source\PSoC4/Thermistor.c ****  6939u, 6936u, 6933u, 6931u, 6928u, 6925u, 6922u, 6919u, 6916u, 6913u, 6910u, 6907u, 6905u, 6902u, 
+ 176:.\Generated_Source\PSoC4/Thermistor.c ****  6890u, 6887u, 6884u, 6882u, 6879u, 6876u, 6873u, 6870u, 6867u, 6864u, 6862u, 6859u, 6856u, 6853u, 
+ 177:.\Generated_Source\PSoC4/Thermistor.c ****  6842u, 6839u, 6836u, 6833u, 6830u, 6827u, 6825u, 6822u, 6819u, 6816u, 6813u, 6810u, 6807u, 6805u, 
+ 178:.\Generated_Source\PSoC4/Thermistor.c ****  6793u, 6791u, 6788u, 6785u, 6782u, 6779u, 6776u, 6774u, 6771u, 6768u, 6765u, 6762u, 6760u, 6757u, 
+ 179:.\Generated_Source\PSoC4/Thermistor.c ****  6745u, 6743u, 6740u, 6737u, 6734u, 6731u, 6729u, 6726u, 6723u, 6720u, 6718u, 6715u, 6712u, 6709u, 
+ 180:.\Generated_Source\PSoC4/Thermistor.c ****  6698u, 6695u, 6692u, 6690u, 6687u, 6684u, 6681u, 6679u, 6676u, 6673u, 6670u, 6668u, 6665u, 6662u, 
+ 181:.\Generated_Source\PSoC4/Thermistor.c ****  6651u, 6648u, 6645u, 6643u, 6640u, 6637u, 6634u, 6632u, 6629u, 6626u, 6623u, 6621u, 6618u, 6615u, 
+ 182:.\Generated_Source\PSoC4/Thermistor.c ****  6604u, 6601u, 6599u, 6596u, 6593u, 6591u, 6588u, 6585u, 6582u, 6580u, 6577u, 6574u, 6571u, 6569u, 
+ 183:.\Generated_Source\PSoC4/Thermistor.c ****  6558u, 6555u, 6552u, 6550u, 6547u, 6544u, 6542u, 6539u, 6536u, 6533u, 6531u, 6528u, 6525u, 6523u, 
+ 184:.\Generated_Source\PSoC4/Thermistor.c ****  6512u, 6509u, 6507u, 6504u, 6501u, 6498u, 6496u, 6493u, 6490u, 6488u, 6485u, 6482u, 6480u, 6477u, 
+ 185:.\Generated_Source\PSoC4/Thermistor.c ****  6466u, 6464u, 6461u, 6458u, 6456u, 6453u, 6450u, 6448u, 6445u, 6442u, 6440u, 6437u, 6434u, 6432u, 
+ 186:.\Generated_Source\PSoC4/Thermistor.c ****  6421u, 6418u, 6416u, 6413u, 6410u, 6408u, 6405u, 6403u, 6400u, 6397u, 6395u, 6392u, 6389u, 6387u, 
+ 187:.\Generated_Source\PSoC4/Thermistor.c ****  6376u, 6374u, 6371u, 6368u, 6366u, 6363u, 6360u, 6358u, 6355u, 6353u, 6350u, 6347u, 6345u, 6342u, 
+ 188:.\Generated_Source\PSoC4/Thermistor.c ****  6332u, 6329u, 6326u, 6324u, 6321u, 6319u, 6316u, 6313u, 6311u, 6308u, 6306u, 6303u, 6300u, 6298u, 
+ 189:.\Generated_Source\PSoC4/Thermistor.c ****  6288u, 6285u, 6282u, 6280u, 6277u, 6275u, 6272u, 6269u, 6267u, 6264u, 6262u, 6259u, 6257u, 6254u, 
+ 190:.\Generated_Source\PSoC4/Thermistor.c ****  6244u, 6241u, 6239u, 6236u, 6233u, 6231u, 6228u, 6226u, 6223u, 6221u, 6218u, 6216u, 6213u, 6210u, 
+ 191:.\Generated_Source\PSoC4/Thermistor.c ****  6200u, 6198u, 6195u, 6193u, 6190u, 6188u, 6185u, 6182u, 6180u, 6177u, 6175u, 6172u, 6170u, 6167u, 
+ 192:.\Generated_Source\PSoC4/Thermistor.c ****  6157u, 6155u, 6152u, 6150u, 6147u, 6144u, 6142u, 6139u, 6137u, 6134u, 6132u, 6129u, 6127u, 6124u, 
+ 193:.\Generated_Source\PSoC4/Thermistor.c ****  6114u, 6112u, 6109u, 6107u, 6104u, 6102u, 6099u, 6097u, 6094u, 6092u, 6089u, 6087u, 6084u, 6082u, 
+ 194:.\Generated_Source\PSoC4/Thermistor.c ****  6072u, 6069u, 6067u, 6064u, 6062u, 6059u, 6057u, 6055u, 6052u, 6050u, 6047u, 6045u, 6042u, 6040u, 
+ 195:.\Generated_Source\PSoC4/Thermistor.c ****  6030u, 6027u, 6025u, 6022u, 6020u, 6017u, 6015u, 6013u, 6010u, 6008u, 6005u, 6003u, 6000u, 5998u, 
+ 196:.\Generated_Source\PSoC4/Thermistor.c ****  5988u, 5986u, 5983u, 5981u, 5978u, 5976u, 5973u, 5971u, 5968u, 5966u, 5964u, 5961u, 5959u, 5956u, 
+ 197:.\Generated_Source\PSoC4/Thermistor.c ****  5947u, 5944u, 5942u, 5939u, 5937u, 5934u, 5932u, 5930u, 5927u, 5925u, 5922u, 5920u, 5918u, 5915u, 
+ 198:.\Generated_Source\PSoC4/Thermistor.c ****  5905u, 5903u, 5901u, 5898u, 5896u, 5893u, 5891u, 5889u, 5886u, 5884u, 5881u, 5879u, 5877u, 5874u, 
+ 199:.\Generated_Source\PSoC4/Thermistor.c ****  5865u, 5862u, 5860u, 5857u, 5855u, 5853u, 5850u, 5848u, 5846u, 5843u, 5841u, 5838u, 5836u, 5834u, 
+ 200:.\Generated_Source\PSoC4/Thermistor.c ****  5824u, 5822u, 5819u, 5817u, 5815u, 5812u, 5810u, 5808u, 5805u, 5803u, 5801u, 5798u, 5796u, 5793u, 
+ 201:.\Generated_Source\PSoC4/Thermistor.c ****  5784u, 5782u, 5779u, 5777u, 5775u, 5772u, 5770u, 5768u, 5765u, 5763u, 5761u, 5758u, 5756u, 5754u, 
+ 202:.\Generated_Source\PSoC4/Thermistor.c ****  5744u, 5742u, 5740u, 5737u, 5735u, 5733u, 5730u, 5728u, 5726u, 5723u, 5721u, 5719u, 5716u, 5714u, 
+ 203:.\Generated_Source\PSoC4/Thermistor.c ****  5705u, 5702u, 5700u, 5698u, 5695u, 5693u, 5691u, 5688u, 5686u, 5684u, 5682u, 5679u, 5677u, 5675u, 
+ 204:.\Generated_Source\PSoC4/Thermistor.c ****  5665u, 5663u, 5661u, 5659u, 5656u, 5654u, 5652u, 5649u, 5647u, 5645u, 5643u, 5640u, 5638u, 5636u, 
+ 205:.\Generated_Source\PSoC4/Thermistor.c ****  5627u, 5624u, 5622u, 5620u, 5617u, 5615u, 5613u, 5611u, 5608u, 5606u, 5604u, 5602u, 5599u, 5597u, 
+ 206:.\Generated_Source\PSoC4/Thermistor.c ****  5588u, 5586u, 5583u, 5581u, 5579u, 5577u, 5574u, 5572u, 5570u, 5568u, 5565u, 5563u, 5561u, 5559u, 
+ 207:.\Generated_Source\PSoC4/Thermistor.c ****  5550u, 5547u, 5545u, 5543u, 5541u, 5538u, 5536u, 5534u, 5532u, 5529u, 5527u, 5525u, 5523u, 5521u, 
+ 208:.\Generated_Source\PSoC4/Thermistor.c ****  5512u, 5509u, 5507u, 5505u, 5503u, 5500u, 5498u, 5496u, 5494u, 5492u, 5489u, 5487u, 5485u, 5483u, 
+ 209:.\Generated_Source\PSoC4/Thermistor.c ****  5474u, 5472u, 5469u, 5467u, 5465u, 5463u, 5461u, 5458u, 5456u, 5454u, 5452u, 5450u, 5447u, 5445u, 
+ 210:.\Generated_Source\PSoC4/Thermistor.c ****  5436u, 5434u, 5432u, 5430u, 5428u, 5426u, 5423u, 5421u, 5419u, 5417u, 5415u, 5412u, 5410u, 5408u, 
+ 211:.\Generated_Source\PSoC4/Thermistor.c ****  5399u, 5397u, 5395u, 5393u, 5391u, 5389u, 5386u, 5384u, 5382u, 5380u, 5378u, 5376u, 5373u, 5371u, 
+ 212:.\Generated_Source\PSoC4/Thermistor.c ****  5363u, 5360u, 5358u, 5356u, 5354u, 5352u, 5350u, 5347u, 5345u, 5343u, 5341u, 5339u, 5337u, 5335u, 
+ 213:.\Generated_Source\PSoC4/Thermistor.c ****  5326u };
+ 214:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 215:.\Generated_Source\PSoC4/Thermistor.c **** 
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 7
+
+
+ 216:.\Generated_Source\PSoC4/Thermistor.c ****     #if (Thermistor_IMPLEMENTATION == Thermistor_EQUATION_METHOD)
+ 217:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 218:.\Generated_Source\PSoC4/Thermistor.c ****         float32 stEqn;
+ 219:.\Generated_Source\PSoC4/Thermistor.c ****         float32 logrT;
+ 220:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 221:.\Generated_Source\PSoC4/Thermistor.c ****         /* Calculate thermistor resistance from the voltages */
+ 222:.\Generated_Source\PSoC4/Thermistor.c ****         #if(!CY_PSOC3)
+ 223:.\Generated_Source\PSoC4/Thermistor.c ****             logrT = (float32)log((float64)resT);
+ 224:.\Generated_Source\PSoC4/Thermistor.c ****         #else
+ 225:.\Generated_Source\PSoC4/Thermistor.c ****             logrT = log((float32)resT);
+ 226:.\Generated_Source\PSoC4/Thermistor.c ****         #endif  /* (!CY_PSOC3) */
+ 227:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 228:.\Generated_Source\PSoC4/Thermistor.c ****         /* Calculate temperature from the resistance of thermistor using Steinhart-Hart Equation */
+ 229:.\Generated_Source\PSoC4/Thermistor.c ****         #if(!CY_PSOC3)
+ 230:.\Generated_Source\PSoC4/Thermistor.c ****             stEqn = (float32)(Thermistor_THA + (Thermistor_THB * logrT) + 
+ 231:.\Generated_Source\PSoC4/Thermistor.c ****                              (Thermistor_THC * pow((float64)logrT, (float32)3)));
+ 232:.\Generated_Source\PSoC4/Thermistor.c ****         #else
+ 233:.\Generated_Source\PSoC4/Thermistor.c ****             stEqn = (float32)(Thermistor_THA + (Thermistor_THB * logrT) + 
+ 234:.\Generated_Source\PSoC4/Thermistor.c ****                              (Thermistor_THC * pow(logrT, (float32)3)));
+ 235:.\Generated_Source\PSoC4/Thermistor.c ****         #endif  /* (!CY_PSOC3) */
+ 236:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 237:.\Generated_Source\PSoC4/Thermistor.c ****         tempTR = (int16)((float32)((((1.0 / stEqn) - Thermistor_K2C) * (float32)Thermistor_SCALE) +
+ 238:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 239:.\Generated_Source\PSoC4/Thermistor.c ****     #else /* Thermistor_IMPLEMENTATION == Thermistor_LUT_METHOD */
+ 240:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 241:.\Generated_Source\PSoC4/Thermistor.c ****         uint16 mid;
+ 242:.\Generated_Source\PSoC4/Thermistor.c ****         uint16 first = 0u;
+ 128              		.loc 1 242 0
+ 129 0008 0E23     		mov	r3, #14
+ 130 000a FB18     		add	r3, r7, r3
+ 131 000c 0022     		mov	r2, #0
+ 132 000e 1A80     		strh	r2, [r3]
+ 243:.\Generated_Source\PSoC4/Thermistor.c ****         uint16 last = Thermistor_LUT_SIZE - 1u;
+ 133              		.loc 1 243 0
+ 134 0010 0C23     		mov	r3, #12
+ 135 0012 FB18     		add	r3, r7, r3
+ 136 0014 FA22     		mov	r2, #250
+ 137 0016 D200     		lsl	r2, r2, #3
+ 138 0018 1A80     		strh	r2, [r3]
+ 244:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 245:.\Generated_Source\PSoC4/Thermistor.c ****         /* Calculate temperature from the resistance of thermistor by using the LUT */
+ 246:.\Generated_Source\PSoC4/Thermistor.c ****         while (first < last)
+ 139              		.loc 1 246 0
+ 140 001a 4AE0     		b	.L6
+ 141              	.L11:
+ 247:.\Generated_Source\PSoC4/Thermistor.c ****         {
+ 248:.\Generated_Source\PSoC4/Thermistor.c ****             mid = (first + last) >> 1u;
+ 142              		.loc 1 248 0
+ 143 001c 0E23     		mov	r3, #14
+ 144 001e FB18     		add	r3, r7, r3
+ 145 0020 1A88     		ldrh	r2, [r3]
+ 146 0022 0C23     		mov	r3, #12
+ 147 0024 FB18     		add	r3, r7, r3
+ 148 0026 1B88     		ldrh	r3, [r3]
+ 149 0028 D318     		add	r3, r2, r3
+ 150 002a 5A10     		asr	r2, r3, #1
+ 151 002c 0A23     		mov	r3, #10
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 8
+
+
+ 152 002e FB18     		add	r3, r7, r3
+ 153 0030 1A80     		strh	r2, [r3]
+ 249:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 250:.\Generated_Source\PSoC4/Thermistor.c ****             if ((0u == mid) || ((Thermistor_LUT_SIZE - 1u) == mid) || (resT == Thermistor_LUT[mid])
+ 154              		.loc 1 250 0
+ 155 0032 0A23     		mov	r3, #10
+ 156 0034 FB18     		add	r3, r7, r3
+ 157 0036 1B88     		ldrh	r3, [r3]
+ 158 0038 002B     		cmp	r3, #0
+ 159 003a 0FD0     		beq	.L7
+ 160              		.loc 1 250 0 is_stmt 0 discriminator 1
+ 161 003c 0A23     		mov	r3, #10
+ 162 003e FB18     		add	r3, r7, r3
+ 163 0040 1A88     		ldrh	r2, [r3]
+ 164 0042 FA23     		mov	r3, #250
+ 165 0044 DB00     		lsl	r3, r3, #3
+ 166 0046 9A42     		cmp	r2, r3
+ 167 0048 08D0     		beq	.L7
+ 168              		.loc 1 250 0 discriminator 2
+ 169 004a 0A23     		mov	r3, #10
+ 170 004c FB18     		add	r3, r7, r3
+ 171 004e 1A88     		ldrh	r2, [r3]
+ 172 0050 4E4B     		ldr	r3, .L15
+ 173 0052 9200     		lsl	r2, r2, #2
+ 174 0054 D258     		ldr	r2, [r2, r3]
+ 175 0056 7B68     		ldr	r3, [r7, #4]
+ 176 0058 9A42     		cmp	r2, r3
+ 177 005a 06D1     		bne	.L8
+ 178              	.L7:
+ 251:.\Generated_Source\PSoC4/Thermistor.c ****             {
+ 252:.\Generated_Source\PSoC4/Thermistor.c ****                 last = mid;
+ 179              		.loc 1 252 0 is_stmt 1
+ 180 005c 0C23     		mov	r3, #12
+ 181 005e FB18     		add	r3, r7, r3
+ 182 0060 0A22     		mov	r2, #10
+ 183 0062 BA18     		add	r2, r7, r2
+ 184 0064 1288     		ldrh	r2, [r2]
+ 185 0066 1A80     		strh	r2, [r3]
+ 253:.\Generated_Source\PSoC4/Thermistor.c ****                 break;
+ 186              		.loc 1 253 0
+ 187 0068 2BE0     		b	.L9
+ 188              	.L8:
+ 254:.\Generated_Source\PSoC4/Thermistor.c ****             }
+ 255:.\Generated_Source\PSoC4/Thermistor.c ****             else if (Thermistor_LUT[mid] > resT)
+ 189              		.loc 1 255 0
+ 190 006a 0A23     		mov	r3, #10
+ 191 006c FB18     		add	r3, r7, r3
+ 192 006e 1A88     		ldrh	r2, [r3]
+ 193 0070 464B     		ldr	r3, .L15
+ 194 0072 9200     		lsl	r2, r2, #2
+ 195 0074 D258     		ldr	r2, [r2, r3]
+ 196 0076 7B68     		ldr	r3, [r7, #4]
+ 197 0078 9A42     		cmp	r2, r3
+ 198 007a 0DD9     		bls	.L10
+ 256:.\Generated_Source\PSoC4/Thermistor.c ****             {
+ 257:.\Generated_Source\PSoC4/Thermistor.c ****                 first = mid + 1u;
+ 199              		.loc 1 257 0
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 9
+
+
+ 200 007c 0E23     		mov	r3, #14
+ 201 007e FB18     		add	r3, r7, r3
+ 202 0080 0A22     		mov	r2, #10
+ 203 0082 BA18     		add	r2, r7, r2
+ 204 0084 1288     		ldrh	r2, [r2]
+ 205 0086 0132     		add	r2, r2, #1
+ 206 0088 1A80     		strh	r2, [r3]
+ 207 008a 0C23     		mov	r3, #12
+ 208 008c FB18     		add	r3, r7, r3
+ 209 008e 0C22     		mov	r2, #12
+ 210 0090 BA18     		add	r2, r7, r2
+ 211 0092 1288     		ldrh	r2, [r2]
+ 212 0094 1A80     		strh	r2, [r3]
+ 213 0096 0CE0     		b	.L6
+ 214              	.L10:
+ 258:.\Generated_Source\PSoC4/Thermistor.c ****             }
+ 259:.\Generated_Source\PSoC4/Thermistor.c ****             else /* (Thermistor_LUT[mid] < resT) */
+ 260:.\Generated_Source\PSoC4/Thermistor.c ****             {
+ 261:.\Generated_Source\PSoC4/Thermistor.c ****                 last = mid - 1u;
+ 215              		.loc 1 261 0
+ 216 0098 0C23     		mov	r3, #12
+ 217 009a FB18     		add	r3, r7, r3
+ 218 009c 0A22     		mov	r2, #10
+ 219 009e BA18     		add	r2, r7, r2
+ 220 00a0 1288     		ldrh	r2, [r2]
+ 221 00a2 013A     		sub	r2, r2, #1
+ 222 00a4 1A80     		strh	r2, [r3]
+ 223 00a6 0E23     		mov	r3, #14
+ 224 00a8 FB18     		add	r3, r7, r3
+ 225 00aa 0E22     		mov	r2, #14
+ 226 00ac BA18     		add	r2, r7, r2
+ 227 00ae 1288     		ldrh	r2, [r2]
+ 228 00b0 1A80     		strh	r2, [r3]
+ 229              	.L6:
+ 246:.\Generated_Source\PSoC4/Thermistor.c ****         {
+ 230              		.loc 1 246 0
+ 231 00b2 0E23     		mov	r3, #14
+ 232 00b4 FA18     		add	r2, r7, r3
+ 233 00b6 0C23     		mov	r3, #12
+ 234 00b8 FB18     		add	r3, r7, r3
+ 235 00ba 1288     		ldrh	r2, [r2]
+ 236 00bc 1B88     		ldrh	r3, [r3]
+ 237 00be 9A42     		cmp	r2, r3
+ 238 00c0 ACD3     		bcc	.L11
+ 239              	.L9:
+ 262:.\Generated_Source\PSoC4/Thermistor.c ****             }
+ 263:.\Generated_Source\PSoC4/Thermistor.c ****         }
+ 264:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 265:.\Generated_Source\PSoC4/Thermistor.c ****         /* Calculation the closest entry in the LUT */
+ 266:.\Generated_Source\PSoC4/Thermistor.c ****         if ((Thermistor_LUT[last] > resT) && (last < (Thermistor_LUT_SIZE - 1u)) &&
+ 240              		.loc 1 266 0
+ 241 00c2 0C23     		mov	r3, #12
+ 242 00c4 FB18     		add	r3, r7, r3
+ 243 00c6 1A88     		ldrh	r2, [r3]
+ 244 00c8 304B     		ldr	r3, .L15
+ 245 00ca 9200     		lsl	r2, r2, #2
+ 246 00cc D258     		ldr	r2, [r2, r3]
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 10
+
+
+ 247 00ce 7B68     		ldr	r3, [r7, #4]
+ 248 00d0 9A42     		cmp	r2, r3
+ 249 00d2 20D9     		bls	.L12
+ 250              		.loc 1 266 0 is_stmt 0 discriminator 1
+ 251 00d4 0C23     		mov	r3, #12
+ 252 00d6 FB18     		add	r3, r7, r3
+ 253 00d8 1B88     		ldrh	r3, [r3]
+ 254 00da 2D4A     		ldr	r2, .L15+4
+ 255 00dc 9342     		cmp	r3, r2
+ 256 00de 1AD8     		bhi	.L12
+ 267:.\Generated_Source\PSoC4/Thermistor.c ****            ((Thermistor_LUT[last] - resT) > (resT - Thermistor_LUT[last + 1u])))
+ 257              		.loc 1 267 0 is_stmt 1 discriminator 2
+ 258 00e0 0C23     		mov	r3, #12
+ 259 00e2 FB18     		add	r3, r7, r3
+ 260 00e4 1A88     		ldrh	r2, [r3]
+ 261 00e6 294B     		ldr	r3, .L15
+ 262 00e8 9200     		lsl	r2, r2, #2
+ 263 00ea D258     		ldr	r2, [r2, r3]
+ 264 00ec 7B68     		ldr	r3, [r7, #4]
+ 265 00ee D21A     		sub	r2, r2, r3
+ 266 00f0 0C23     		mov	r3, #12
+ 267 00f2 FB18     		add	r3, r7, r3
+ 268 00f4 1B88     		ldrh	r3, [r3]
+ 269 00f6 591C     		add	r1, r3, #1
+ 270 00f8 244B     		ldr	r3, .L15
+ 271 00fa 8900     		lsl	r1, r1, #2
+ 272 00fc CB58     		ldr	r3, [r1, r3]
+ 273 00fe 7968     		ldr	r1, [r7, #4]
+ 274 0100 CB1A     		sub	r3, r1, r3
+ 266:.\Generated_Source\PSoC4/Thermistor.c ****            ((Thermistor_LUT[last] - resT) > (resT - Thermistor_LUT[last + 1u])))
+ 275              		.loc 1 266 0 discriminator 2
+ 276 0102 9A42     		cmp	r2, r3
+ 277 0104 07D9     		bls	.L12
+ 268:.\Generated_Source\PSoC4/Thermistor.c ****         {
+ 269:.\Generated_Source\PSoC4/Thermistor.c ****             last++;
+ 278              		.loc 1 269 0
+ 279 0106 0C23     		mov	r3, #12
+ 280 0108 FB18     		add	r3, r7, r3
+ 281 010a 1A88     		ldrh	r2, [r3]
+ 282 010c 0C23     		mov	r3, #12
+ 283 010e FB18     		add	r3, r7, r3
+ 284 0110 0132     		add	r2, r2, #1
+ 285 0112 1A80     		strh	r2, [r3]
+ 286 0114 27E0     		b	.L13
+ 287              	.L12:
+ 270:.\Generated_Source\PSoC4/Thermistor.c ****         }
+ 271:.\Generated_Source\PSoC4/Thermistor.c ****         else if ((Thermistor_LUT[last] < resT) && (last > 0u) &&
+ 288              		.loc 1 271 0
+ 289 0116 0C23     		mov	r3, #12
+ 290 0118 FB18     		add	r3, r7, r3
+ 291 011a 1A88     		ldrh	r2, [r3]
+ 292 011c 1B4B     		ldr	r3, .L15
+ 293 011e 9200     		lsl	r2, r2, #2
+ 294 0120 D258     		ldr	r2, [r2, r3]
+ 295 0122 7B68     		ldr	r3, [r7, #4]
+ 296 0124 9A42     		cmp	r2, r3
+ 297 0126 1ED2     		bcs	.L13
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 11
+
+
+ 298              		.loc 1 271 0 is_stmt 0 discriminator 1
+ 299 0128 0C23     		mov	r3, #12
+ 300 012a FB18     		add	r3, r7, r3
+ 301 012c 1B88     		ldrh	r3, [r3]
+ 302 012e 002B     		cmp	r3, #0
+ 303 0130 19D0     		beq	.L13
+ 272:.\Generated_Source\PSoC4/Thermistor.c ****                 ((Thermistor_LUT[last - 1u] - resT) < (resT - Thermistor_LUT[last])))
+ 304              		.loc 1 272 0 is_stmt 1 discriminator 2
+ 305 0132 0C23     		mov	r3, #12
+ 306 0134 FB18     		add	r3, r7, r3
+ 307 0136 1B88     		ldrh	r3, [r3]
+ 308 0138 5A1E     		sub	r2, r3, #1
+ 309 013a 144B     		ldr	r3, .L15
+ 310 013c 9200     		lsl	r2, r2, #2
+ 311 013e D258     		ldr	r2, [r2, r3]
+ 312 0140 7B68     		ldr	r3, [r7, #4]
+ 313 0142 D21A     		sub	r2, r2, r3
+ 314 0144 0C23     		mov	r3, #12
+ 315 0146 FB18     		add	r3, r7, r3
+ 316 0148 1988     		ldrh	r1, [r3]
+ 317 014a 104B     		ldr	r3, .L15
+ 318 014c 8900     		lsl	r1, r1, #2
+ 319 014e CB58     		ldr	r3, [r1, r3]
+ 320 0150 7968     		ldr	r1, [r7, #4]
+ 321 0152 CB1A     		sub	r3, r1, r3
+ 271:.\Generated_Source\PSoC4/Thermistor.c ****                 ((Thermistor_LUT[last - 1u] - resT) < (resT - Thermistor_LUT[last])))
+ 322              		.loc 1 271 0 discriminator 2
+ 323 0154 9A42     		cmp	r2, r3
+ 324 0156 06D2     		bcs	.L13
+ 273:.\Generated_Source\PSoC4/Thermistor.c ****         {
+ 274:.\Generated_Source\PSoC4/Thermistor.c ****             last--;
+ 325              		.loc 1 274 0
+ 326 0158 0C23     		mov	r3, #12
+ 327 015a FB18     		add	r3, r7, r3
+ 328 015c 1A88     		ldrh	r2, [r3]
+ 329 015e 0C23     		mov	r3, #12
+ 330 0160 FB18     		add	r3, r7, r3
+ 331 0162 013A     		sub	r2, r2, #1
+ 332 0164 1A80     		strh	r2, [r3]
+ 333              	.L13:
+ 275:.\Generated_Source\PSoC4/Thermistor.c ****         }
+ 276:.\Generated_Source\PSoC4/Thermistor.c ****         else
+ 277:.\Generated_Source\PSoC4/Thermistor.c ****         {
+ 278:.\Generated_Source\PSoC4/Thermistor.c ****             /* Closest entry in the LUT already found */
+ 279:.\Generated_Source\PSoC4/Thermistor.c ****         }
+ 280:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 281:.\Generated_Source\PSoC4/Thermistor.c ****         tempTR = Thermistor_MIN_TEMP + (int16)((uint16)(last * Thermistor_ACCURACY));
+ 334              		.loc 1 281 0
+ 335 0166 0C23     		mov	r3, #12
+ 336 0168 FB18     		add	r3, r7, r3
+ 337 016a 1B88     		ldrh	r3, [r3]
+ 338 016c FA22     		mov	r2, #250
+ 339 016e D200     		lsl	r2, r2, #3
+ 340 0170 9446     		mov	ip, r2
+ 341 0172 6344     		add	r3, r3, ip
+ 342 0174 9AB2     		uxth	r2, r3
+ 343 0176 0823     		mov	r3, #8
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 12
+
+
+ 344 0178 FB18     		add	r3, r7, r3
+ 345 017a 1A80     		strh	r2, [r3]
+ 282:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 283:.\Generated_Source\PSoC4/Thermistor.c ****     #endif /* (Thermistor_IMPLEMENTATION == Thermistor_EQUATION_METHOD) */
+ 284:.\Generated_Source\PSoC4/Thermistor.c **** 
+ 285:.\Generated_Source\PSoC4/Thermistor.c ****     return (tempTR);
+ 346              		.loc 1 285 0
+ 347 017c 0823     		mov	r3, #8
+ 348 017e FB18     		add	r3, r7, r3
+ 349 0180 1B88     		ldrh	r3, [r3]
+ 350 0182 1BB2     		sxth	r3, r3
+ 286:.\Generated_Source\PSoC4/Thermistor.c **** }
+ 351              		.loc 1 286 0
+ 352 0184 181C     		mov	r0, r3
+ 353 0186 BD46     		mov	sp, r7
+ 354 0188 04B0     		add	sp, sp, #16
+ 355              		@ sp needed
+ 356 018a 80BD     		pop	{r7, pc}
+ 357              	.L16:
+ 358              		.align	2
+ 359              	.L15:
+ 360 018c 00000000 		.word	Thermistor_LUT.4689
+ 361 0190 CF070000 		.word	1999
+ 362              		.cfi_endproc
+ 363              	.LFE3:
+ 364              		.size	Thermistor_GetTemperature, .-Thermistor_GetTemperature
+ 365              		.section	.rodata
+ 366              		.align	2
+ 367              		.type	Thermistor_LUT.4689, %object
+ 368              		.size	Thermistor_LUT.4689, 8004
+ 369              	Thermistor_LUT.4689:
+ 370 0000 CC300000 		.word	12492
+ 371 0004 C6300000 		.word	12486
+ 372 0008 C1300000 		.word	12481
+ 373 000c BB300000 		.word	12475
+ 374 0010 B5300000 		.word	12469
+ 375 0014 B0300000 		.word	12464
+ 376 0018 AA300000 		.word	12458
+ 377 001c A5300000 		.word	12453
+ 378 0020 9F300000 		.word	12447
+ 379 0024 99300000 		.word	12441
+ 380 0028 94300000 		.word	12436
+ 381 002c 8E300000 		.word	12430
+ 382 0030 88300000 		.word	12424
+ 383 0034 83300000 		.word	12419
+ 384 0038 7D300000 		.word	12413
+ 385 003c 78300000 		.word	12408
+ 386 0040 72300000 		.word	12402
+ 387 0044 6C300000 		.word	12396
+ 388 0048 67300000 		.word	12391
+ 389 004c 61300000 		.word	12385
+ 390 0050 5C300000 		.word	12380
+ 391 0054 56300000 		.word	12374
+ 392 0058 51300000 		.word	12369
+ 393 005c 4B300000 		.word	12363
+ 394 0060 45300000 		.word	12357
+ 395 0064 40300000 		.word	12352
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 13
+
+
+ 396 0068 3A300000 		.word	12346
+ 397 006c 35300000 		.word	12341
+ 398 0070 2F300000 		.word	12335
+ 399 0074 2A300000 		.word	12330
+ 400 0078 24300000 		.word	12324
+ 401 007c 1E300000 		.word	12318
+ 402 0080 19300000 		.word	12313
+ 403 0084 13300000 		.word	12307
+ 404 0088 0E300000 		.word	12302
+ 405 008c 08300000 		.word	12296
+ 406 0090 03300000 		.word	12291
+ 407 0094 FD2F0000 		.word	12285
+ 408 0098 F82F0000 		.word	12280
+ 409 009c F22F0000 		.word	12274
+ 410 00a0 ED2F0000 		.word	12269
+ 411 00a4 E72F0000 		.word	12263
+ 412 00a8 E12F0000 		.word	12257
+ 413 00ac DC2F0000 		.word	12252
+ 414 00b0 D62F0000 		.word	12246
+ 415 00b4 D12F0000 		.word	12241
+ 416 00b8 CB2F0000 		.word	12235
+ 417 00bc C62F0000 		.word	12230
+ 418 00c0 C02F0000 		.word	12224
+ 419 00c4 BB2F0000 		.word	12219
+ 420 00c8 B52F0000 		.word	12213
+ 421 00cc B02F0000 		.word	12208
+ 422 00d0 AA2F0000 		.word	12202
+ 423 00d4 A52F0000 		.word	12197
+ 424 00d8 9F2F0000 		.word	12191
+ 425 00dc 9A2F0000 		.word	12186
+ 426 00e0 942F0000 		.word	12180
+ 427 00e4 8F2F0000 		.word	12175
+ 428 00e8 892F0000 		.word	12169
+ 429 00ec 842F0000 		.word	12164
+ 430 00f0 7F2F0000 		.word	12159
+ 431 00f4 792F0000 		.word	12153
+ 432 00f8 742F0000 		.word	12148
+ 433 00fc 6E2F0000 		.word	12142
+ 434 0100 692F0000 		.word	12137
+ 435 0104 632F0000 		.word	12131
+ 436 0108 5E2F0000 		.word	12126
+ 437 010c 582F0000 		.word	12120
+ 438 0110 532F0000 		.word	12115
+ 439 0114 4D2F0000 		.word	12109
+ 440 0118 482F0000 		.word	12104
+ 441 011c 422F0000 		.word	12098
+ 442 0120 3D2F0000 		.word	12093
+ 443 0124 382F0000 		.word	12088
+ 444 0128 322F0000 		.word	12082
+ 445 012c 2D2F0000 		.word	12077
+ 446 0130 272F0000 		.word	12071
+ 447 0134 222F0000 		.word	12066
+ 448 0138 1C2F0000 		.word	12060
+ 449 013c 172F0000 		.word	12055
+ 450 0140 122F0000 		.word	12050
+ 451 0144 0C2F0000 		.word	12044
+ 452 0148 072F0000 		.word	12039
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 14
+
+
+ 453 014c 012F0000 		.word	12033
+ 454 0150 FC2E0000 		.word	12028
+ 455 0154 F72E0000 		.word	12023
+ 456 0158 F12E0000 		.word	12017
+ 457 015c EC2E0000 		.word	12012
+ 458 0160 E62E0000 		.word	12006
+ 459 0164 E12E0000 		.word	12001
+ 460 0168 DC2E0000 		.word	11996
+ 461 016c D62E0000 		.word	11990
+ 462 0170 D12E0000 		.word	11985
+ 463 0174 CB2E0000 		.word	11979
+ 464 0178 C62E0000 		.word	11974
+ 465 017c C12E0000 		.word	11969
+ 466 0180 BB2E0000 		.word	11963
+ 467 0184 B62E0000 		.word	11958
+ 468 0188 B12E0000 		.word	11953
+ 469 018c AB2E0000 		.word	11947
+ 470 0190 A62E0000 		.word	11942
+ 471 0194 A02E0000 		.word	11936
+ 472 0198 9B2E0000 		.word	11931
+ 473 019c 962E0000 		.word	11926
+ 474 01a0 902E0000 		.word	11920
+ 475 01a4 8B2E0000 		.word	11915
+ 476 01a8 862E0000 		.word	11910
+ 477 01ac 802E0000 		.word	11904
+ 478 01b0 7B2E0000 		.word	11899
+ 479 01b4 762E0000 		.word	11894
+ 480 01b8 702E0000 		.word	11888
+ 481 01bc 6B2E0000 		.word	11883
+ 482 01c0 662E0000 		.word	11878
+ 483 01c4 602E0000 		.word	11872
+ 484 01c8 5B2E0000 		.word	11867
+ 485 01cc 562E0000 		.word	11862
+ 486 01d0 502E0000 		.word	11856
+ 487 01d4 4B2E0000 		.word	11851
+ 488 01d8 462E0000 		.word	11846
+ 489 01dc 402E0000 		.word	11840
+ 490 01e0 3B2E0000 		.word	11835
+ 491 01e4 362E0000 		.word	11830
+ 492 01e8 302E0000 		.word	11824
+ 493 01ec 2B2E0000 		.word	11819
+ 494 01f0 262E0000 		.word	11814
+ 495 01f4 212E0000 		.word	11809
+ 496 01f8 1B2E0000 		.word	11803
+ 497 01fc 162E0000 		.word	11798
+ 498 0200 112E0000 		.word	11793
+ 499 0204 0B2E0000 		.word	11787
+ 500 0208 062E0000 		.word	11782
+ 501 020c 012E0000 		.word	11777
+ 502 0210 FC2D0000 		.word	11772
+ 503 0214 F62D0000 		.word	11766
+ 504 0218 F12D0000 		.word	11761
+ 505 021c EC2D0000 		.word	11756
+ 506 0220 E62D0000 		.word	11750
+ 507 0224 E12D0000 		.word	11745
+ 508 0228 DC2D0000 		.word	11740
+ 509 022c D72D0000 		.word	11735
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 15
+
+
+ 510 0230 D12D0000 		.word	11729
+ 511 0234 CC2D0000 		.word	11724
+ 512 0238 C72D0000 		.word	11719
+ 513 023c C22D0000 		.word	11714
+ 514 0240 BC2D0000 		.word	11708
+ 515 0244 B72D0000 		.word	11703
+ 516 0248 B22D0000 		.word	11698
+ 517 024c AD2D0000 		.word	11693
+ 518 0250 A72D0000 		.word	11687
+ 519 0254 A22D0000 		.word	11682
+ 520 0258 9D2D0000 		.word	11677
+ 521 025c 982D0000 		.word	11672
+ 522 0260 932D0000 		.word	11667
+ 523 0264 8D2D0000 		.word	11661
+ 524 0268 882D0000 		.word	11656
+ 525 026c 832D0000 		.word	11651
+ 526 0270 7E2D0000 		.word	11646
+ 527 0274 782D0000 		.word	11640
+ 528 0278 732D0000 		.word	11635
+ 529 027c 6E2D0000 		.word	11630
+ 530 0280 692D0000 		.word	11625
+ 531 0284 642D0000 		.word	11620
+ 532 0288 5E2D0000 		.word	11614
+ 533 028c 592D0000 		.word	11609
+ 534 0290 542D0000 		.word	11604
+ 535 0294 4F2D0000 		.word	11599
+ 536 0298 4A2D0000 		.word	11594
+ 537 029c 442D0000 		.word	11588
+ 538 02a0 3F2D0000 		.word	11583
+ 539 02a4 3A2D0000 		.word	11578
+ 540 02a8 352D0000 		.word	11573
+ 541 02ac 302D0000 		.word	11568
+ 542 02b0 2B2D0000 		.word	11563
+ 543 02b4 252D0000 		.word	11557
+ 544 02b8 202D0000 		.word	11552
+ 545 02bc 1B2D0000 		.word	11547
+ 546 02c0 162D0000 		.word	11542
+ 547 02c4 112D0000 		.word	11537
+ 548 02c8 0C2D0000 		.word	11532
+ 549 02cc 062D0000 		.word	11526
+ 550 02d0 012D0000 		.word	11521
+ 551 02d4 FC2C0000 		.word	11516
+ 552 02d8 F72C0000 		.word	11511
+ 553 02dc F22C0000 		.word	11506
+ 554 02e0 ED2C0000 		.word	11501
+ 555 02e4 E82C0000 		.word	11496
+ 556 02e8 E22C0000 		.word	11490
+ 557 02ec DD2C0000 		.word	11485
+ 558 02f0 D82C0000 		.word	11480
+ 559 02f4 D32C0000 		.word	11475
+ 560 02f8 CE2C0000 		.word	11470
+ 561 02fc C92C0000 		.word	11465
+ 562 0300 C42C0000 		.word	11460
+ 563 0304 BF2C0000 		.word	11455
+ 564 0308 B92C0000 		.word	11449
+ 565 030c B42C0000 		.word	11444
+ 566 0310 AF2C0000 		.word	11439
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 16
+
+
+ 567 0314 AA2C0000 		.word	11434
+ 568 0318 A52C0000 		.word	11429
+ 569 031c A02C0000 		.word	11424
+ 570 0320 9B2C0000 		.word	11419
+ 571 0324 962C0000 		.word	11414
+ 572 0328 912C0000 		.word	11409
+ 573 032c 8C2C0000 		.word	11404
+ 574 0330 862C0000 		.word	11398
+ 575 0334 812C0000 		.word	11393
+ 576 0338 7C2C0000 		.word	11388
+ 577 033c 772C0000 		.word	11383
+ 578 0340 722C0000 		.word	11378
+ 579 0344 6D2C0000 		.word	11373
+ 580 0348 682C0000 		.word	11368
+ 581 034c 632C0000 		.word	11363
+ 582 0350 5E2C0000 		.word	11358
+ 583 0354 592C0000 		.word	11353
+ 584 0358 542C0000 		.word	11348
+ 585 035c 4F2C0000 		.word	11343
+ 586 0360 4A2C0000 		.word	11338
+ 587 0364 452C0000 		.word	11333
+ 588 0368 3F2C0000 		.word	11327
+ 589 036c 3A2C0000 		.word	11322
+ 590 0370 352C0000 		.word	11317
+ 591 0374 302C0000 		.word	11312
+ 592 0378 2B2C0000 		.word	11307
+ 593 037c 262C0000 		.word	11302
+ 594 0380 212C0000 		.word	11297
+ 595 0384 1C2C0000 		.word	11292
+ 596 0388 172C0000 		.word	11287
+ 597 038c 122C0000 		.word	11282
+ 598 0390 0D2C0000 		.word	11277
+ 599 0394 082C0000 		.word	11272
+ 600 0398 032C0000 		.word	11267
+ 601 039c FE2B0000 		.word	11262
+ 602 03a0 F92B0000 		.word	11257
+ 603 03a4 F42B0000 		.word	11252
+ 604 03a8 EF2B0000 		.word	11247
+ 605 03ac EA2B0000 		.word	11242
+ 606 03b0 E52B0000 		.word	11237
+ 607 03b4 E02B0000 		.word	11232
+ 608 03b8 DB2B0000 		.word	11227
+ 609 03bc D62B0000 		.word	11222
+ 610 03c0 D12B0000 		.word	11217
+ 611 03c4 CC2B0000 		.word	11212
+ 612 03c8 C72B0000 		.word	11207
+ 613 03cc C22B0000 		.word	11202
+ 614 03d0 BD2B0000 		.word	11197
+ 615 03d4 B82B0000 		.word	11192
+ 616 03d8 B32B0000 		.word	11187
+ 617 03dc AE2B0000 		.word	11182
+ 618 03e0 A92B0000 		.word	11177
+ 619 03e4 A42B0000 		.word	11172
+ 620 03e8 9F2B0000 		.word	11167
+ 621 03ec 9A2B0000 		.word	11162
+ 622 03f0 952B0000 		.word	11157
+ 623 03f4 902B0000 		.word	11152
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 17
+
+
+ 624 03f8 8B2B0000 		.word	11147
+ 625 03fc 862B0000 		.word	11142
+ 626 0400 812B0000 		.word	11137
+ 627 0404 7C2B0000 		.word	11132
+ 628 0408 772B0000 		.word	11127
+ 629 040c 732B0000 		.word	11123
+ 630 0410 6E2B0000 		.word	11118
+ 631 0414 692B0000 		.word	11113
+ 632 0418 642B0000 		.word	11108
+ 633 041c 5F2B0000 		.word	11103
+ 634 0420 5A2B0000 		.word	11098
+ 635 0424 552B0000 		.word	11093
+ 636 0428 502B0000 		.word	11088
+ 637 042c 4B2B0000 		.word	11083
+ 638 0430 462B0000 		.word	11078
+ 639 0434 412B0000 		.word	11073
+ 640 0438 3C2B0000 		.word	11068
+ 641 043c 372B0000 		.word	11063
+ 642 0440 322B0000 		.word	11058
+ 643 0444 2D2B0000 		.word	11053
+ 644 0448 292B0000 		.word	11049
+ 645 044c 242B0000 		.word	11044
+ 646 0450 1F2B0000 		.word	11039
+ 647 0454 1A2B0000 		.word	11034
+ 648 0458 152B0000 		.word	11029
+ 649 045c 102B0000 		.word	11024
+ 650 0460 0B2B0000 		.word	11019
+ 651 0464 062B0000 		.word	11014
+ 652 0468 012B0000 		.word	11009
+ 653 046c FC2A0000 		.word	11004
+ 654 0470 F82A0000 		.word	11000
+ 655 0474 F32A0000 		.word	10995
+ 656 0478 EE2A0000 		.word	10990
+ 657 047c E92A0000 		.word	10985
+ 658 0480 E42A0000 		.word	10980
+ 659 0484 DF2A0000 		.word	10975
+ 660 0488 DA2A0000 		.word	10970
+ 661 048c D52A0000 		.word	10965
+ 662 0490 D12A0000 		.word	10961
+ 663 0494 CC2A0000 		.word	10956
+ 664 0498 C72A0000 		.word	10951
+ 665 049c C22A0000 		.word	10946
+ 666 04a0 BD2A0000 		.word	10941
+ 667 04a4 B82A0000 		.word	10936
+ 668 04a8 B32A0000 		.word	10931
+ 669 04ac AF2A0000 		.word	10927
+ 670 04b0 AA2A0000 		.word	10922
+ 671 04b4 A52A0000 		.word	10917
+ 672 04b8 A02A0000 		.word	10912
+ 673 04bc 9B2A0000 		.word	10907
+ 674 04c0 962A0000 		.word	10902
+ 675 04c4 922A0000 		.word	10898
+ 676 04c8 8D2A0000 		.word	10893
+ 677 04cc 882A0000 		.word	10888
+ 678 04d0 832A0000 		.word	10883
+ 679 04d4 7E2A0000 		.word	10878
+ 680 04d8 792A0000 		.word	10873
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 18
+
+
+ 681 04dc 752A0000 		.word	10869
+ 682 04e0 702A0000 		.word	10864
+ 683 04e4 6B2A0000 		.word	10859
+ 684 04e8 662A0000 		.word	10854
+ 685 04ec 612A0000 		.word	10849
+ 686 04f0 5C2A0000 		.word	10844
+ 687 04f4 582A0000 		.word	10840
+ 688 04f8 532A0000 		.word	10835
+ 689 04fc 4E2A0000 		.word	10830
+ 690 0500 492A0000 		.word	10825
+ 691 0504 442A0000 		.word	10820
+ 692 0508 402A0000 		.word	10816
+ 693 050c 3B2A0000 		.word	10811
+ 694 0510 362A0000 		.word	10806
+ 695 0514 312A0000 		.word	10801
+ 696 0518 2D2A0000 		.word	10797
+ 697 051c 282A0000 		.word	10792
+ 698 0520 232A0000 		.word	10787
+ 699 0524 1E2A0000 		.word	10782
+ 700 0528 192A0000 		.word	10777
+ 701 052c 152A0000 		.word	10773
+ 702 0530 102A0000 		.word	10768
+ 703 0534 0B2A0000 		.word	10763
+ 704 0538 062A0000 		.word	10758
+ 705 053c 022A0000 		.word	10754
+ 706 0540 FD290000 		.word	10749
+ 707 0544 F8290000 		.word	10744
+ 708 0548 F3290000 		.word	10739
+ 709 054c EF290000 		.word	10735
+ 710 0550 EA290000 		.word	10730
+ 711 0554 E5290000 		.word	10725
+ 712 0558 E0290000 		.word	10720
+ 713 055c DC290000 		.word	10716
+ 714 0560 D7290000 		.word	10711
+ 715 0564 D2290000 		.word	10706
+ 716 0568 CD290000 		.word	10701
+ 717 056c C9290000 		.word	10697
+ 718 0570 C4290000 		.word	10692
+ 719 0574 BF290000 		.word	10687
+ 720 0578 BA290000 		.word	10682
+ 721 057c B6290000 		.word	10678
+ 722 0580 B1290000 		.word	10673
+ 723 0584 AC290000 		.word	10668
+ 724 0588 A7290000 		.word	10663
+ 725 058c A3290000 		.word	10659
+ 726 0590 9E290000 		.word	10654
+ 727 0594 99290000 		.word	10649
+ 728 0598 95290000 		.word	10645
+ 729 059c 90290000 		.word	10640
+ 730 05a0 8B290000 		.word	10635
+ 731 05a4 87290000 		.word	10631
+ 732 05a8 82290000 		.word	10626
+ 733 05ac 7D290000 		.word	10621
+ 734 05b0 78290000 		.word	10616
+ 735 05b4 74290000 		.word	10612
+ 736 05b8 6F290000 		.word	10607
+ 737 05bc 6A290000 		.word	10602
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 19
+
+
+ 738 05c0 66290000 		.word	10598
+ 739 05c4 61290000 		.word	10593
+ 740 05c8 5C290000 		.word	10588
+ 741 05cc 58290000 		.word	10584
+ 742 05d0 53290000 		.word	10579
+ 743 05d4 4E290000 		.word	10574
+ 744 05d8 4A290000 		.word	10570
+ 745 05dc 45290000 		.word	10565
+ 746 05e0 40290000 		.word	10560
+ 747 05e4 3C290000 		.word	10556
+ 748 05e8 37290000 		.word	10551
+ 749 05ec 32290000 		.word	10546
+ 750 05f0 2E290000 		.word	10542
+ 751 05f4 29290000 		.word	10537
+ 752 05f8 24290000 		.word	10532
+ 753 05fc 20290000 		.word	10528
+ 754 0600 1B290000 		.word	10523
+ 755 0604 16290000 		.word	10518
+ 756 0608 12290000 		.word	10514
+ 757 060c 0D290000 		.word	10509
+ 758 0610 08290000 		.word	10504
+ 759 0614 04290000 		.word	10500
+ 760 0618 FF280000 		.word	10495
+ 761 061c FB280000 		.word	10491
+ 762 0620 F6280000 		.word	10486
+ 763 0624 F1280000 		.word	10481
+ 764 0628 ED280000 		.word	10477
+ 765 062c E8280000 		.word	10472
+ 766 0630 E3280000 		.word	10467
+ 767 0634 DF280000 		.word	10463
+ 768 0638 DA280000 		.word	10458
+ 769 063c D6280000 		.word	10454
+ 770 0640 D1280000 		.word	10449
+ 771 0644 CC280000 		.word	10444
+ 772 0648 C8280000 		.word	10440
+ 773 064c C3280000 		.word	10435
+ 774 0650 BF280000 		.word	10431
+ 775 0654 BA280000 		.word	10426
+ 776 0658 B5280000 		.word	10421
+ 777 065c B1280000 		.word	10417
+ 778 0660 AC280000 		.word	10412
+ 779 0664 A8280000 		.word	10408
+ 780 0668 A3280000 		.word	10403
+ 781 066c 9E280000 		.word	10398
+ 782 0670 9A280000 		.word	10394
+ 783 0674 95280000 		.word	10389
+ 784 0678 91280000 		.word	10385
+ 785 067c 8C280000 		.word	10380
+ 786 0680 88280000 		.word	10376
+ 787 0684 83280000 		.word	10371
+ 788 0688 7E280000 		.word	10366
+ 789 068c 7A280000 		.word	10362
+ 790 0690 75280000 		.word	10357
+ 791 0694 71280000 		.word	10353
+ 792 0698 6C280000 		.word	10348
+ 793 069c 68280000 		.word	10344
+ 794 06a0 63280000 		.word	10339
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 20
+
+
+ 795 06a4 5E280000 		.word	10334
+ 796 06a8 5A280000 		.word	10330
+ 797 06ac 55280000 		.word	10325
+ 798 06b0 51280000 		.word	10321
+ 799 06b4 4C280000 		.word	10316
+ 800 06b8 48280000 		.word	10312
+ 801 06bc 43280000 		.word	10307
+ 802 06c0 3F280000 		.word	10303
+ 803 06c4 3A280000 		.word	10298
+ 804 06c8 36280000 		.word	10294
+ 805 06cc 31280000 		.word	10289
+ 806 06d0 2D280000 		.word	10285
+ 807 06d4 28280000 		.word	10280
+ 808 06d8 23280000 		.word	10275
+ 809 06dc 1F280000 		.word	10271
+ 810 06e0 1A280000 		.word	10266
+ 811 06e4 16280000 		.word	10262
+ 812 06e8 11280000 		.word	10257
+ 813 06ec 0D280000 		.word	10253
+ 814 06f0 08280000 		.word	10248
+ 815 06f4 04280000 		.word	10244
+ 816 06f8 FF270000 		.word	10239
+ 817 06fc FB270000 		.word	10235
+ 818 0700 F6270000 		.word	10230
+ 819 0704 F2270000 		.word	10226
+ 820 0708 ED270000 		.word	10221
+ 821 070c E9270000 		.word	10217
+ 822 0710 E4270000 		.word	10212
+ 823 0714 E0270000 		.word	10208
+ 824 0718 DB270000 		.word	10203
+ 825 071c D7270000 		.word	10199
+ 826 0720 D2270000 		.word	10194
+ 827 0724 CE270000 		.word	10190
+ 828 0728 C9270000 		.word	10185
+ 829 072c C5270000 		.word	10181
+ 830 0730 C0270000 		.word	10176
+ 831 0734 BC270000 		.word	10172
+ 832 0738 B8270000 		.word	10168
+ 833 073c B3270000 		.word	10163
+ 834 0740 AF270000 		.word	10159
+ 835 0744 AA270000 		.word	10154
+ 836 0748 A6270000 		.word	10150
+ 837 074c A1270000 		.word	10145
+ 838 0750 9D270000 		.word	10141
+ 839 0754 98270000 		.word	10136
+ 840 0758 94270000 		.word	10132
+ 841 075c 8F270000 		.word	10127
+ 842 0760 8B270000 		.word	10123
+ 843 0764 87270000 		.word	10119
+ 844 0768 82270000 		.word	10114
+ 845 076c 7E270000 		.word	10110
+ 846 0770 79270000 		.word	10105
+ 847 0774 75270000 		.word	10101
+ 848 0778 70270000 		.word	10096
+ 849 077c 6C270000 		.word	10092
+ 850 0780 67270000 		.word	10087
+ 851 0784 63270000 		.word	10083
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 21
+
+
+ 852 0788 5F270000 		.word	10079
+ 853 078c 5A270000 		.word	10074
+ 854 0790 56270000 		.word	10070
+ 855 0794 51270000 		.word	10065
+ 856 0798 4D270000 		.word	10061
+ 857 079c 49270000 		.word	10057
+ 858 07a0 44270000 		.word	10052
+ 859 07a4 40270000 		.word	10048
+ 860 07a8 3B270000 		.word	10043
+ 861 07ac 37270000 		.word	10039
+ 862 07b0 32270000 		.word	10034
+ 863 07b4 2E270000 		.word	10030
+ 864 07b8 2A270000 		.word	10026
+ 865 07bc 25270000 		.word	10021
+ 866 07c0 21270000 		.word	10017
+ 867 07c4 1C270000 		.word	10012
+ 868 07c8 18270000 		.word	10008
+ 869 07cc 14270000 		.word	10004
+ 870 07d0 0F270000 		.word	9999
+ 871 07d4 0B270000 		.word	9995
+ 872 07d8 07270000 		.word	9991
+ 873 07dc 02270000 		.word	9986
+ 874 07e0 FE260000 		.word	9982
+ 875 07e4 F9260000 		.word	9977
+ 876 07e8 F5260000 		.word	9973
+ 877 07ec F1260000 		.word	9969
+ 878 07f0 EC260000 		.word	9964
+ 879 07f4 E8260000 		.word	9960
+ 880 07f8 E4260000 		.word	9956
+ 881 07fc DF260000 		.word	9951
+ 882 0800 DB260000 		.word	9947
+ 883 0804 D6260000 		.word	9942
+ 884 0808 D2260000 		.word	9938
+ 885 080c CE260000 		.word	9934
+ 886 0810 C9260000 		.word	9929
+ 887 0814 C5260000 		.word	9925
+ 888 0818 C1260000 		.word	9921
+ 889 081c BC260000 		.word	9916
+ 890 0820 B8260000 		.word	9912
+ 891 0824 B4260000 		.word	9908
+ 892 0828 AF260000 		.word	9903
+ 893 082c AB260000 		.word	9899
+ 894 0830 A7260000 		.word	9895
+ 895 0834 A2260000 		.word	9890
+ 896 0838 9E260000 		.word	9886
+ 897 083c 9A260000 		.word	9882
+ 898 0840 95260000 		.word	9877
+ 899 0844 91260000 		.word	9873
+ 900 0848 8D260000 		.word	9869
+ 901 084c 88260000 		.word	9864
+ 902 0850 84260000 		.word	9860
+ 903 0854 80260000 		.word	9856
+ 904 0858 7B260000 		.word	9851
+ 905 085c 77260000 		.word	9847
+ 906 0860 73260000 		.word	9843
+ 907 0864 6F260000 		.word	9839
+ 908 0868 6A260000 		.word	9834
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 22
+
+
+ 909 086c 66260000 		.word	9830
+ 910 0870 62260000 		.word	9826
+ 911 0874 5D260000 		.word	9821
+ 912 0878 59260000 		.word	9817
+ 913 087c 55260000 		.word	9813
+ 914 0880 50260000 		.word	9808
+ 915 0884 4C260000 		.word	9804
+ 916 0888 48260000 		.word	9800
+ 917 088c 44260000 		.word	9796
+ 918 0890 3F260000 		.word	9791
+ 919 0894 3B260000 		.word	9787
+ 920 0898 37260000 		.word	9783
+ 921 089c 32260000 		.word	9778
+ 922 08a0 2E260000 		.word	9774
+ 923 08a4 2A260000 		.word	9770
+ 924 08a8 26260000 		.word	9766
+ 925 08ac 21260000 		.word	9761
+ 926 08b0 1D260000 		.word	9757
+ 927 08b4 19260000 		.word	9753
+ 928 08b8 15260000 		.word	9749
+ 929 08bc 10260000 		.word	9744
+ 930 08c0 0C260000 		.word	9740
+ 931 08c4 08260000 		.word	9736
+ 932 08c8 04260000 		.word	9732
+ 933 08cc FF250000 		.word	9727
+ 934 08d0 FB250000 		.word	9723
+ 935 08d4 F7250000 		.word	9719
+ 936 08d8 F3250000 		.word	9715
+ 937 08dc EE250000 		.word	9710
+ 938 08e0 EA250000 		.word	9706
+ 939 08e4 E6250000 		.word	9702
+ 940 08e8 E2250000 		.word	9698
+ 941 08ec DD250000 		.word	9693
+ 942 08f0 D9250000 		.word	9689
+ 943 08f4 D5250000 		.word	9685
+ 944 08f8 D1250000 		.word	9681
+ 945 08fc CC250000 		.word	9676
+ 946 0900 C8250000 		.word	9672
+ 947 0904 C4250000 		.word	9668
+ 948 0908 C0250000 		.word	9664
+ 949 090c BC250000 		.word	9660
+ 950 0910 B7250000 		.word	9655
+ 951 0914 B3250000 		.word	9651
+ 952 0918 AF250000 		.word	9647
+ 953 091c AB250000 		.word	9643
+ 954 0920 A7250000 		.word	9639
+ 955 0924 A2250000 		.word	9634
+ 956 0928 9E250000 		.word	9630
+ 957 092c 9A250000 		.word	9626
+ 958 0930 96250000 		.word	9622
+ 959 0934 91250000 		.word	9617
+ 960 0938 8D250000 		.word	9613
+ 961 093c 89250000 		.word	9609
+ 962 0940 85250000 		.word	9605
+ 963 0944 81250000 		.word	9601
+ 964 0948 7D250000 		.word	9597
+ 965 094c 78250000 		.word	9592
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 23
+
+
+ 966 0950 74250000 		.word	9588
+ 967 0954 70250000 		.word	9584
+ 968 0958 6C250000 		.word	9580
+ 969 095c 68250000 		.word	9576
+ 970 0960 63250000 		.word	9571
+ 971 0964 5F250000 		.word	9567
+ 972 0968 5B250000 		.word	9563
+ 973 096c 57250000 		.word	9559
+ 974 0970 53250000 		.word	9555
+ 975 0974 4F250000 		.word	9551
+ 976 0978 4A250000 		.word	9546
+ 977 097c 46250000 		.word	9542
+ 978 0980 42250000 		.word	9538
+ 979 0984 3E250000 		.word	9534
+ 980 0988 3A250000 		.word	9530
+ 981 098c 36250000 		.word	9526
+ 982 0990 32250000 		.word	9522
+ 983 0994 2D250000 		.word	9517
+ 984 0998 29250000 		.word	9513
+ 985 099c 25250000 		.word	9509
+ 986 09a0 21250000 		.word	9505
+ 987 09a4 1D250000 		.word	9501
+ 988 09a8 19250000 		.word	9497
+ 989 09ac 15250000 		.word	9493
+ 990 09b0 10250000 		.word	9488
+ 991 09b4 0C250000 		.word	9484
+ 992 09b8 08250000 		.word	9480
+ 993 09bc 04250000 		.word	9476
+ 994 09c0 00250000 		.word	9472
+ 995 09c4 FC240000 		.word	9468
+ 996 09c8 F8240000 		.word	9464
+ 997 09cc F4240000 		.word	9460
+ 998 09d0 EF240000 		.word	9455
+ 999 09d4 EB240000 		.word	9451
+ 1000 09d8 E7240000 		.word	9447
+ 1001 09dc E3240000 		.word	9443
+ 1002 09e0 DF240000 		.word	9439
+ 1003 09e4 DB240000 		.word	9435
+ 1004 09e8 D7240000 		.word	9431
+ 1005 09ec D3240000 		.word	9427
+ 1006 09f0 CF240000 		.word	9423
+ 1007 09f4 CA240000 		.word	9418
+ 1008 09f8 C6240000 		.word	9414
+ 1009 09fc C2240000 		.word	9410
+ 1010 0a00 BE240000 		.word	9406
+ 1011 0a04 BA240000 		.word	9402
+ 1012 0a08 B6240000 		.word	9398
+ 1013 0a0c B2240000 		.word	9394
+ 1014 0a10 AE240000 		.word	9390
+ 1015 0a14 AA240000 		.word	9386
+ 1016 0a18 A6240000 		.word	9382
+ 1017 0a1c A2240000 		.word	9378
+ 1018 0a20 9E240000 		.word	9374
+ 1019 0a24 99240000 		.word	9369
+ 1020 0a28 95240000 		.word	9365
+ 1021 0a2c 91240000 		.word	9361
+ 1022 0a30 8D240000 		.word	9357
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 24
+
+
+ 1023 0a34 89240000 		.word	9353
+ 1024 0a38 85240000 		.word	9349
+ 1025 0a3c 81240000 		.word	9345
+ 1026 0a40 7D240000 		.word	9341
+ 1027 0a44 79240000 		.word	9337
+ 1028 0a48 75240000 		.word	9333
+ 1029 0a4c 71240000 		.word	9329
+ 1030 0a50 6D240000 		.word	9325
+ 1031 0a54 69240000 		.word	9321
+ 1032 0a58 65240000 		.word	9317
+ 1033 0a5c 61240000 		.word	9313
+ 1034 0a60 5D240000 		.word	9309
+ 1035 0a64 59240000 		.word	9305
+ 1036 0a68 54240000 		.word	9300
+ 1037 0a6c 50240000 		.word	9296
+ 1038 0a70 4C240000 		.word	9292
+ 1039 0a74 48240000 		.word	9288
+ 1040 0a78 44240000 		.word	9284
+ 1041 0a7c 40240000 		.word	9280
+ 1042 0a80 3C240000 		.word	9276
+ 1043 0a84 38240000 		.word	9272
+ 1044 0a88 34240000 		.word	9268
+ 1045 0a8c 30240000 		.word	9264
+ 1046 0a90 2C240000 		.word	9260
+ 1047 0a94 28240000 		.word	9256
+ 1048 0a98 24240000 		.word	9252
+ 1049 0a9c 20240000 		.word	9248
+ 1050 0aa0 1C240000 		.word	9244
+ 1051 0aa4 18240000 		.word	9240
+ 1052 0aa8 14240000 		.word	9236
+ 1053 0aac 10240000 		.word	9232
+ 1054 0ab0 0C240000 		.word	9228
+ 1055 0ab4 08240000 		.word	9224
+ 1056 0ab8 04240000 		.word	9220
+ 1057 0abc 00240000 		.word	9216
+ 1058 0ac0 FC230000 		.word	9212
+ 1059 0ac4 F8230000 		.word	9208
+ 1060 0ac8 F4230000 		.word	9204
+ 1061 0acc F0230000 		.word	9200
+ 1062 0ad0 EC230000 		.word	9196
+ 1063 0ad4 E8230000 		.word	9192
+ 1064 0ad8 E4230000 		.word	9188
+ 1065 0adc E0230000 		.word	9184
+ 1066 0ae0 DC230000 		.word	9180
+ 1067 0ae4 D8230000 		.word	9176
+ 1068 0ae8 D4230000 		.word	9172
+ 1069 0aec D0230000 		.word	9168
+ 1070 0af0 CC230000 		.word	9164
+ 1071 0af4 C8230000 		.word	9160
+ 1072 0af8 C4230000 		.word	9156
+ 1073 0afc C0230000 		.word	9152
+ 1074 0b00 BC230000 		.word	9148
+ 1075 0b04 B8230000 		.word	9144
+ 1076 0b08 B4230000 		.word	9140
+ 1077 0b0c B1230000 		.word	9137
+ 1078 0b10 AD230000 		.word	9133
+ 1079 0b14 A9230000 		.word	9129
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 25
+
+
+ 1080 0b18 A5230000 		.word	9125
+ 1081 0b1c A1230000 		.word	9121
+ 1082 0b20 9D230000 		.word	9117
+ 1083 0b24 99230000 		.word	9113
+ 1084 0b28 95230000 		.word	9109
+ 1085 0b2c 91230000 		.word	9105
+ 1086 0b30 8D230000 		.word	9101
+ 1087 0b34 89230000 		.word	9097
+ 1088 0b38 85230000 		.word	9093
+ 1089 0b3c 81230000 		.word	9089
+ 1090 0b40 7D230000 		.word	9085
+ 1091 0b44 79230000 		.word	9081
+ 1092 0b48 75230000 		.word	9077
+ 1093 0b4c 71230000 		.word	9073
+ 1094 0b50 6E230000 		.word	9070
+ 1095 0b54 6A230000 		.word	9066
+ 1096 0b58 66230000 		.word	9062
+ 1097 0b5c 62230000 		.word	9058
+ 1098 0b60 5E230000 		.word	9054
+ 1099 0b64 5A230000 		.word	9050
+ 1100 0b68 56230000 		.word	9046
+ 1101 0b6c 52230000 		.word	9042
+ 1102 0b70 4E230000 		.word	9038
+ 1103 0b74 4A230000 		.word	9034
+ 1104 0b78 46230000 		.word	9030
+ 1105 0b7c 42230000 		.word	9026
+ 1106 0b80 3F230000 		.word	9023
+ 1107 0b84 3B230000 		.word	9019
+ 1108 0b88 37230000 		.word	9015
+ 1109 0b8c 33230000 		.word	9011
+ 1110 0b90 2F230000 		.word	9007
+ 1111 0b94 2B230000 		.word	9003
+ 1112 0b98 27230000 		.word	8999
+ 1113 0b9c 23230000 		.word	8995
+ 1114 0ba0 1F230000 		.word	8991
+ 1115 0ba4 1C230000 		.word	8988
+ 1116 0ba8 18230000 		.word	8984
+ 1117 0bac 14230000 		.word	8980
+ 1118 0bb0 10230000 		.word	8976
+ 1119 0bb4 0C230000 		.word	8972
+ 1120 0bb8 08230000 		.word	8968
+ 1121 0bbc 04230000 		.word	8964
+ 1122 0bc0 00230000 		.word	8960
+ 1123 0bc4 FC220000 		.word	8956
+ 1124 0bc8 F9220000 		.word	8953
+ 1125 0bcc F5220000 		.word	8949
+ 1126 0bd0 F1220000 		.word	8945
+ 1127 0bd4 ED220000 		.word	8941
+ 1128 0bd8 E9220000 		.word	8937
+ 1129 0bdc E5220000 		.word	8933
+ 1130 0be0 E1220000 		.word	8929
+ 1131 0be4 DE220000 		.word	8926
+ 1132 0be8 DA220000 		.word	8922
+ 1133 0bec D6220000 		.word	8918
+ 1134 0bf0 D2220000 		.word	8914
+ 1135 0bf4 CE220000 		.word	8910
+ 1136 0bf8 CA220000 		.word	8906
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 26
+
+
+ 1137 0bfc C6220000 		.word	8902
+ 1138 0c00 C3220000 		.word	8899
+ 1139 0c04 BF220000 		.word	8895
+ 1140 0c08 BB220000 		.word	8891
+ 1141 0c0c B7220000 		.word	8887
+ 1142 0c10 B3220000 		.word	8883
+ 1143 0c14 AF220000 		.word	8879
+ 1144 0c18 AC220000 		.word	8876
+ 1145 0c1c A8220000 		.word	8872
+ 1146 0c20 A4220000 		.word	8868
+ 1147 0c24 A0220000 		.word	8864
+ 1148 0c28 9C220000 		.word	8860
+ 1149 0c2c 98220000 		.word	8856
+ 1150 0c30 95220000 		.word	8853
+ 1151 0c34 91220000 		.word	8849
+ 1152 0c38 8D220000 		.word	8845
+ 1153 0c3c 89220000 		.word	8841
+ 1154 0c40 85220000 		.word	8837
+ 1155 0c44 82220000 		.word	8834
+ 1156 0c48 7E220000 		.word	8830
+ 1157 0c4c 7A220000 		.word	8826
+ 1158 0c50 76220000 		.word	8822
+ 1159 0c54 72220000 		.word	8818
+ 1160 0c58 6F220000 		.word	8815
+ 1161 0c5c 6B220000 		.word	8811
+ 1162 0c60 67220000 		.word	8807
+ 1163 0c64 63220000 		.word	8803
+ 1164 0c68 5F220000 		.word	8799
+ 1165 0c6c 5C220000 		.word	8796
+ 1166 0c70 58220000 		.word	8792
+ 1167 0c74 54220000 		.word	8788
+ 1168 0c78 50220000 		.word	8784
+ 1169 0c7c 4C220000 		.word	8780
+ 1170 0c80 49220000 		.word	8777
+ 1171 0c84 45220000 		.word	8773
+ 1172 0c88 41220000 		.word	8769
+ 1173 0c8c 3D220000 		.word	8765
+ 1174 0c90 3A220000 		.word	8762
+ 1175 0c94 36220000 		.word	8758
+ 1176 0c98 32220000 		.word	8754
+ 1177 0c9c 2E220000 		.word	8750
+ 1178 0ca0 2A220000 		.word	8746
+ 1179 0ca4 27220000 		.word	8743
+ 1180 0ca8 23220000 		.word	8739
+ 1181 0cac 1F220000 		.word	8735
+ 1182 0cb0 1B220000 		.word	8731
+ 1183 0cb4 18220000 		.word	8728
+ 1184 0cb8 14220000 		.word	8724
+ 1185 0cbc 10220000 		.word	8720
+ 1186 0cc0 0C220000 		.word	8716
+ 1187 0cc4 09220000 		.word	8713
+ 1188 0cc8 05220000 		.word	8709
+ 1189 0ccc 01220000 		.word	8705
+ 1190 0cd0 FD210000 		.word	8701
+ 1191 0cd4 FA210000 		.word	8698
+ 1192 0cd8 F6210000 		.word	8694
+ 1193 0cdc F2210000 		.word	8690
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 27
+
+
+ 1194 0ce0 EE210000 		.word	8686
+ 1195 0ce4 EB210000 		.word	8683
+ 1196 0ce8 E7210000 		.word	8679
+ 1197 0cec E3210000 		.word	8675
+ 1198 0cf0 DF210000 		.word	8671
+ 1199 0cf4 DC210000 		.word	8668
+ 1200 0cf8 D8210000 		.word	8664
+ 1201 0cfc D4210000 		.word	8660
+ 1202 0d00 D1210000 		.word	8657
+ 1203 0d04 CD210000 		.word	8653
+ 1204 0d08 C9210000 		.word	8649
+ 1205 0d0c C5210000 		.word	8645
+ 1206 0d10 C2210000 		.word	8642
+ 1207 0d14 BE210000 		.word	8638
+ 1208 0d18 BA210000 		.word	8634
+ 1209 0d1c B7210000 		.word	8631
+ 1210 0d20 B3210000 		.word	8627
+ 1211 0d24 AF210000 		.word	8623
+ 1212 0d28 AB210000 		.word	8619
+ 1213 0d2c A8210000 		.word	8616
+ 1214 0d30 A4210000 		.word	8612
+ 1215 0d34 A0210000 		.word	8608
+ 1216 0d38 9D210000 		.word	8605
+ 1217 0d3c 99210000 		.word	8601
+ 1218 0d40 95210000 		.word	8597
+ 1219 0d44 92210000 		.word	8594
+ 1220 0d48 8E210000 		.word	8590
+ 1221 0d4c 8A210000 		.word	8586
+ 1222 0d50 86210000 		.word	8582
+ 1223 0d54 83210000 		.word	8579
+ 1224 0d58 7F210000 		.word	8575
+ 1225 0d5c 7B210000 		.word	8571
+ 1226 0d60 78210000 		.word	8568
+ 1227 0d64 74210000 		.word	8564
+ 1228 0d68 70210000 		.word	8560
+ 1229 0d6c 6D210000 		.word	8557
+ 1230 0d70 69210000 		.word	8553
+ 1231 0d74 65210000 		.word	8549
+ 1232 0d78 62210000 		.word	8546
+ 1233 0d7c 5E210000 		.word	8542
+ 1234 0d80 5A210000 		.word	8538
+ 1235 0d84 57210000 		.word	8535
+ 1236 0d88 53210000 		.word	8531
+ 1237 0d8c 4F210000 		.word	8527
+ 1238 0d90 4C210000 		.word	8524
+ 1239 0d94 48210000 		.word	8520
+ 1240 0d98 44210000 		.word	8516
+ 1241 0d9c 41210000 		.word	8513
+ 1242 0da0 3D210000 		.word	8509
+ 1243 0da4 39210000 		.word	8505
+ 1244 0da8 36210000 		.word	8502
+ 1245 0dac 32210000 		.word	8498
+ 1246 0db0 2F210000 		.word	8495
+ 1247 0db4 2B210000 		.word	8491
+ 1248 0db8 27210000 		.word	8487
+ 1249 0dbc 24210000 		.word	8484
+ 1250 0dc0 20210000 		.word	8480
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 28
+
+
+ 1251 0dc4 1C210000 		.word	8476
+ 1252 0dc8 19210000 		.word	8473
+ 1253 0dcc 15210000 		.word	8469
+ 1254 0dd0 11210000 		.word	8465
+ 1255 0dd4 0E210000 		.word	8462
+ 1256 0dd8 0A210000 		.word	8458
+ 1257 0ddc 07210000 		.word	8455
+ 1258 0de0 03210000 		.word	8451
+ 1259 0de4 FF200000 		.word	8447
+ 1260 0de8 FC200000 		.word	8444
+ 1261 0dec F8200000 		.word	8440
+ 1262 0df0 F4200000 		.word	8436
+ 1263 0df4 F1200000 		.word	8433
+ 1264 0df8 ED200000 		.word	8429
+ 1265 0dfc EA200000 		.word	8426
+ 1266 0e00 E6200000 		.word	8422
+ 1267 0e04 E2200000 		.word	8418
+ 1268 0e08 DF200000 		.word	8415
+ 1269 0e0c DB200000 		.word	8411
+ 1270 0e10 D8200000 		.word	8408
+ 1271 0e14 D4200000 		.word	8404
+ 1272 0e18 D0200000 		.word	8400
+ 1273 0e1c CD200000 		.word	8397
+ 1274 0e20 C9200000 		.word	8393
+ 1275 0e24 C6200000 		.word	8390
+ 1276 0e28 C2200000 		.word	8386
+ 1277 0e2c BE200000 		.word	8382
+ 1278 0e30 BB200000 		.word	8379
+ 1279 0e34 B7200000 		.word	8375
+ 1280 0e38 B4200000 		.word	8372
+ 1281 0e3c B0200000 		.word	8368
+ 1282 0e40 AC200000 		.word	8364
+ 1283 0e44 A9200000 		.word	8361
+ 1284 0e48 A5200000 		.word	8357
+ 1285 0e4c A2200000 		.word	8354
+ 1286 0e50 9E200000 		.word	8350
+ 1287 0e54 9B200000 		.word	8347
+ 1288 0e58 97200000 		.word	8343
+ 1289 0e5c 93200000 		.word	8339
+ 1290 0e60 90200000 		.word	8336
+ 1291 0e64 8C200000 		.word	8332
+ 1292 0e68 89200000 		.word	8329
+ 1293 0e6c 85200000 		.word	8325
+ 1294 0e70 82200000 		.word	8322
+ 1295 0e74 7E200000 		.word	8318
+ 1296 0e78 7B200000 		.word	8315
+ 1297 0e7c 77200000 		.word	8311
+ 1298 0e80 73200000 		.word	8307
+ 1299 0e84 70200000 		.word	8304
+ 1300 0e88 6C200000 		.word	8300
+ 1301 0e8c 69200000 		.word	8297
+ 1302 0e90 65200000 		.word	8293
+ 1303 0e94 62200000 		.word	8290
+ 1304 0e98 5E200000 		.word	8286
+ 1305 0e9c 5B200000 		.word	8283
+ 1306 0ea0 57200000 		.word	8279
+ 1307 0ea4 53200000 		.word	8275
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 29
+
+
+ 1308 0ea8 50200000 		.word	8272
+ 1309 0eac 4C200000 		.word	8268
+ 1310 0eb0 49200000 		.word	8265
+ 1311 0eb4 45200000 		.word	8261
+ 1312 0eb8 42200000 		.word	8258
+ 1313 0ebc 3E200000 		.word	8254
+ 1314 0ec0 3B200000 		.word	8251
+ 1315 0ec4 37200000 		.word	8247
+ 1316 0ec8 34200000 		.word	8244
+ 1317 0ecc 30200000 		.word	8240
+ 1318 0ed0 2D200000 		.word	8237
+ 1319 0ed4 29200000 		.word	8233
+ 1320 0ed8 26200000 		.word	8230
+ 1321 0edc 22200000 		.word	8226
+ 1322 0ee0 1F200000 		.word	8223
+ 1323 0ee4 1B200000 		.word	8219
+ 1324 0ee8 18200000 		.word	8216
+ 1325 0eec 14200000 		.word	8212
+ 1326 0ef0 11200000 		.word	8209
+ 1327 0ef4 0D200000 		.word	8205
+ 1328 0ef8 0A200000 		.word	8202
+ 1329 0efc 06200000 		.word	8198
+ 1330 0f00 03200000 		.word	8195
+ 1331 0f04 FF1F0000 		.word	8191
+ 1332 0f08 FC1F0000 		.word	8188
+ 1333 0f0c F81F0000 		.word	8184
+ 1334 0f10 F51F0000 		.word	8181
+ 1335 0f14 F11F0000 		.word	8177
+ 1336 0f18 EE1F0000 		.word	8174
+ 1337 0f1c EA1F0000 		.word	8170
+ 1338 0f20 E71F0000 		.word	8167
+ 1339 0f24 E31F0000 		.word	8163
+ 1340 0f28 E01F0000 		.word	8160
+ 1341 0f2c DC1F0000 		.word	8156
+ 1342 0f30 D91F0000 		.word	8153
+ 1343 0f34 D51F0000 		.word	8149
+ 1344 0f38 D21F0000 		.word	8146
+ 1345 0f3c CE1F0000 		.word	8142
+ 1346 0f40 CB1F0000 		.word	8139
+ 1347 0f44 C71F0000 		.word	8135
+ 1348 0f48 C41F0000 		.word	8132
+ 1349 0f4c C01F0000 		.word	8128
+ 1350 0f50 BD1F0000 		.word	8125
+ 1351 0f54 B91F0000 		.word	8121
+ 1352 0f58 B61F0000 		.word	8118
+ 1353 0f5c B31F0000 		.word	8115
+ 1354 0f60 AF1F0000 		.word	8111
+ 1355 0f64 AC1F0000 		.word	8108
+ 1356 0f68 A81F0000 		.word	8104
+ 1357 0f6c A51F0000 		.word	8101
+ 1358 0f70 A11F0000 		.word	8097
+ 1359 0f74 9E1F0000 		.word	8094
+ 1360 0f78 9A1F0000 		.word	8090
+ 1361 0f7c 971F0000 		.word	8087
+ 1362 0f80 941F0000 		.word	8084
+ 1363 0f84 901F0000 		.word	8080
+ 1364 0f88 8D1F0000 		.word	8077
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 30
+
+
+ 1365 0f8c 891F0000 		.word	8073
+ 1366 0f90 861F0000 		.word	8070
+ 1367 0f94 821F0000 		.word	8066
+ 1368 0f98 7F1F0000 		.word	8063
+ 1369 0f9c 7B1F0000 		.word	8059
+ 1370 0fa0 781F0000 		.word	8056
+ 1371 0fa4 751F0000 		.word	8053
+ 1372 0fa8 711F0000 		.word	8049
+ 1373 0fac 6E1F0000 		.word	8046
+ 1374 0fb0 6A1F0000 		.word	8042
+ 1375 0fb4 671F0000 		.word	8039
+ 1376 0fb8 631F0000 		.word	8035
+ 1377 0fbc 601F0000 		.word	8032
+ 1378 0fc0 5D1F0000 		.word	8029
+ 1379 0fc4 591F0000 		.word	8025
+ 1380 0fc8 561F0000 		.word	8022
+ 1381 0fcc 521F0000 		.word	8018
+ 1382 0fd0 4F1F0000 		.word	8015
+ 1383 0fd4 4C1F0000 		.word	8012
+ 1384 0fd8 481F0000 		.word	8008
+ 1385 0fdc 451F0000 		.word	8005
+ 1386 0fe0 411F0000 		.word	8001
+ 1387 0fe4 3E1F0000 		.word	7998
+ 1388 0fe8 3B1F0000 		.word	7995
+ 1389 0fec 371F0000 		.word	7991
+ 1390 0ff0 341F0000 		.word	7988
+ 1391 0ff4 301F0000 		.word	7984
+ 1392 0ff8 2D1F0000 		.word	7981
+ 1393 0ffc 2A1F0000 		.word	7978
+ 1394 1000 261F0000 		.word	7974
+ 1395 1004 231F0000 		.word	7971
+ 1396 1008 1F1F0000 		.word	7967
+ 1397 100c 1C1F0000 		.word	7964
+ 1398 1010 191F0000 		.word	7961
+ 1399 1014 151F0000 		.word	7957
+ 1400 1018 121F0000 		.word	7954
+ 1401 101c 0E1F0000 		.word	7950
+ 1402 1020 0B1F0000 		.word	7947
+ 1403 1024 081F0000 		.word	7944
+ 1404 1028 041F0000 		.word	7940
+ 1405 102c 011F0000 		.word	7937
+ 1406 1030 FE1E0000 		.word	7934
+ 1407 1034 FA1E0000 		.word	7930
+ 1408 1038 F71E0000 		.word	7927
+ 1409 103c F31E0000 		.word	7923
+ 1410 1040 F01E0000 		.word	7920
+ 1411 1044 ED1E0000 		.word	7917
+ 1412 1048 E91E0000 		.word	7913
+ 1413 104c E61E0000 		.word	7910
+ 1414 1050 E31E0000 		.word	7907
+ 1415 1054 DF1E0000 		.word	7903
+ 1416 1058 DC1E0000 		.word	7900
+ 1417 105c D91E0000 		.word	7897
+ 1418 1060 D51E0000 		.word	7893
+ 1419 1064 D21E0000 		.word	7890
+ 1420 1068 CF1E0000 		.word	7887
+ 1421 106c CB1E0000 		.word	7883
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 31
+
+
+ 1422 1070 C81E0000 		.word	7880
+ 1423 1074 C41E0000 		.word	7876
+ 1424 1078 C11E0000 		.word	7873
+ 1425 107c BE1E0000 		.word	7870
+ 1426 1080 BA1E0000 		.word	7866
+ 1427 1084 B71E0000 		.word	7863
+ 1428 1088 B41E0000 		.word	7860
+ 1429 108c B01E0000 		.word	7856
+ 1430 1090 AD1E0000 		.word	7853
+ 1431 1094 AA1E0000 		.word	7850
+ 1432 1098 A61E0000 		.word	7846
+ 1433 109c A31E0000 		.word	7843
+ 1434 10a0 A01E0000 		.word	7840
+ 1435 10a4 9C1E0000 		.word	7836
+ 1436 10a8 991E0000 		.word	7833
+ 1437 10ac 961E0000 		.word	7830
+ 1438 10b0 921E0000 		.word	7826
+ 1439 10b4 8F1E0000 		.word	7823
+ 1440 10b8 8C1E0000 		.word	7820
+ 1441 10bc 891E0000 		.word	7817
+ 1442 10c0 851E0000 		.word	7813
+ 1443 10c4 821E0000 		.word	7810
+ 1444 10c8 7F1E0000 		.word	7807
+ 1445 10cc 7B1E0000 		.word	7803
+ 1446 10d0 781E0000 		.word	7800
+ 1447 10d4 751E0000 		.word	7797
+ 1448 10d8 711E0000 		.word	7793
+ 1449 10dc 6E1E0000 		.word	7790
+ 1450 10e0 6B1E0000 		.word	7787
+ 1451 10e4 671E0000 		.word	7783
+ 1452 10e8 641E0000 		.word	7780
+ 1453 10ec 611E0000 		.word	7777
+ 1454 10f0 5E1E0000 		.word	7774
+ 1455 10f4 5A1E0000 		.word	7770
+ 1456 10f8 571E0000 		.word	7767
+ 1457 10fc 541E0000 		.word	7764
+ 1458 1100 501E0000 		.word	7760
+ 1459 1104 4D1E0000 		.word	7757
+ 1460 1108 4A1E0000 		.word	7754
+ 1461 110c 471E0000 		.word	7751
+ 1462 1110 431E0000 		.word	7747
+ 1463 1114 401E0000 		.word	7744
+ 1464 1118 3D1E0000 		.word	7741
+ 1465 111c 391E0000 		.word	7737
+ 1466 1120 361E0000 		.word	7734
+ 1467 1124 331E0000 		.word	7731
+ 1468 1128 301E0000 		.word	7728
+ 1469 112c 2C1E0000 		.word	7724
+ 1470 1130 291E0000 		.word	7721
+ 1471 1134 261E0000 		.word	7718
+ 1472 1138 231E0000 		.word	7715
+ 1473 113c 1F1E0000 		.word	7711
+ 1474 1140 1C1E0000 		.word	7708
+ 1475 1144 191E0000 		.word	7705
+ 1476 1148 151E0000 		.word	7701
+ 1477 114c 121E0000 		.word	7698
+ 1478 1150 0F1E0000 		.word	7695
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 32
+
+
+ 1479 1154 0C1E0000 		.word	7692
+ 1480 1158 081E0000 		.word	7688
+ 1481 115c 051E0000 		.word	7685
+ 1482 1160 021E0000 		.word	7682
+ 1483 1164 FF1D0000 		.word	7679
+ 1484 1168 FB1D0000 		.word	7675
+ 1485 116c F81D0000 		.word	7672
+ 1486 1170 F51D0000 		.word	7669
+ 1487 1174 F21D0000 		.word	7666
+ 1488 1178 EE1D0000 		.word	7662
+ 1489 117c EB1D0000 		.word	7659
+ 1490 1180 E81D0000 		.word	7656
+ 1491 1184 E51D0000 		.word	7653
+ 1492 1188 E21D0000 		.word	7650
+ 1493 118c DE1D0000 		.word	7646
+ 1494 1190 DB1D0000 		.word	7643
+ 1495 1194 D81D0000 		.word	7640
+ 1496 1198 D51D0000 		.word	7637
+ 1497 119c D11D0000 		.word	7633
+ 1498 11a0 CE1D0000 		.word	7630
+ 1499 11a4 CB1D0000 		.word	7627
+ 1500 11a8 C81D0000 		.word	7624
+ 1501 11ac C41D0000 		.word	7620
+ 1502 11b0 C11D0000 		.word	7617
+ 1503 11b4 BE1D0000 		.word	7614
+ 1504 11b8 BB1D0000 		.word	7611
+ 1505 11bc B81D0000 		.word	7608
+ 1506 11c0 B41D0000 		.word	7604
+ 1507 11c4 B11D0000 		.word	7601
+ 1508 11c8 AE1D0000 		.word	7598
+ 1509 11cc AB1D0000 		.word	7595
+ 1510 11d0 A81D0000 		.word	7592
+ 1511 11d4 A41D0000 		.word	7588
+ 1512 11d8 A11D0000 		.word	7585
+ 1513 11dc 9E1D0000 		.word	7582
+ 1514 11e0 9B1D0000 		.word	7579
+ 1515 11e4 981D0000 		.word	7576
+ 1516 11e8 941D0000 		.word	7572
+ 1517 11ec 911D0000 		.word	7569
+ 1518 11f0 8E1D0000 		.word	7566
+ 1519 11f4 8B1D0000 		.word	7563
+ 1520 11f8 881D0000 		.word	7560
+ 1521 11fc 841D0000 		.word	7556
+ 1522 1200 811D0000 		.word	7553
+ 1523 1204 7E1D0000 		.word	7550
+ 1524 1208 7B1D0000 		.word	7547
+ 1525 120c 781D0000 		.word	7544
+ 1526 1210 741D0000 		.word	7540
+ 1527 1214 711D0000 		.word	7537
+ 1528 1218 6E1D0000 		.word	7534
+ 1529 121c 6B1D0000 		.word	7531
+ 1530 1220 681D0000 		.word	7528
+ 1531 1224 651D0000 		.word	7525
+ 1532 1228 611D0000 		.word	7521
+ 1533 122c 5E1D0000 		.word	7518
+ 1534 1230 5B1D0000 		.word	7515
+ 1535 1234 581D0000 		.word	7512
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 33
+
+
+ 1536 1238 551D0000 		.word	7509
+ 1537 123c 521D0000 		.word	7506
+ 1538 1240 4E1D0000 		.word	7502
+ 1539 1244 4B1D0000 		.word	7499
+ 1540 1248 481D0000 		.word	7496
+ 1541 124c 451D0000 		.word	7493
+ 1542 1250 421D0000 		.word	7490
+ 1543 1254 3F1D0000 		.word	7487
+ 1544 1258 3B1D0000 		.word	7483
+ 1545 125c 381D0000 		.word	7480
+ 1546 1260 351D0000 		.word	7477
+ 1547 1264 321D0000 		.word	7474
+ 1548 1268 2F1D0000 		.word	7471
+ 1549 126c 2C1D0000 		.word	7468
+ 1550 1270 281D0000 		.word	7464
+ 1551 1274 251D0000 		.word	7461
+ 1552 1278 221D0000 		.word	7458
+ 1553 127c 1F1D0000 		.word	7455
+ 1554 1280 1C1D0000 		.word	7452
+ 1555 1284 191D0000 		.word	7449
+ 1556 1288 161D0000 		.word	7446
+ 1557 128c 121D0000 		.word	7442
+ 1558 1290 0F1D0000 		.word	7439
+ 1559 1294 0C1D0000 		.word	7436
+ 1560 1298 091D0000 		.word	7433
+ 1561 129c 061D0000 		.word	7430
+ 1562 12a0 031D0000 		.word	7427
+ 1563 12a4 001D0000 		.word	7424
+ 1564 12a8 FD1C0000 		.word	7421
+ 1565 12ac F91C0000 		.word	7417
+ 1566 12b0 F61C0000 		.word	7414
+ 1567 12b4 F31C0000 		.word	7411
+ 1568 12b8 F01C0000 		.word	7408
+ 1569 12bc ED1C0000 		.word	7405
+ 1570 12c0 EA1C0000 		.word	7402
+ 1571 12c4 E71C0000 		.word	7399
+ 1572 12c8 E41C0000 		.word	7396
+ 1573 12cc E11C0000 		.word	7393
+ 1574 12d0 DD1C0000 		.word	7389
+ 1575 12d4 DA1C0000 		.word	7386
+ 1576 12d8 D71C0000 		.word	7383
+ 1577 12dc D41C0000 		.word	7380
+ 1578 12e0 D11C0000 		.word	7377
+ 1579 12e4 CE1C0000 		.word	7374
+ 1580 12e8 CB1C0000 		.word	7371
+ 1581 12ec C81C0000 		.word	7368
+ 1582 12f0 C51C0000 		.word	7365
+ 1583 12f4 C11C0000 		.word	7361
+ 1584 12f8 BE1C0000 		.word	7358
+ 1585 12fc BB1C0000 		.word	7355
+ 1586 1300 B81C0000 		.word	7352
+ 1587 1304 B51C0000 		.word	7349
+ 1588 1308 B21C0000 		.word	7346
+ 1589 130c AF1C0000 		.word	7343
+ 1590 1310 AC1C0000 		.word	7340
+ 1591 1314 A91C0000 		.word	7337
+ 1592 1318 A61C0000 		.word	7334
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 34
+
+
+ 1593 131c A31C0000 		.word	7331
+ 1594 1320 A01C0000 		.word	7328
+ 1595 1324 9C1C0000 		.word	7324
+ 1596 1328 991C0000 		.word	7321
+ 1597 132c 961C0000 		.word	7318
+ 1598 1330 931C0000 		.word	7315
+ 1599 1334 901C0000 		.word	7312
+ 1600 1338 8D1C0000 		.word	7309
+ 1601 133c 8A1C0000 		.word	7306
+ 1602 1340 871C0000 		.word	7303
+ 1603 1344 841C0000 		.word	7300
+ 1604 1348 811C0000 		.word	7297
+ 1605 134c 7E1C0000 		.word	7294
+ 1606 1350 7B1C0000 		.word	7291
+ 1607 1354 781C0000 		.word	7288
+ 1608 1358 751C0000 		.word	7285
+ 1609 135c 711C0000 		.word	7281
+ 1610 1360 6E1C0000 		.word	7278
+ 1611 1364 6B1C0000 		.word	7275
+ 1612 1368 681C0000 		.word	7272
+ 1613 136c 651C0000 		.word	7269
+ 1614 1370 621C0000 		.word	7266
+ 1615 1374 5F1C0000 		.word	7263
+ 1616 1378 5C1C0000 		.word	7260
+ 1617 137c 591C0000 		.word	7257
+ 1618 1380 561C0000 		.word	7254
+ 1619 1384 531C0000 		.word	7251
+ 1620 1388 501C0000 		.word	7248
+ 1621 138c 4D1C0000 		.word	7245
+ 1622 1390 4A1C0000 		.word	7242
+ 1623 1394 471C0000 		.word	7239
+ 1624 1398 441C0000 		.word	7236
+ 1625 139c 411C0000 		.word	7233
+ 1626 13a0 3E1C0000 		.word	7230
+ 1627 13a4 3B1C0000 		.word	7227
+ 1628 13a8 381C0000 		.word	7224
+ 1629 13ac 351C0000 		.word	7221
+ 1630 13b0 321C0000 		.word	7218
+ 1631 13b4 2F1C0000 		.word	7215
+ 1632 13b8 2C1C0000 		.word	7212
+ 1633 13bc 281C0000 		.word	7208
+ 1634 13c0 251C0000 		.word	7205
+ 1635 13c4 221C0000 		.word	7202
+ 1636 13c8 1F1C0000 		.word	7199
+ 1637 13cc 1C1C0000 		.word	7196
+ 1638 13d0 191C0000 		.word	7193
+ 1639 13d4 161C0000 		.word	7190
+ 1640 13d8 131C0000 		.word	7187
+ 1641 13dc 101C0000 		.word	7184
+ 1642 13e0 0D1C0000 		.word	7181
+ 1643 13e4 0A1C0000 		.word	7178
+ 1644 13e8 071C0000 		.word	7175
+ 1645 13ec 041C0000 		.word	7172
+ 1646 13f0 011C0000 		.word	7169
+ 1647 13f4 FE1B0000 		.word	7166
+ 1648 13f8 FB1B0000 		.word	7163
+ 1649 13fc F81B0000 		.word	7160
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 35
+
+
+ 1650 1400 F51B0000 		.word	7157
+ 1651 1404 F21B0000 		.word	7154
+ 1652 1408 EF1B0000 		.word	7151
+ 1653 140c EC1B0000 		.word	7148
+ 1654 1410 E91B0000 		.word	7145
+ 1655 1414 E61B0000 		.word	7142
+ 1656 1418 E31B0000 		.word	7139
+ 1657 141c E01B0000 		.word	7136
+ 1658 1420 DD1B0000 		.word	7133
+ 1659 1424 DA1B0000 		.word	7130
+ 1660 1428 D71B0000 		.word	7127
+ 1661 142c D41B0000 		.word	7124
+ 1662 1430 D11B0000 		.word	7121
+ 1663 1434 CE1B0000 		.word	7118
+ 1664 1438 CB1B0000 		.word	7115
+ 1665 143c C81B0000 		.word	7112
+ 1666 1440 C51B0000 		.word	7109
+ 1667 1444 C31B0000 		.word	7107
+ 1668 1448 C01B0000 		.word	7104
+ 1669 144c BD1B0000 		.word	7101
+ 1670 1450 BA1B0000 		.word	7098
+ 1671 1454 B71B0000 		.word	7095
+ 1672 1458 B41B0000 		.word	7092
+ 1673 145c B11B0000 		.word	7089
+ 1674 1460 AE1B0000 		.word	7086
+ 1675 1464 AB1B0000 		.word	7083
+ 1676 1468 A81B0000 		.word	7080
+ 1677 146c A51B0000 		.word	7077
+ 1678 1470 A21B0000 		.word	7074
+ 1679 1474 9F1B0000 		.word	7071
+ 1680 1478 9C1B0000 		.word	7068
+ 1681 147c 991B0000 		.word	7065
+ 1682 1480 961B0000 		.word	7062
+ 1683 1484 931B0000 		.word	7059
+ 1684 1488 901B0000 		.word	7056
+ 1685 148c 8D1B0000 		.word	7053
+ 1686 1490 8A1B0000 		.word	7050
+ 1687 1494 871B0000 		.word	7047
+ 1688 1498 841B0000 		.word	7044
+ 1689 149c 811B0000 		.word	7041
+ 1690 14a0 7E1B0000 		.word	7038
+ 1691 14a4 7C1B0000 		.word	7036
+ 1692 14a8 791B0000 		.word	7033
+ 1693 14ac 761B0000 		.word	7030
+ 1694 14b0 731B0000 		.word	7027
+ 1695 14b4 701B0000 		.word	7024
+ 1696 14b8 6D1B0000 		.word	7021
+ 1697 14bc 6A1B0000 		.word	7018
+ 1698 14c0 671B0000 		.word	7015
+ 1699 14c4 641B0000 		.word	7012
+ 1700 14c8 611B0000 		.word	7009
+ 1701 14cc 5E1B0000 		.word	7006
+ 1702 14d0 5B1B0000 		.word	7003
+ 1703 14d4 581B0000 		.word	7000
+ 1704 14d8 551B0000 		.word	6997
+ 1705 14dc 521B0000 		.word	6994
+ 1706 14e0 501B0000 		.word	6992
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 36
+
+
+ 1707 14e4 4D1B0000 		.word	6989
+ 1708 14e8 4A1B0000 		.word	6986
+ 1709 14ec 471B0000 		.word	6983
+ 1710 14f0 441B0000 		.word	6980
+ 1711 14f4 411B0000 		.word	6977
+ 1712 14f8 3E1B0000 		.word	6974
+ 1713 14fc 3B1B0000 		.word	6971
+ 1714 1500 381B0000 		.word	6968
+ 1715 1504 351B0000 		.word	6965
+ 1716 1508 321B0000 		.word	6962
+ 1717 150c 301B0000 		.word	6960
+ 1718 1510 2D1B0000 		.word	6957
+ 1719 1514 2A1B0000 		.word	6954
+ 1720 1518 271B0000 		.word	6951
+ 1721 151c 241B0000 		.word	6948
+ 1722 1520 211B0000 		.word	6945
+ 1723 1524 1E1B0000 		.word	6942
+ 1724 1528 1B1B0000 		.word	6939
+ 1725 152c 181B0000 		.word	6936
+ 1726 1530 151B0000 		.word	6933
+ 1727 1534 131B0000 		.word	6931
+ 1728 1538 101B0000 		.word	6928
+ 1729 153c 0D1B0000 		.word	6925
+ 1730 1540 0A1B0000 		.word	6922
+ 1731 1544 071B0000 		.word	6919
+ 1732 1548 041B0000 		.word	6916
+ 1733 154c 011B0000 		.word	6913
+ 1734 1550 FE1A0000 		.word	6910
+ 1735 1554 FB1A0000 		.word	6907
+ 1736 1558 F91A0000 		.word	6905
+ 1737 155c F61A0000 		.word	6902
+ 1738 1560 F31A0000 		.word	6899
+ 1739 1564 F01A0000 		.word	6896
+ 1740 1568 ED1A0000 		.word	6893
+ 1741 156c EA1A0000 		.word	6890
+ 1742 1570 E71A0000 		.word	6887
+ 1743 1574 E41A0000 		.word	6884
+ 1744 1578 E21A0000 		.word	6882
+ 1745 157c DF1A0000 		.word	6879
+ 1746 1580 DC1A0000 		.word	6876
+ 1747 1584 D91A0000 		.word	6873
+ 1748 1588 D61A0000 		.word	6870
+ 1749 158c D31A0000 		.word	6867
+ 1750 1590 D01A0000 		.word	6864
+ 1751 1594 CE1A0000 		.word	6862
+ 1752 1598 CB1A0000 		.word	6859
+ 1753 159c C81A0000 		.word	6856
+ 1754 15a0 C51A0000 		.word	6853
+ 1755 15a4 C21A0000 		.word	6850
+ 1756 15a8 BF1A0000 		.word	6847
+ 1757 15ac BC1A0000 		.word	6844
+ 1758 15b0 BA1A0000 		.word	6842
+ 1759 15b4 B71A0000 		.word	6839
+ 1760 15b8 B41A0000 		.word	6836
+ 1761 15bc B11A0000 		.word	6833
+ 1762 15c0 AE1A0000 		.word	6830
+ 1763 15c4 AB1A0000 		.word	6827
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 37
+
+
+ 1764 15c8 A91A0000 		.word	6825
+ 1765 15cc A61A0000 		.word	6822
+ 1766 15d0 A31A0000 		.word	6819
+ 1767 15d4 A01A0000 		.word	6816
+ 1768 15d8 9D1A0000 		.word	6813
+ 1769 15dc 9A1A0000 		.word	6810
+ 1770 15e0 971A0000 		.word	6807
+ 1771 15e4 951A0000 		.word	6805
+ 1772 15e8 921A0000 		.word	6802
+ 1773 15ec 8F1A0000 		.word	6799
+ 1774 15f0 8C1A0000 		.word	6796
+ 1775 15f4 891A0000 		.word	6793
+ 1776 15f8 871A0000 		.word	6791
+ 1777 15fc 841A0000 		.word	6788
+ 1778 1600 811A0000 		.word	6785
+ 1779 1604 7E1A0000 		.word	6782
+ 1780 1608 7B1A0000 		.word	6779
+ 1781 160c 781A0000 		.word	6776
+ 1782 1610 761A0000 		.word	6774
+ 1783 1614 731A0000 		.word	6771
+ 1784 1618 701A0000 		.word	6768
+ 1785 161c 6D1A0000 		.word	6765
+ 1786 1620 6A1A0000 		.word	6762
+ 1787 1624 681A0000 		.word	6760
+ 1788 1628 651A0000 		.word	6757
+ 1789 162c 621A0000 		.word	6754
+ 1790 1630 5F1A0000 		.word	6751
+ 1791 1634 5C1A0000 		.word	6748
+ 1792 1638 591A0000 		.word	6745
+ 1793 163c 571A0000 		.word	6743
+ 1794 1640 541A0000 		.word	6740
+ 1795 1644 511A0000 		.word	6737
+ 1796 1648 4E1A0000 		.word	6734
+ 1797 164c 4B1A0000 		.word	6731
+ 1798 1650 491A0000 		.word	6729
+ 1799 1654 461A0000 		.word	6726
+ 1800 1658 431A0000 		.word	6723
+ 1801 165c 401A0000 		.word	6720
+ 1802 1660 3E1A0000 		.word	6718
+ 1803 1664 3B1A0000 		.word	6715
+ 1804 1668 381A0000 		.word	6712
+ 1805 166c 351A0000 		.word	6709
+ 1806 1670 321A0000 		.word	6706
+ 1807 1674 301A0000 		.word	6704
+ 1808 1678 2D1A0000 		.word	6701
+ 1809 167c 2A1A0000 		.word	6698
+ 1810 1680 271A0000 		.word	6695
+ 1811 1684 241A0000 		.word	6692
+ 1812 1688 221A0000 		.word	6690
+ 1813 168c 1F1A0000 		.word	6687
+ 1814 1690 1C1A0000 		.word	6684
+ 1815 1694 191A0000 		.word	6681
+ 1816 1698 171A0000 		.word	6679
+ 1817 169c 141A0000 		.word	6676
+ 1818 16a0 111A0000 		.word	6673
+ 1819 16a4 0E1A0000 		.word	6670
+ 1820 16a8 0C1A0000 		.word	6668
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 38
+
+
+ 1821 16ac 091A0000 		.word	6665
+ 1822 16b0 061A0000 		.word	6662
+ 1823 16b4 031A0000 		.word	6659
+ 1824 16b8 001A0000 		.word	6656
+ 1825 16bc FE190000 		.word	6654
+ 1826 16c0 FB190000 		.word	6651
+ 1827 16c4 F8190000 		.word	6648
+ 1828 16c8 F5190000 		.word	6645
+ 1829 16cc F3190000 		.word	6643
+ 1830 16d0 F0190000 		.word	6640
+ 1831 16d4 ED190000 		.word	6637
+ 1832 16d8 EA190000 		.word	6634
+ 1833 16dc E8190000 		.word	6632
+ 1834 16e0 E5190000 		.word	6629
+ 1835 16e4 E2190000 		.word	6626
+ 1836 16e8 DF190000 		.word	6623
+ 1837 16ec DD190000 		.word	6621
+ 1838 16f0 DA190000 		.word	6618
+ 1839 16f4 D7190000 		.word	6615
+ 1840 16f8 D4190000 		.word	6612
+ 1841 16fc D2190000 		.word	6610
+ 1842 1700 CF190000 		.word	6607
+ 1843 1704 CC190000 		.word	6604
+ 1844 1708 C9190000 		.word	6601
+ 1845 170c C7190000 		.word	6599
+ 1846 1710 C4190000 		.word	6596
+ 1847 1714 C1190000 		.word	6593
+ 1848 1718 BF190000 		.word	6591
+ 1849 171c BC190000 		.word	6588
+ 1850 1720 B9190000 		.word	6585
+ 1851 1724 B6190000 		.word	6582
+ 1852 1728 B4190000 		.word	6580
+ 1853 172c B1190000 		.word	6577
+ 1854 1730 AE190000 		.word	6574
+ 1855 1734 AB190000 		.word	6571
+ 1856 1738 A9190000 		.word	6569
+ 1857 173c A6190000 		.word	6566
+ 1858 1740 A3190000 		.word	6563
+ 1859 1744 A1190000 		.word	6561
+ 1860 1748 9E190000 		.word	6558
+ 1861 174c 9B190000 		.word	6555
+ 1862 1750 98190000 		.word	6552
+ 1863 1754 96190000 		.word	6550
+ 1864 1758 93190000 		.word	6547
+ 1865 175c 90190000 		.word	6544
+ 1866 1760 8E190000 		.word	6542
+ 1867 1764 8B190000 		.word	6539
+ 1868 1768 88190000 		.word	6536
+ 1869 176c 85190000 		.word	6533
+ 1870 1770 83190000 		.word	6531
+ 1871 1774 80190000 		.word	6528
+ 1872 1778 7D190000 		.word	6525
+ 1873 177c 7B190000 		.word	6523
+ 1874 1780 78190000 		.word	6520
+ 1875 1784 75190000 		.word	6517
+ 1876 1788 73190000 		.word	6515
+ 1877 178c 70190000 		.word	6512
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 39
+
+
+ 1878 1790 6D190000 		.word	6509
+ 1879 1794 6B190000 		.word	6507
+ 1880 1798 68190000 		.word	6504
+ 1881 179c 65190000 		.word	6501
+ 1882 17a0 62190000 		.word	6498
+ 1883 17a4 60190000 		.word	6496
+ 1884 17a8 5D190000 		.word	6493
+ 1885 17ac 5A190000 		.word	6490
+ 1886 17b0 58190000 		.word	6488
+ 1887 17b4 55190000 		.word	6485
+ 1888 17b8 52190000 		.word	6482
+ 1889 17bc 50190000 		.word	6480
+ 1890 17c0 4D190000 		.word	6477
+ 1891 17c4 4A190000 		.word	6474
+ 1892 17c8 48190000 		.word	6472
+ 1893 17cc 45190000 		.word	6469
+ 1894 17d0 42190000 		.word	6466
+ 1895 17d4 40190000 		.word	6464
+ 1896 17d8 3D190000 		.word	6461
+ 1897 17dc 3A190000 		.word	6458
+ 1898 17e0 38190000 		.word	6456
+ 1899 17e4 35190000 		.word	6453
+ 1900 17e8 32190000 		.word	6450
+ 1901 17ec 30190000 		.word	6448
+ 1902 17f0 2D190000 		.word	6445
+ 1903 17f4 2A190000 		.word	6442
+ 1904 17f8 28190000 		.word	6440
+ 1905 17fc 25190000 		.word	6437
+ 1906 1800 22190000 		.word	6434
+ 1907 1804 20190000 		.word	6432
+ 1908 1808 1D190000 		.word	6429
+ 1909 180c 1A190000 		.word	6426
+ 1910 1810 18190000 		.word	6424
+ 1911 1814 15190000 		.word	6421
+ 1912 1818 12190000 		.word	6418
+ 1913 181c 10190000 		.word	6416
+ 1914 1820 0D190000 		.word	6413
+ 1915 1824 0A190000 		.word	6410
+ 1916 1828 08190000 		.word	6408
+ 1917 182c 05190000 		.word	6405
+ 1918 1830 03190000 		.word	6403
+ 1919 1834 00190000 		.word	6400
+ 1920 1838 FD180000 		.word	6397
+ 1921 183c FB180000 		.word	6395
+ 1922 1840 F8180000 		.word	6392
+ 1923 1844 F5180000 		.word	6389
+ 1924 1848 F3180000 		.word	6387
+ 1925 184c F0180000 		.word	6384
+ 1926 1850 ED180000 		.word	6381
+ 1927 1854 EB180000 		.word	6379
+ 1928 1858 E8180000 		.word	6376
+ 1929 185c E6180000 		.word	6374
+ 1930 1860 E3180000 		.word	6371
+ 1931 1864 E0180000 		.word	6368
+ 1932 1868 DE180000 		.word	6366
+ 1933 186c DB180000 		.word	6363
+ 1934 1870 D8180000 		.word	6360
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 40
+
+
+ 1935 1874 D6180000 		.word	6358
+ 1936 1878 D3180000 		.word	6355
+ 1937 187c D1180000 		.word	6353
+ 1938 1880 CE180000 		.word	6350
+ 1939 1884 CB180000 		.word	6347
+ 1940 1888 C9180000 		.word	6345
+ 1941 188c C6180000 		.word	6342
+ 1942 1890 C4180000 		.word	6340
+ 1943 1894 C1180000 		.word	6337
+ 1944 1898 BE180000 		.word	6334
+ 1945 189c BC180000 		.word	6332
+ 1946 18a0 B9180000 		.word	6329
+ 1947 18a4 B6180000 		.word	6326
+ 1948 18a8 B4180000 		.word	6324
+ 1949 18ac B1180000 		.word	6321
+ 1950 18b0 AF180000 		.word	6319
+ 1951 18b4 AC180000 		.word	6316
+ 1952 18b8 A9180000 		.word	6313
+ 1953 18bc A7180000 		.word	6311
+ 1954 18c0 A4180000 		.word	6308
+ 1955 18c4 A2180000 		.word	6306
+ 1956 18c8 9F180000 		.word	6303
+ 1957 18cc 9C180000 		.word	6300
+ 1958 18d0 9A180000 		.word	6298
+ 1959 18d4 97180000 		.word	6295
+ 1960 18d8 95180000 		.word	6293
+ 1961 18dc 92180000 		.word	6290
+ 1962 18e0 90180000 		.word	6288
+ 1963 18e4 8D180000 		.word	6285
+ 1964 18e8 8A180000 		.word	6282
+ 1965 18ec 88180000 		.word	6280
+ 1966 18f0 85180000 		.word	6277
+ 1967 18f4 83180000 		.word	6275
+ 1968 18f8 80180000 		.word	6272
+ 1969 18fc 7D180000 		.word	6269
+ 1970 1900 7B180000 		.word	6267
+ 1971 1904 78180000 		.word	6264
+ 1972 1908 76180000 		.word	6262
+ 1973 190c 73180000 		.word	6259
+ 1974 1910 71180000 		.word	6257
+ 1975 1914 6E180000 		.word	6254
+ 1976 1918 6B180000 		.word	6251
+ 1977 191c 69180000 		.word	6249
+ 1978 1920 66180000 		.word	6246
+ 1979 1924 64180000 		.word	6244
+ 1980 1928 61180000 		.word	6241
+ 1981 192c 5F180000 		.word	6239
+ 1982 1930 5C180000 		.word	6236
+ 1983 1934 59180000 		.word	6233
+ 1984 1938 57180000 		.word	6231
+ 1985 193c 54180000 		.word	6228
+ 1986 1940 52180000 		.word	6226
+ 1987 1944 4F180000 		.word	6223
+ 1988 1948 4D180000 		.word	6221
+ 1989 194c 4A180000 		.word	6218
+ 1990 1950 48180000 		.word	6216
+ 1991 1954 45180000 		.word	6213
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 41
+
+
+ 1992 1958 42180000 		.word	6210
+ 1993 195c 40180000 		.word	6208
+ 1994 1960 3D180000 		.word	6205
+ 1995 1964 3B180000 		.word	6203
+ 1996 1968 38180000 		.word	6200
+ 1997 196c 36180000 		.word	6198
+ 1998 1970 33180000 		.word	6195
+ 1999 1974 31180000 		.word	6193
+ 2000 1978 2E180000 		.word	6190
+ 2001 197c 2C180000 		.word	6188
+ 2002 1980 29180000 		.word	6185
+ 2003 1984 26180000 		.word	6182
+ 2004 1988 24180000 		.word	6180
+ 2005 198c 21180000 		.word	6177
+ 2006 1990 1F180000 		.word	6175
+ 2007 1994 1C180000 		.word	6172
+ 2008 1998 1A180000 		.word	6170
+ 2009 199c 17180000 		.word	6167
+ 2010 19a0 15180000 		.word	6165
+ 2011 19a4 12180000 		.word	6162
+ 2012 19a8 10180000 		.word	6160
+ 2013 19ac 0D180000 		.word	6157
+ 2014 19b0 0B180000 		.word	6155
+ 2015 19b4 08180000 		.word	6152
+ 2016 19b8 06180000 		.word	6150
+ 2017 19bc 03180000 		.word	6147
+ 2018 19c0 00180000 		.word	6144
+ 2019 19c4 FE170000 		.word	6142
+ 2020 19c8 FB170000 		.word	6139
+ 2021 19cc F9170000 		.word	6137
+ 2022 19d0 F6170000 		.word	6134
+ 2023 19d4 F4170000 		.word	6132
+ 2024 19d8 F1170000 		.word	6129
+ 2025 19dc EF170000 		.word	6127
+ 2026 19e0 EC170000 		.word	6124
+ 2027 19e4 EA170000 		.word	6122
+ 2028 19e8 E7170000 		.word	6119
+ 2029 19ec E5170000 		.word	6117
+ 2030 19f0 E2170000 		.word	6114
+ 2031 19f4 E0170000 		.word	6112
+ 2032 19f8 DD170000 		.word	6109
+ 2033 19fc DB170000 		.word	6107
+ 2034 1a00 D8170000 		.word	6104
+ 2035 1a04 D6170000 		.word	6102
+ 2036 1a08 D3170000 		.word	6099
+ 2037 1a0c D1170000 		.word	6097
+ 2038 1a10 CE170000 		.word	6094
+ 2039 1a14 CC170000 		.word	6092
+ 2040 1a18 C9170000 		.word	6089
+ 2041 1a1c C7170000 		.word	6087
+ 2042 1a20 C4170000 		.word	6084
+ 2043 1a24 C2170000 		.word	6082
+ 2044 1a28 BF170000 		.word	6079
+ 2045 1a2c BD170000 		.word	6077
+ 2046 1a30 BA170000 		.word	6074
+ 2047 1a34 B8170000 		.word	6072
+ 2048 1a38 B5170000 		.word	6069
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 42
+
+
+ 2049 1a3c B3170000 		.word	6067
+ 2050 1a40 B0170000 		.word	6064
+ 2051 1a44 AE170000 		.word	6062
+ 2052 1a48 AB170000 		.word	6059
+ 2053 1a4c A9170000 		.word	6057
+ 2054 1a50 A7170000 		.word	6055
+ 2055 1a54 A4170000 		.word	6052
+ 2056 1a58 A2170000 		.word	6050
+ 2057 1a5c 9F170000 		.word	6047
+ 2058 1a60 9D170000 		.word	6045
+ 2059 1a64 9A170000 		.word	6042
+ 2060 1a68 98170000 		.word	6040
+ 2061 1a6c 95170000 		.word	6037
+ 2062 1a70 93170000 		.word	6035
+ 2063 1a74 90170000 		.word	6032
+ 2064 1a78 8E170000 		.word	6030
+ 2065 1a7c 8B170000 		.word	6027
+ 2066 1a80 89170000 		.word	6025
+ 2067 1a84 86170000 		.word	6022
+ 2068 1a88 84170000 		.word	6020
+ 2069 1a8c 81170000 		.word	6017
+ 2070 1a90 7F170000 		.word	6015
+ 2071 1a94 7D170000 		.word	6013
+ 2072 1a98 7A170000 		.word	6010
+ 2073 1a9c 78170000 		.word	6008
+ 2074 1aa0 75170000 		.word	6005
+ 2075 1aa4 73170000 		.word	6003
+ 2076 1aa8 70170000 		.word	6000
+ 2077 1aac 6E170000 		.word	5998
+ 2078 1ab0 6B170000 		.word	5995
+ 2079 1ab4 69170000 		.word	5993
+ 2080 1ab8 66170000 		.word	5990
+ 2081 1abc 64170000 		.word	5988
+ 2082 1ac0 62170000 		.word	5986
+ 2083 1ac4 5F170000 		.word	5983
+ 2084 1ac8 5D170000 		.word	5981
+ 2085 1acc 5A170000 		.word	5978
+ 2086 1ad0 58170000 		.word	5976
+ 2087 1ad4 55170000 		.word	5973
+ 2088 1ad8 53170000 		.word	5971
+ 2089 1adc 50170000 		.word	5968
+ 2090 1ae0 4E170000 		.word	5966
+ 2091 1ae4 4C170000 		.word	5964
+ 2092 1ae8 49170000 		.word	5961
+ 2093 1aec 47170000 		.word	5959
+ 2094 1af0 44170000 		.word	5956
+ 2095 1af4 42170000 		.word	5954
+ 2096 1af8 3F170000 		.word	5951
+ 2097 1afc 3D170000 		.word	5949
+ 2098 1b00 3B170000 		.word	5947
+ 2099 1b04 38170000 		.word	5944
+ 2100 1b08 36170000 		.word	5942
+ 2101 1b0c 33170000 		.word	5939
+ 2102 1b10 31170000 		.word	5937
+ 2103 1b14 2E170000 		.word	5934
+ 2104 1b18 2C170000 		.word	5932
+ 2105 1b1c 2A170000 		.word	5930
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 43
+
+
+ 2106 1b20 27170000 		.word	5927
+ 2107 1b24 25170000 		.word	5925
+ 2108 1b28 22170000 		.word	5922
+ 2109 1b2c 20170000 		.word	5920
+ 2110 1b30 1E170000 		.word	5918
+ 2111 1b34 1B170000 		.word	5915
+ 2112 1b38 19170000 		.word	5913
+ 2113 1b3c 16170000 		.word	5910
+ 2114 1b40 14170000 		.word	5908
+ 2115 1b44 11170000 		.word	5905
+ 2116 1b48 0F170000 		.word	5903
+ 2117 1b4c 0D170000 		.word	5901
+ 2118 1b50 0A170000 		.word	5898
+ 2119 1b54 08170000 		.word	5896
+ 2120 1b58 05170000 		.word	5893
+ 2121 1b5c 03170000 		.word	5891
+ 2122 1b60 01170000 		.word	5889
+ 2123 1b64 FE160000 		.word	5886
+ 2124 1b68 FC160000 		.word	5884
+ 2125 1b6c F9160000 		.word	5881
+ 2126 1b70 F7160000 		.word	5879
+ 2127 1b74 F5160000 		.word	5877
+ 2128 1b78 F2160000 		.word	5874
+ 2129 1b7c F0160000 		.word	5872
+ 2130 1b80 ED160000 		.word	5869
+ 2131 1b84 EB160000 		.word	5867
+ 2132 1b88 E9160000 		.word	5865
+ 2133 1b8c E6160000 		.word	5862
+ 2134 1b90 E4160000 		.word	5860
+ 2135 1b94 E1160000 		.word	5857
+ 2136 1b98 DF160000 		.word	5855
+ 2137 1b9c DD160000 		.word	5853
+ 2138 1ba0 DA160000 		.word	5850
+ 2139 1ba4 D8160000 		.word	5848
+ 2140 1ba8 D6160000 		.word	5846
+ 2141 1bac D3160000 		.word	5843
+ 2142 1bb0 D1160000 		.word	5841
+ 2143 1bb4 CE160000 		.word	5838
+ 2144 1bb8 CC160000 		.word	5836
+ 2145 1bbc CA160000 		.word	5834
+ 2146 1bc0 C7160000 		.word	5831
+ 2147 1bc4 C5160000 		.word	5829
+ 2148 1bc8 C3160000 		.word	5827
+ 2149 1bcc C0160000 		.word	5824
+ 2150 1bd0 BE160000 		.word	5822
+ 2151 1bd4 BB160000 		.word	5819
+ 2152 1bd8 B9160000 		.word	5817
+ 2153 1bdc B7160000 		.word	5815
+ 2154 1be0 B4160000 		.word	5812
+ 2155 1be4 B2160000 		.word	5810
+ 2156 1be8 B0160000 		.word	5808
+ 2157 1bec AD160000 		.word	5805
+ 2158 1bf0 AB160000 		.word	5803
+ 2159 1bf4 A9160000 		.word	5801
+ 2160 1bf8 A6160000 		.word	5798
+ 2161 1bfc A4160000 		.word	5796
+ 2162 1c00 A1160000 		.word	5793
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 44
+
+
+ 2163 1c04 9F160000 		.word	5791
+ 2164 1c08 9D160000 		.word	5789
+ 2165 1c0c 9A160000 		.word	5786
+ 2166 1c10 98160000 		.word	5784
+ 2167 1c14 96160000 		.word	5782
+ 2168 1c18 93160000 		.word	5779
+ 2169 1c1c 91160000 		.word	5777
+ 2170 1c20 8F160000 		.word	5775
+ 2171 1c24 8C160000 		.word	5772
+ 2172 1c28 8A160000 		.word	5770
+ 2173 1c2c 88160000 		.word	5768
+ 2174 1c30 85160000 		.word	5765
+ 2175 1c34 83160000 		.word	5763
+ 2176 1c38 81160000 		.word	5761
+ 2177 1c3c 7E160000 		.word	5758
+ 2178 1c40 7C160000 		.word	5756
+ 2179 1c44 7A160000 		.word	5754
+ 2180 1c48 77160000 		.word	5751
+ 2181 1c4c 75160000 		.word	5749
+ 2182 1c50 73160000 		.word	5747
+ 2183 1c54 70160000 		.word	5744
+ 2184 1c58 6E160000 		.word	5742
+ 2185 1c5c 6C160000 		.word	5740
+ 2186 1c60 69160000 		.word	5737
+ 2187 1c64 67160000 		.word	5735
+ 2188 1c68 65160000 		.word	5733
+ 2189 1c6c 62160000 		.word	5730
+ 2190 1c70 60160000 		.word	5728
+ 2191 1c74 5E160000 		.word	5726
+ 2192 1c78 5B160000 		.word	5723
+ 2193 1c7c 59160000 		.word	5721
+ 2194 1c80 57160000 		.word	5719
+ 2195 1c84 54160000 		.word	5716
+ 2196 1c88 52160000 		.word	5714
+ 2197 1c8c 50160000 		.word	5712
+ 2198 1c90 4D160000 		.word	5709
+ 2199 1c94 4B160000 		.word	5707
+ 2200 1c98 49160000 		.word	5705
+ 2201 1c9c 46160000 		.word	5702
+ 2202 1ca0 44160000 		.word	5700
+ 2203 1ca4 42160000 		.word	5698
+ 2204 1ca8 3F160000 		.word	5695
+ 2205 1cac 3D160000 		.word	5693
+ 2206 1cb0 3B160000 		.word	5691
+ 2207 1cb4 38160000 		.word	5688
+ 2208 1cb8 36160000 		.word	5686
+ 2209 1cbc 34160000 		.word	5684
+ 2210 1cc0 32160000 		.word	5682
+ 2211 1cc4 2F160000 		.word	5679
+ 2212 1cc8 2D160000 		.word	5677
+ 2213 1ccc 2B160000 		.word	5675
+ 2214 1cd0 28160000 		.word	5672
+ 2215 1cd4 26160000 		.word	5670
+ 2216 1cd8 24160000 		.word	5668
+ 2217 1cdc 21160000 		.word	5665
+ 2218 1ce0 1F160000 		.word	5663
+ 2219 1ce4 1D160000 		.word	5661
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 45
+
+
+ 2220 1ce8 1B160000 		.word	5659
+ 2221 1cec 18160000 		.word	5656
+ 2222 1cf0 16160000 		.word	5654
+ 2223 1cf4 14160000 		.word	5652
+ 2224 1cf8 11160000 		.word	5649
+ 2225 1cfc 0F160000 		.word	5647
+ 2226 1d00 0D160000 		.word	5645
+ 2227 1d04 0B160000 		.word	5643
+ 2228 1d08 08160000 		.word	5640
+ 2229 1d0c 06160000 		.word	5638
+ 2230 1d10 04160000 		.word	5636
+ 2231 1d14 01160000 		.word	5633
+ 2232 1d18 FF150000 		.word	5631
+ 2233 1d1c FD150000 		.word	5629
+ 2234 1d20 FB150000 		.word	5627
+ 2235 1d24 F8150000 		.word	5624
+ 2236 1d28 F6150000 		.word	5622
+ 2237 1d2c F4150000 		.word	5620
+ 2238 1d30 F1150000 		.word	5617
+ 2239 1d34 EF150000 		.word	5615
+ 2240 1d38 ED150000 		.word	5613
+ 2241 1d3c EB150000 		.word	5611
+ 2242 1d40 E8150000 		.word	5608
+ 2243 1d44 E6150000 		.word	5606
+ 2244 1d48 E4150000 		.word	5604
+ 2245 1d4c E2150000 		.word	5602
+ 2246 1d50 DF150000 		.word	5599
+ 2247 1d54 DD150000 		.word	5597
+ 2248 1d58 DB150000 		.word	5595
+ 2249 1d5c D8150000 		.word	5592
+ 2250 1d60 D6150000 		.word	5590
+ 2251 1d64 D4150000 		.word	5588
+ 2252 1d68 D2150000 		.word	5586
+ 2253 1d6c CF150000 		.word	5583
+ 2254 1d70 CD150000 		.word	5581
+ 2255 1d74 CB150000 		.word	5579
+ 2256 1d78 C9150000 		.word	5577
+ 2257 1d7c C6150000 		.word	5574
+ 2258 1d80 C4150000 		.word	5572
+ 2259 1d84 C2150000 		.word	5570
+ 2260 1d88 C0150000 		.word	5568
+ 2261 1d8c BD150000 		.word	5565
+ 2262 1d90 BB150000 		.word	5563
+ 2263 1d94 B9150000 		.word	5561
+ 2264 1d98 B7150000 		.word	5559
+ 2265 1d9c B4150000 		.word	5556
+ 2266 1da0 B2150000 		.word	5554
+ 2267 1da4 B0150000 		.word	5552
+ 2268 1da8 AE150000 		.word	5550
+ 2269 1dac AB150000 		.word	5547
+ 2270 1db0 A9150000 		.word	5545
+ 2271 1db4 A7150000 		.word	5543
+ 2272 1db8 A5150000 		.word	5541
+ 2273 1dbc A2150000 		.word	5538
+ 2274 1dc0 A0150000 		.word	5536
+ 2275 1dc4 9E150000 		.word	5534
+ 2276 1dc8 9C150000 		.word	5532
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 46
+
+
+ 2277 1dcc 99150000 		.word	5529
+ 2278 1dd0 97150000 		.word	5527
+ 2279 1dd4 95150000 		.word	5525
+ 2280 1dd8 93150000 		.word	5523
+ 2281 1ddc 91150000 		.word	5521
+ 2282 1de0 8E150000 		.word	5518
+ 2283 1de4 8C150000 		.word	5516
+ 2284 1de8 8A150000 		.word	5514
+ 2285 1dec 88150000 		.word	5512
+ 2286 1df0 85150000 		.word	5509
+ 2287 1df4 83150000 		.word	5507
+ 2288 1df8 81150000 		.word	5505
+ 2289 1dfc 7F150000 		.word	5503
+ 2290 1e00 7C150000 		.word	5500
+ 2291 1e04 7A150000 		.word	5498
+ 2292 1e08 78150000 		.word	5496
+ 2293 1e0c 76150000 		.word	5494
+ 2294 1e10 74150000 		.word	5492
+ 2295 1e14 71150000 		.word	5489
+ 2296 1e18 6F150000 		.word	5487
+ 2297 1e1c 6D150000 		.word	5485
+ 2298 1e20 6B150000 		.word	5483
+ 2299 1e24 69150000 		.word	5481
+ 2300 1e28 66150000 		.word	5478
+ 2301 1e2c 64150000 		.word	5476
+ 2302 1e30 62150000 		.word	5474
+ 2303 1e34 60150000 		.word	5472
+ 2304 1e38 5D150000 		.word	5469
+ 2305 1e3c 5B150000 		.word	5467
+ 2306 1e40 59150000 		.word	5465
+ 2307 1e44 57150000 		.word	5463
+ 2308 1e48 55150000 		.word	5461
+ 2309 1e4c 52150000 		.word	5458
+ 2310 1e50 50150000 		.word	5456
+ 2311 1e54 4E150000 		.word	5454
+ 2312 1e58 4C150000 		.word	5452
+ 2313 1e5c 4A150000 		.word	5450
+ 2314 1e60 47150000 		.word	5447
+ 2315 1e64 45150000 		.word	5445
+ 2316 1e68 43150000 		.word	5443
+ 2317 1e6c 41150000 		.word	5441
+ 2318 1e70 3F150000 		.word	5439
+ 2319 1e74 3C150000 		.word	5436
+ 2320 1e78 3A150000 		.word	5434
+ 2321 1e7c 38150000 		.word	5432
+ 2322 1e80 36150000 		.word	5430
+ 2323 1e84 34150000 		.word	5428
+ 2324 1e88 32150000 		.word	5426
+ 2325 1e8c 2F150000 		.word	5423
+ 2326 1e90 2D150000 		.word	5421
+ 2327 1e94 2B150000 		.word	5419
+ 2328 1e98 29150000 		.word	5417
+ 2329 1e9c 27150000 		.word	5415
+ 2330 1ea0 24150000 		.word	5412
+ 2331 1ea4 22150000 		.word	5410
+ 2332 1ea8 20150000 		.word	5408
+ 2333 1eac 1E150000 		.word	5406
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 47
+
+
+ 2334 1eb0 1C150000 		.word	5404
+ 2335 1eb4 1A150000 		.word	5402
+ 2336 1eb8 17150000 		.word	5399
+ 2337 1ebc 15150000 		.word	5397
+ 2338 1ec0 13150000 		.word	5395
+ 2339 1ec4 11150000 		.word	5393
+ 2340 1ec8 0F150000 		.word	5391
+ 2341 1ecc 0D150000 		.word	5389
+ 2342 1ed0 0A150000 		.word	5386
+ 2343 1ed4 08150000 		.word	5384
+ 2344 1ed8 06150000 		.word	5382
+ 2345 1edc 04150000 		.word	5380
+ 2346 1ee0 02150000 		.word	5378
+ 2347 1ee4 00150000 		.word	5376
+ 2348 1ee8 FD140000 		.word	5373
+ 2349 1eec FB140000 		.word	5371
+ 2350 1ef0 F9140000 		.word	5369
+ 2351 1ef4 F7140000 		.word	5367
+ 2352 1ef8 F5140000 		.word	5365
+ 2353 1efc F3140000 		.word	5363
+ 2354 1f00 F0140000 		.word	5360
+ 2355 1f04 EE140000 		.word	5358
+ 2356 1f08 EC140000 		.word	5356
+ 2357 1f0c EA140000 		.word	5354
+ 2358 1f10 E8140000 		.word	5352
+ 2359 1f14 E6140000 		.word	5350
+ 2360 1f18 E3140000 		.word	5347
+ 2361 1f1c E1140000 		.word	5345
+ 2362 1f20 DF140000 		.word	5343
+ 2363 1f24 DD140000 		.word	5341
+ 2364 1f28 DB140000 		.word	5339
+ 2365 1f2c D9140000 		.word	5337
+ 2366 1f30 D7140000 		.word	5335
+ 2367 1f34 D4140000 		.word	5332
+ 2368 1f38 D2140000 		.word	5330
+ 2369 1f3c D0140000 		.word	5328
+ 2370 1f40 CE140000 		.word	5326
+ 2371              		.text
+ 2372              	.Letext0:
+ 2373              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 2374              		.section	.debug_info,"",%progbits
+ 2375              	.Ldebug_info0:
+ 2376 0000 86010000 		.4byte	0x186
+ 2377 0004 0400     		.2byte	0x4
+ 2378 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 2379 000a 04       		.byte	0x4
+ 2380 000b 01       		.uleb128 0x1
+ 2381 000c 92000000 		.4byte	.LASF26
+ 2382 0010 01       		.byte	0x1
+ 2383 0011 27010000 		.4byte	.LASF27
+ 2384 0015 D1010000 		.4byte	.LASF28
+ 2385 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 2386 001d 00000000 		.4byte	0
+ 2387 0021 00000000 		.4byte	.Ldebug_line0
+ 2388 0025 02       		.uleb128 0x2
+ 2389 0026 01       		.byte	0x1
+ 2390 0027 06       		.byte	0x6
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 48
+
+
+ 2391 0028 0A020000 		.4byte	.LASF0
+ 2392 002c 02       		.uleb128 0x2
+ 2393 002d 01       		.byte	0x1
+ 2394 002e 08       		.byte	0x8
+ 2395 002f 39000000 		.4byte	.LASF1
+ 2396 0033 02       		.uleb128 0x2
+ 2397 0034 02       		.byte	0x2
+ 2398 0035 05       		.byte	0x5
+ 2399 0036 A0010000 		.4byte	.LASF2
+ 2400 003a 02       		.uleb128 0x2
+ 2401 003b 02       		.byte	0x2
+ 2402 003c 07       		.byte	0x7
+ 2403 003d 1A000000 		.4byte	.LASF3
+ 2404 0041 02       		.uleb128 0x2
+ 2405 0042 04       		.byte	0x4
+ 2406 0043 05       		.byte	0x5
+ 2407 0044 C3010000 		.4byte	.LASF4
+ 2408 0048 02       		.uleb128 0x2
+ 2409 0049 04       		.byte	0x4
+ 2410 004a 07       		.byte	0x7
+ 2411 004b 4D000000 		.4byte	.LASF5
+ 2412 004f 02       		.uleb128 0x2
+ 2413 0050 08       		.byte	0x8
+ 2414 0051 05       		.byte	0x5
+ 2415 0052 8D010000 		.4byte	.LASF6
+ 2416 0056 02       		.uleb128 0x2
+ 2417 0057 08       		.byte	0x8
+ 2418 0058 07       		.byte	0x7
+ 2419 0059 61010000 		.4byte	.LASF7
+ 2420 005d 03       		.uleb128 0x3
+ 2421 005e 04       		.byte	0x4
+ 2422 005f 05       		.byte	0x5
+ 2423 0060 696E7400 		.ascii	"int\000"
+ 2424 0064 02       		.uleb128 0x2
+ 2425 0065 04       		.byte	0x4
+ 2426 0066 07       		.byte	0x7
+ 2427 0067 54010000 		.4byte	.LASF8
+ 2428 006b 04       		.uleb128 0x4
+ 2429 006c 20010000 		.4byte	.LASF9
+ 2430 0070 02       		.byte	0x2
+ 2431 0071 A2       		.byte	0xa2
+ 2432 0072 3A000000 		.4byte	0x3a
+ 2433 0076 04       		.uleb128 0x4
+ 2434 0077 4D010000 		.4byte	.LASF10
+ 2435 007b 02       		.byte	0x2
+ 2436 007c A3       		.byte	0xa3
+ 2437 007d 48000000 		.4byte	0x48
+ 2438 0081 04       		.uleb128 0x4
+ 2439 0082 47000000 		.4byte	.LASF11
+ 2440 0086 02       		.byte	0x2
+ 2441 0087 A5       		.byte	0xa5
+ 2442 0088 33000000 		.4byte	0x33
+ 2443 008c 04       		.uleb128 0x4
+ 2444 008d 64000000 		.4byte	.LASF12
+ 2445 0091 02       		.byte	0x2
+ 2446 0092 A6       		.byte	0xa6
+ 2447 0093 41000000 		.4byte	0x41
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 49
+
+
+ 2448 0097 02       		.uleb128 0x2
+ 2449 0098 04       		.byte	0x4
+ 2450 0099 04       		.byte	0x4
+ 2451 009a 33000000 		.4byte	.LASF13
+ 2452 009e 02       		.uleb128 0x2
+ 2453 009f 08       		.byte	0x8
+ 2454 00a0 04       		.byte	0x4
+ 2455 00a1 8B000000 		.4byte	.LASF14
+ 2456 00a5 02       		.uleb128 0x2
+ 2457 00a6 01       		.byte	0x1
+ 2458 00a7 08       		.byte	0x8
+ 2459 00a8 9B010000 		.4byte	.LASF15
+ 2460 00ac 02       		.uleb128 0x2
+ 2461 00ad 04       		.byte	0x4
+ 2462 00ae 07       		.byte	0x7
+ 2463 00af 84010000 		.4byte	.LASF16
+ 2464 00b3 05       		.uleb128 0x5
+ 2465 00b4 AA010000 		.4byte	.LASF19
+ 2466 00b8 01       		.byte	0x1
+ 2467 00b9 2A       		.byte	0x2a
+ 2468 00ba 76000000 		.4byte	0x76
+ 2469 00be 00000000 		.4byte	.LFB2
+ 2470 00c2 94000000 		.4byte	.LFE2-.LFB2
+ 2471 00c6 01       		.uleb128 0x1
+ 2472 00c7 9C       		.byte	0x9c
+ 2473 00c8 02010000 		.4byte	0x102
+ 2474 00cc 06       		.uleb128 0x6
+ 2475 00cd 0F000000 		.4byte	.LASF17
+ 2476 00d1 01       		.byte	0x1
+ 2477 00d2 2A       		.byte	0x2a
+ 2478 00d3 81000000 		.4byte	0x81
+ 2479 00d7 02       		.uleb128 0x2
+ 2480 00d8 91       		.byte	0x91
+ 2481 00d9 66       		.sleb128 -26
+ 2482 00da 06       		.uleb128 0x6
+ 2483 00db 78010000 		.4byte	.LASF18
+ 2484 00df 01       		.byte	0x1
+ 2485 00e0 2A       		.byte	0x2a
+ 2486 00e1 81000000 		.4byte	0x81
+ 2487 00e5 02       		.uleb128 0x2
+ 2488 00e6 91       		.byte	0x91
+ 2489 00e7 64       		.sleb128 -28
+ 2490 00e8 07       		.uleb128 0x7
+ 2491 00e9 CC010000 		.4byte	.LASF21
+ 2492 00ed 01       		.byte	0x1
+ 2493 00ee 2D       		.byte	0x2d
+ 2494 00ef 8C000000 		.4byte	0x8c
+ 2495 00f3 02       		.uleb128 0x2
+ 2496 00f4 91       		.byte	0x91
+ 2497 00f5 6C       		.sleb128 -20
+ 2498 00f6 08       		.uleb128 0x8
+ 2499 00f7 5F000000 		.4byte	.LASF29
+ 2500 00fb 01       		.byte	0x1
+ 2501 00fc 2E       		.byte	0x2e
+ 2502 00fd 81000000 		.4byte	0x81
+ 2503 0101 00       		.byte	0
+ 2504 0102 09       		.uleb128 0x9
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 50
+
+
+ 2505 0103 6A000000 		.4byte	.LASF20
+ 2506 0107 01       		.byte	0x1
+ 2507 0108 58       		.byte	0x58
+ 2508 0109 81000000 		.4byte	0x81
+ 2509 010d 00000000 		.4byte	.LFB3
+ 2510 0111 94010000 		.4byte	.LFE3-.LFB3
+ 2511 0115 01       		.uleb128 0x1
+ 2512 0116 9C       		.byte	0x9c
+ 2513 0117 73010000 		.4byte	0x173
+ 2514 011b 06       		.uleb128 0x6
+ 2515 011c CC010000 		.4byte	.LASF21
+ 2516 0120 01       		.byte	0x1
+ 2517 0121 58       		.byte	0x58
+ 2518 0122 76000000 		.4byte	0x76
+ 2519 0126 02       		.uleb128 0x2
+ 2520 0127 91       		.byte	0x91
+ 2521 0128 6C       		.sleb128 -20
+ 2522 0129 07       		.uleb128 0x7
+ 2523 012a 84000000 		.4byte	.LASF22
+ 2524 012e 01       		.byte	0x1
+ 2525 012f 5A       		.byte	0x5a
+ 2526 0130 81000000 		.4byte	0x81
+ 2527 0134 02       		.uleb128 0x2
+ 2528 0135 91       		.byte	0x91
+ 2529 0136 70       		.sleb128 -16
+ 2530 0137 07       		.uleb128 0x7
+ 2531 0138 00000000 		.4byte	.LASF23
+ 2532 013c 01       		.byte	0x1
+ 2533 013d 5B       		.byte	0x5b
+ 2534 013e 84010000 		.4byte	0x184
+ 2535 0142 05       		.uleb128 0x5
+ 2536 0143 03       		.byte	0x3
+ 2537 0144 00000000 		.4byte	Thermistor_LUT.4689
+ 2538 0148 0A       		.uleb128 0xa
+ 2539 0149 6D696400 		.ascii	"mid\000"
+ 2540 014d 01       		.byte	0x1
+ 2541 014e F1       		.byte	0xf1
+ 2542 014f 6B000000 		.4byte	0x6b
+ 2543 0153 02       		.uleb128 0x2
+ 2544 0154 91       		.byte	0x91
+ 2545 0155 72       		.sleb128 -14
+ 2546 0156 07       		.uleb128 0x7
+ 2547 0157 2D000000 		.4byte	.LASF24
+ 2548 015b 01       		.byte	0x1
+ 2549 015c F2       		.byte	0xf2
+ 2550 015d 6B000000 		.4byte	0x6b
+ 2551 0161 02       		.uleb128 0x2
+ 2552 0162 91       		.byte	0x91
+ 2553 0163 76       		.sleb128 -10
+ 2554 0164 07       		.uleb128 0x7
+ 2555 0165 16020000 		.4byte	.LASF25
+ 2556 0169 01       		.byte	0x1
+ 2557 016a F3       		.byte	0xf3
+ 2558 016b 6B000000 		.4byte	0x6b
+ 2559 016f 02       		.uleb128 0x2
+ 2560 0170 91       		.byte	0x91
+ 2561 0171 74       		.sleb128 -12
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 51
+
+
+ 2562 0172 00       		.byte	0
+ 2563 0173 0B       		.uleb128 0xb
+ 2564 0174 76000000 		.4byte	0x76
+ 2565 0178 84010000 		.4byte	0x184
+ 2566 017c 0C       		.uleb128 0xc
+ 2567 017d AC000000 		.4byte	0xac
+ 2568 0181 D007     		.2byte	0x7d0
+ 2569 0183 00       		.byte	0
+ 2570 0184 0D       		.uleb128 0xd
+ 2571 0185 73010000 		.4byte	0x173
+ 2572 0189 00       		.byte	0
+ 2573              		.section	.debug_abbrev,"",%progbits
+ 2574              	.Ldebug_abbrev0:
+ 2575 0000 01       		.uleb128 0x1
+ 2576 0001 11       		.uleb128 0x11
+ 2577 0002 01       		.byte	0x1
+ 2578 0003 25       		.uleb128 0x25
+ 2579 0004 0E       		.uleb128 0xe
+ 2580 0005 13       		.uleb128 0x13
+ 2581 0006 0B       		.uleb128 0xb
+ 2582 0007 03       		.uleb128 0x3
+ 2583 0008 0E       		.uleb128 0xe
+ 2584 0009 1B       		.uleb128 0x1b
+ 2585 000a 0E       		.uleb128 0xe
+ 2586 000b 55       		.uleb128 0x55
+ 2587 000c 17       		.uleb128 0x17
+ 2588 000d 11       		.uleb128 0x11
+ 2589 000e 01       		.uleb128 0x1
+ 2590 000f 10       		.uleb128 0x10
+ 2591 0010 17       		.uleb128 0x17
+ 2592 0011 00       		.byte	0
+ 2593 0012 00       		.byte	0
+ 2594 0013 02       		.uleb128 0x2
+ 2595 0014 24       		.uleb128 0x24
+ 2596 0015 00       		.byte	0
+ 2597 0016 0B       		.uleb128 0xb
+ 2598 0017 0B       		.uleb128 0xb
+ 2599 0018 3E       		.uleb128 0x3e
+ 2600 0019 0B       		.uleb128 0xb
+ 2601 001a 03       		.uleb128 0x3
+ 2602 001b 0E       		.uleb128 0xe
+ 2603 001c 00       		.byte	0
+ 2604 001d 00       		.byte	0
+ 2605 001e 03       		.uleb128 0x3
+ 2606 001f 24       		.uleb128 0x24
+ 2607 0020 00       		.byte	0
+ 2608 0021 0B       		.uleb128 0xb
+ 2609 0022 0B       		.uleb128 0xb
+ 2610 0023 3E       		.uleb128 0x3e
+ 2611 0024 0B       		.uleb128 0xb
+ 2612 0025 03       		.uleb128 0x3
+ 2613 0026 08       		.uleb128 0x8
+ 2614 0027 00       		.byte	0
+ 2615 0028 00       		.byte	0
+ 2616 0029 04       		.uleb128 0x4
+ 2617 002a 16       		.uleb128 0x16
+ 2618 002b 00       		.byte	0
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 52
+
+
+ 2619 002c 03       		.uleb128 0x3
+ 2620 002d 0E       		.uleb128 0xe
+ 2621 002e 3A       		.uleb128 0x3a
+ 2622 002f 0B       		.uleb128 0xb
+ 2623 0030 3B       		.uleb128 0x3b
+ 2624 0031 0B       		.uleb128 0xb
+ 2625 0032 49       		.uleb128 0x49
+ 2626 0033 13       		.uleb128 0x13
+ 2627 0034 00       		.byte	0
+ 2628 0035 00       		.byte	0
+ 2629 0036 05       		.uleb128 0x5
+ 2630 0037 2E       		.uleb128 0x2e
+ 2631 0038 01       		.byte	0x1
+ 2632 0039 3F       		.uleb128 0x3f
+ 2633 003a 19       		.uleb128 0x19
+ 2634 003b 03       		.uleb128 0x3
+ 2635 003c 0E       		.uleb128 0xe
+ 2636 003d 3A       		.uleb128 0x3a
+ 2637 003e 0B       		.uleb128 0xb
+ 2638 003f 3B       		.uleb128 0x3b
+ 2639 0040 0B       		.uleb128 0xb
+ 2640 0041 27       		.uleb128 0x27
+ 2641 0042 19       		.uleb128 0x19
+ 2642 0043 49       		.uleb128 0x49
+ 2643 0044 13       		.uleb128 0x13
+ 2644 0045 11       		.uleb128 0x11
+ 2645 0046 01       		.uleb128 0x1
+ 2646 0047 12       		.uleb128 0x12
+ 2647 0048 06       		.uleb128 0x6
+ 2648 0049 40       		.uleb128 0x40
+ 2649 004a 18       		.uleb128 0x18
+ 2650 004b 9642     		.uleb128 0x2116
+ 2651 004d 19       		.uleb128 0x19
+ 2652 004e 01       		.uleb128 0x1
+ 2653 004f 13       		.uleb128 0x13
+ 2654 0050 00       		.byte	0
+ 2655 0051 00       		.byte	0
+ 2656 0052 06       		.uleb128 0x6
+ 2657 0053 05       		.uleb128 0x5
+ 2658 0054 00       		.byte	0
+ 2659 0055 03       		.uleb128 0x3
+ 2660 0056 0E       		.uleb128 0xe
+ 2661 0057 3A       		.uleb128 0x3a
+ 2662 0058 0B       		.uleb128 0xb
+ 2663 0059 3B       		.uleb128 0x3b
+ 2664 005a 0B       		.uleb128 0xb
+ 2665 005b 49       		.uleb128 0x49
+ 2666 005c 13       		.uleb128 0x13
+ 2667 005d 02       		.uleb128 0x2
+ 2668 005e 18       		.uleb128 0x18
+ 2669 005f 00       		.byte	0
+ 2670 0060 00       		.byte	0
+ 2671 0061 07       		.uleb128 0x7
+ 2672 0062 34       		.uleb128 0x34
+ 2673 0063 00       		.byte	0
+ 2674 0064 03       		.uleb128 0x3
+ 2675 0065 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 53
+
+
+ 2676 0066 3A       		.uleb128 0x3a
+ 2677 0067 0B       		.uleb128 0xb
+ 2678 0068 3B       		.uleb128 0x3b
+ 2679 0069 0B       		.uleb128 0xb
+ 2680 006a 49       		.uleb128 0x49
+ 2681 006b 13       		.uleb128 0x13
+ 2682 006c 02       		.uleb128 0x2
+ 2683 006d 18       		.uleb128 0x18
+ 2684 006e 00       		.byte	0
+ 2685 006f 00       		.byte	0
+ 2686 0070 08       		.uleb128 0x8
+ 2687 0071 34       		.uleb128 0x34
+ 2688 0072 00       		.byte	0
+ 2689 0073 03       		.uleb128 0x3
+ 2690 0074 0E       		.uleb128 0xe
+ 2691 0075 3A       		.uleb128 0x3a
+ 2692 0076 0B       		.uleb128 0xb
+ 2693 0077 3B       		.uleb128 0x3b
+ 2694 0078 0B       		.uleb128 0xb
+ 2695 0079 49       		.uleb128 0x49
+ 2696 007a 13       		.uleb128 0x13
+ 2697 007b 00       		.byte	0
+ 2698 007c 00       		.byte	0
+ 2699 007d 09       		.uleb128 0x9
+ 2700 007e 2E       		.uleb128 0x2e
+ 2701 007f 01       		.byte	0x1
+ 2702 0080 3F       		.uleb128 0x3f
+ 2703 0081 19       		.uleb128 0x19
+ 2704 0082 03       		.uleb128 0x3
+ 2705 0083 0E       		.uleb128 0xe
+ 2706 0084 3A       		.uleb128 0x3a
+ 2707 0085 0B       		.uleb128 0xb
+ 2708 0086 3B       		.uleb128 0x3b
+ 2709 0087 0B       		.uleb128 0xb
+ 2710 0088 27       		.uleb128 0x27
+ 2711 0089 19       		.uleb128 0x19
+ 2712 008a 49       		.uleb128 0x49
+ 2713 008b 13       		.uleb128 0x13
+ 2714 008c 11       		.uleb128 0x11
+ 2715 008d 01       		.uleb128 0x1
+ 2716 008e 12       		.uleb128 0x12
+ 2717 008f 06       		.uleb128 0x6
+ 2718 0090 40       		.uleb128 0x40
+ 2719 0091 18       		.uleb128 0x18
+ 2720 0092 9742     		.uleb128 0x2117
+ 2721 0094 19       		.uleb128 0x19
+ 2722 0095 01       		.uleb128 0x1
+ 2723 0096 13       		.uleb128 0x13
+ 2724 0097 00       		.byte	0
+ 2725 0098 00       		.byte	0
+ 2726 0099 0A       		.uleb128 0xa
+ 2727 009a 34       		.uleb128 0x34
+ 2728 009b 00       		.byte	0
+ 2729 009c 03       		.uleb128 0x3
+ 2730 009d 08       		.uleb128 0x8
+ 2731 009e 3A       		.uleb128 0x3a
+ 2732 009f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 54
+
+
+ 2733 00a0 3B       		.uleb128 0x3b
+ 2734 00a1 0B       		.uleb128 0xb
+ 2735 00a2 49       		.uleb128 0x49
+ 2736 00a3 13       		.uleb128 0x13
+ 2737 00a4 02       		.uleb128 0x2
+ 2738 00a5 18       		.uleb128 0x18
+ 2739 00a6 00       		.byte	0
+ 2740 00a7 00       		.byte	0
+ 2741 00a8 0B       		.uleb128 0xb
+ 2742 00a9 01       		.uleb128 0x1
+ 2743 00aa 01       		.byte	0x1
+ 2744 00ab 49       		.uleb128 0x49
+ 2745 00ac 13       		.uleb128 0x13
+ 2746 00ad 01       		.uleb128 0x1
+ 2747 00ae 13       		.uleb128 0x13
+ 2748 00af 00       		.byte	0
+ 2749 00b0 00       		.byte	0
+ 2750 00b1 0C       		.uleb128 0xc
+ 2751 00b2 21       		.uleb128 0x21
+ 2752 00b3 00       		.byte	0
+ 2753 00b4 49       		.uleb128 0x49
+ 2754 00b5 13       		.uleb128 0x13
+ 2755 00b6 2F       		.uleb128 0x2f
+ 2756 00b7 05       		.uleb128 0x5
+ 2757 00b8 00       		.byte	0
+ 2758 00b9 00       		.byte	0
+ 2759 00ba 0D       		.uleb128 0xd
+ 2760 00bb 26       		.uleb128 0x26
+ 2761 00bc 00       		.byte	0
+ 2762 00bd 49       		.uleb128 0x49
+ 2763 00be 13       		.uleb128 0x13
+ 2764 00bf 00       		.byte	0
+ 2765 00c0 00       		.byte	0
+ 2766 00c1 00       		.byte	0
+ 2767              		.section	.debug_aranges,"",%progbits
+ 2768 0000 24000000 		.4byte	0x24
+ 2769 0004 0200     		.2byte	0x2
+ 2770 0006 00000000 		.4byte	.Ldebug_info0
+ 2771 000a 04       		.byte	0x4
+ 2772 000b 00       		.byte	0
+ 2773 000c 0000     		.2byte	0
+ 2774 000e 0000     		.2byte	0
+ 2775 0010 00000000 		.4byte	.LFB2
+ 2776 0014 94000000 		.4byte	.LFE2-.LFB2
+ 2777 0018 00000000 		.4byte	.LFB3
+ 2778 001c 94010000 		.4byte	.LFE3-.LFB3
+ 2779 0020 00000000 		.4byte	0
+ 2780 0024 00000000 		.4byte	0
+ 2781              		.section	.debug_ranges,"",%progbits
+ 2782              	.Ldebug_ranges0:
+ 2783 0000 00000000 		.4byte	.LFB2
+ 2784 0004 94000000 		.4byte	.LFE2
+ 2785 0008 00000000 		.4byte	.LFB3
+ 2786 000c 94010000 		.4byte	.LFE3
+ 2787 0010 00000000 		.4byte	0
+ 2788 0014 00000000 		.4byte	0
+ 2789              		.section	.debug_line,"",%progbits
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 55
+
+
+ 2790              	.Ldebug_line0:
+ 2791 0000 BC000000 		.section	.debug_str,"MS",%progbits,1
+ 2791      02004900 
+ 2791      00000201 
+ 2791      FB0E0D00 
+ 2791      01010101 
+ 2792              	.LASF23:
+ 2793 0000 54686572 		.ascii	"Thermistor_LUT\000"
+ 2793      6D697374 
+ 2793      6F725F4C 
+ 2793      555400
+ 2794              	.LASF17:
+ 2795 000f 76526566 		.ascii	"vReference\000"
+ 2795      6572656E 
+ 2795      636500
+ 2796              	.LASF3:
+ 2797 001a 73686F72 		.ascii	"short unsigned int\000"
+ 2797      7420756E 
+ 2797      7369676E 
+ 2797      65642069 
+ 2797      6E7400
+ 2798              	.LASF24:
+ 2799 002d 66697273 		.ascii	"first\000"
+ 2799      7400
+ 2800              	.LASF13:
+ 2801 0033 666C6F61 		.ascii	"float\000"
+ 2801      7400
+ 2802              	.LASF1:
+ 2803 0039 756E7369 		.ascii	"unsigned char\000"
+ 2803      676E6564 
+ 2803      20636861 
+ 2803      7200
+ 2804              	.LASF11:
+ 2805 0047 696E7431 		.ascii	"int16\000"
+ 2805      3600
+ 2806              	.LASF5:
+ 2807 004d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2807      20756E73 
+ 2807      69676E65 
+ 2807      6420696E 
+ 2807      7400
+ 2808              	.LASF29:
+ 2809 005f 74656D70 		.ascii	"temp\000"
+ 2809      00
+ 2810              	.LASF12:
+ 2811 0064 696E7433 		.ascii	"int32\000"
+ 2811      3200
+ 2812              	.LASF20:
+ 2813 006a 54686572 		.ascii	"Thermistor_GetTemperature\000"
+ 2813      6D697374 
+ 2813      6F725F47 
+ 2813      65745465 
+ 2813      6D706572 
+ 2814              	.LASF22:
+ 2815 0084 74656D70 		.ascii	"tempTR\000"
+ 2815      545200
+ 2816              	.LASF14:
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 56
+
+
+ 2817 008b 646F7562 		.ascii	"double\000"
+ 2817      6C6500
+ 2818              	.LASF26:
+ 2819 0092 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2819      4320342E 
+ 2819      392E3320 
+ 2819      32303135 
+ 2819      30333033 
+ 2820 00c5 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 2820      20726576 
+ 2820      6973696F 
+ 2820      6E203232 
+ 2820      31323230 
+ 2821 00f8 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2821      66756E63 
+ 2821      74696F6E 
+ 2821      2D736563 
+ 2821      74696F6E 
+ 2822              	.LASF9:
+ 2823 0120 75696E74 		.ascii	"uint16\000"
+ 2823      313600
+ 2824              	.LASF27:
+ 2825 0127 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\Thermistor.c\000"
+ 2825      6E657261 
+ 2825      7465645F 
+ 2825      536F7572 
+ 2825      63655C50 
+ 2826              	.LASF10:
+ 2827 014d 75696E74 		.ascii	"uint32\000"
+ 2827      333200
+ 2828              	.LASF8:
+ 2829 0154 756E7369 		.ascii	"unsigned int\000"
+ 2829      676E6564 
+ 2829      20696E74 
+ 2829      00
+ 2830              	.LASF7:
+ 2831 0161 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2831      206C6F6E 
+ 2831      6720756E 
+ 2831      7369676E 
+ 2831      65642069 
+ 2832              	.LASF18:
+ 2833 0178 76546865 		.ascii	"vThermistor\000"
+ 2833      726D6973 
+ 2833      746F7200 
+ 2834              	.LASF16:
+ 2835 0184 73697A65 		.ascii	"sizetype\000"
+ 2835      74797065 
+ 2835      00
+ 2836              	.LASF6:
+ 2837 018d 6C6F6E67 		.ascii	"long long int\000"
+ 2837      206C6F6E 
+ 2837      6720696E 
+ 2837      7400
+ 2838              	.LASF15:
+ 2839 019b 63686172 		.ascii	"char\000"
+ 2839      00
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cclc6KaJ.s 			page 57
+
+
+ 2840              	.LASF2:
+ 2841 01a0 73686F72 		.ascii	"short int\000"
+ 2841      7420696E 
+ 2841      7400
+ 2842              	.LASF19:
+ 2843 01aa 54686572 		.ascii	"Thermistor_GetResistance\000"
+ 2843      6D697374 
+ 2843      6F725F47 
+ 2843      65745265 
+ 2843      73697374 
+ 2844              	.LASF4:
+ 2845 01c3 6C6F6E67 		.ascii	"long int\000"
+ 2845      20696E74 
+ 2845      00
+ 2846              	.LASF21:
+ 2847 01cc 72657354 		.ascii	"resT\000"
+ 2847      00
+ 2848              	.LASF28:
+ 2849 01d1 433A5C55 		.ascii	"C:\\Users\\Lonnie\\Desktop\\AN91184\\Health Thermom"
+ 2849      73657273 
+ 2849      5C4C6F6E 
+ 2849      6E69655C 
+ 2849      4465736B 
+ 2850 01ff 65746572 		.ascii	"eter.cydsn\000"
+ 2850      2E637964 
+ 2850      736E00
+ 2851              	.LASF0:
+ 2852 020a 7369676E 		.ascii	"signed char\000"
+ 2852      65642063 
+ 2852      68617200 
+ 2853              	.LASF25:
+ 2854 0216 6C617374 		.ascii	"last\000"
+ 2854      00
+ 2855              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

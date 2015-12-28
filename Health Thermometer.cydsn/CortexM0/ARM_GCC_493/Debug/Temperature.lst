@@ -1,0 +1,893 @@
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"Temperature.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MeasureSensorVoltage,"ax",%progbits
+  18              		.align	2
+  19              		.code	16
+  20              		.thumb_func
+  21              		.type	MeasureSensorVoltage, %function
+  22              	MeasureSensorVoltage:
+  23              	.LFB35:
+  24              		.file 1 ".\\Temperature.c"
+   1:.\Temperature.c **** /****************************************************************************
+   2:.\Temperature.c **** * File Name: Temperature.c
+   3:.\Temperature.c **** *
+   4:.\Temperature.c **** * Version: 1.0
+   5:.\Temperature.c **** *
+   6:.\Temperature.c **** * Description:
+   7:.\Temperature.c **** * This file implements functions related to temperature measurement.
+   8:.\Temperature.c **** *
+   9:.\Temperature.c **** * Note:
+  10:.\Temperature.c **** * 
+  11:.\Temperature.c **** * Owner:
+  12:.\Temperature.c **** * PMAD
+  13:.\Temperature.c **** *
+  14:.\Temperature.c **** ******************************************************************************
+  15:.\Temperature.c **** * Copyright (2014), Cypress Semiconductor Corporation.
+  16:.\Temperature.c **** ******************************************************************************
+  17:.\Temperature.c **** * This software is owned by Cypress Semiconductor Corporation (Cypress) and is
+  18:.\Temperature.c **** * protected by and subject to worldwide patent protection (United States and
+  19:.\Temperature.c **** * foreign), United States copyright laws and international treaty provisions.
+  20:.\Temperature.c **** * Cypress hereby grants to licensee a personal, non-exclusive, non-transferable
+  21:.\Temperature.c **** * license to copy, use, modify, create derivative works of, and compile the
+  22:.\Temperature.c **** * Cypress Source Code and derivative works for the sole purpose of creating
+  23:.\Temperature.c **** * custom software in support of licensee product to be used only in conjunction
+  24:.\Temperature.c **** * with a Cypress integrated circuit as specified in the applicable agreement.
+  25:.\Temperature.c **** * Any reproduction, modification, translation, compilation, or representation of
+  26:.\Temperature.c **** * this software except as specified above is prohibited without the express
+  27:.\Temperature.c **** * written permission of Cypress.
+  28:.\Temperature.c **** *
+  29:.\Temperature.c **** * Disclaimer: CYPRESS MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, WITH
+  30:.\Temperature.c **** * REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  31:.\Temperature.c **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  32:.\Temperature.c **** * Cypress reserves the right to make changes without further notice to the
+  33:.\Temperature.c **** * materials described herein. Cypress does not assume any liability arising out
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 2
+
+
+  34:.\Temperature.c **** * of the application or use of any product or circuit described herein. Cypress
+  35:.\Temperature.c **** * does not authorize its products for use as critical components in life-support
+  36:.\Temperature.c **** * systems where a malfunction or failure may reasonably be expected to result in
+  37:.\Temperature.c **** * significant injury to the user. The inclusion of Cypress' product in a life-
+  38:.\Temperature.c **** * support systems application implies that the manufacturer assumes all risk of
+  39:.\Temperature.c **** * such use and in doing so indemnifies Cypress against all charges. Use may be
+  40:.\Temperature.c **** * limited by and subject to the applicable Cypress software license agreement.
+  41:.\Temperature.c **** *****************************************************************************/
+  42:.\Temperature.c **** 
+  43:.\Temperature.c **** 
+  44:.\Temperature.c **** /*****************************************************************************
+  45:.\Temperature.c **** * Included headers
+  46:.\Temperature.c **** *****************************************************************************/
+  47:.\Temperature.c **** #include "CommonFunctions.h"
+  48:.\Temperature.c **** #include "Temperature.h"
+  49:.\Temperature.c **** #include "printf.h"
+  50:.\Temperature.c **** /*****************************************************************************
+  51:.\Temperature.c **** * Static Functions
+  52:.\Temperature.c **** *****************************************************************************/
+  53:.\Temperature.c **** 
+  54:.\Temperature.c **** /*****************************************************************************
+  55:.\Temperature.c **** * Function Name: MeasureSensorVoltage()
+  56:.\Temperature.c **** ******************************************************************************
+  57:.\Temperature.c **** * Summary:
+  58:.\Temperature.c **** * Measures the voltage connected at ADC input. 
+  59:.\Temperature.c **** *
+  60:.\Temperature.c **** * Parameters:
+  61:.\Temperature.c **** * None
+  62:.\Temperature.c **** *
+  63:.\Temperature.c **** * Return:
+  64:.\Temperature.c **** * uint16 - Measured voltage
+  65:.\Temperature.c **** *
+  66:.\Temperature.c **** * Theory:
+  67:.\Temperature.c **** * This functions sequences the AMux to next channel and connects reference 
+  68:.\Temperature.c **** * signal or thermistor or offset signal at ADC input. It then triggers the ADC
+  69:.\Temperature.c **** * and measures the signal.
+  70:.\Temperature.c **** *
+  71:.\Temperature.c **** * Side Effects:
+  72:.\Temperature.c **** * None
+  73:.\Temperature.c **** *
+  74:.\Temperature.c **** * Note:
+  75:.\Temperature.c **** *
+  76:.\Temperature.c **** *****************************************************************************/
+  77:.\Temperature.c **** static uint16 MeasureSensorVoltage ()
+  78:.\Temperature.c **** {
+  25              		.loc 1 78 0
+  26              		.cfi_startproc
+  27 0000 80B5     		push	{r7, lr}
+  28              		.cfi_def_cfa_offset 8
+  29              		.cfi_offset 7, -8
+  30              		.cfi_offset 14, -4
+  31 0002 00AF     		add	r7, sp, #0
+  32              		.cfi_def_cfa_register 7
+  79:.\Temperature.c ****     /* Connect next channel available at AMux input to Amux output */
+  80:.\Temperature.c ****     /* Note: If no channels are connected, channel 0 gets connected by this 
+  81:.\Temperature.c ****     *  fucntion */
+  82:.\Temperature.c ****     AMuxSeq_Next();
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 3
+
+
+  33              		.loc 1 82 0
+  34 0004 FFF7FEFF 		bl	AMuxSeq_Next
+  83:.\Temperature.c ****     
+  84:.\Temperature.c ****     /* Start sample conversion */
+  85:.\Temperature.c ****     ADC_StartConvert();
+  35              		.loc 1 85 0
+  36 0008 FFF7FEFF 		bl	ADC_StartConvert
+  86:.\Temperature.c ****     
+  87:.\Temperature.c ****     /* Wait till end of two conversions and drop one sample for signal to settle 
+  88:.\Temperature.c ****     *  down, it's not required if reference is continuously available.  
+  89:.\Temperature.c ****     *  To reduce current consumption, CPU can be put to sleep while ADC conversion
+  90:.\Temperature.c ****     *  is in process. */
+  91:.\Temperature.c ****     ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  37              		.loc 1 91 0
+  38 000c 0220     		mov	r0, #2
+  39 000e FFF7FEFF 		bl	ADC_IsEndConversion
+  92:.\Temperature.c ****     ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  40              		.loc 1 92 0
+  41 0012 0220     		mov	r0, #2
+  42 0014 FFF7FEFF 		bl	ADC_IsEndConversion
+  93:.\Temperature.c ****     
+  94:.\Temperature.c ****     /* Stop ADC coversion */ 
+  95:.\Temperature.c ****     ADC_StopConvert();
+  43              		.loc 1 95 0
+  44 0018 FFF7FEFF 		bl	ADC_StopConvert
+  96:.\Temperature.c ****     
+  97:.\Temperature.c ****     /* Return 16 bit measured value */
+  98:.\Temperature.c ****     return (ADC_GetResult16(0));
+  45              		.loc 1 98 0
+  46 001c 0020     		mov	r0, #0
+  47 001e FFF7FEFF 		bl	ADC_GetResult16
+  48 0022 031C     		mov	r3, r0
+  49 0024 9BB2     		uxth	r3, r3
+  99:.\Temperature.c **** }
+  50              		.loc 1 99 0
+  51 0026 181C     		mov	r0, r3
+  52 0028 BD46     		mov	sp, r7
+  53              		@ sp needed
+  54 002a 80BD     		pop	{r7, pc}
+  55              		.cfi_endproc
+  56              	.LFE35:
+  57              		.size	MeasureSensorVoltage, .-MeasureSensorVoltage
+  58              		.section	.rodata
+  59              		.align	2
+  60              	.LC0:
+  61 0000 56545F41 		.ascii	"VT_ADC_Count=\000"
+  61      44435F43 
+  61      6F756E74 
+  61      3D00
+  62 000e 0000     		.align	2
+  63              	.LC2:
+  64 0010 256400   		.ascii	"%d\000"
+  65 0013 00       		.align	2
+  66              	.LC4:
+  67 0014 202000   		.ascii	"  \000"
+  68 0017 00       		.align	2
+  69              	.LC6:
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 4
+
+
+  70 0018 56525F41 		.ascii	"VR_ADC_Count=\000"
+  70      44435F43 
+  70      6F756E74 
+  70      3D00
+  71              		.global	__aeabi_i2f
+  72              		.global	__aeabi_f2iz
+  73 0026 0000     		.section	.text.ProcessTemperature,"ax",%progbits
+  74              		.align	2
+  75              		.global	ProcessTemperature
+  76              		.code	16
+  77              		.thumb_func
+  78              		.type	ProcessTemperature, %function
+  79              	ProcessTemperature:
+  80              	.LFB36:
+ 100:.\Temperature.c **** 
+ 101:.\Temperature.c **** /*****************************************************************************
+ 102:.\Temperature.c **** * Public Functions
+ 103:.\Temperature.c **** *****************************************************************************/
+ 104:.\Temperature.c **** 
+ 105:.\Temperature.c **** /*****************************************************************************
+ 106:.\Temperature.c **** * Function Name: ProcessTemperature()
+ 107:.\Temperature.c **** ******************************************************************************
+ 108:.\Temperature.c **** * Summary:
+ 109:.\Temperature.c **** * Measures the current temperature. 
+ 110:.\Temperature.c **** *
+ 111:.\Temperature.c **** * Parameters:
+ 112:.\Temperature.c **** * None
+ 113:.\Temperature.c **** *
+ 114:.\Temperature.c **** * Return:
+ 115:.\Temperature.c **** * uint32 - Measured temperature
+ 116:.\Temperature.c **** *
+ 117:.\Temperature.c **** * Theory:
+ 118:.\Temperature.c **** * This function measures the reference voltage, thermistor voltage and 
+ 119:.\Temperature.c **** * offset voltage. 
+ 120:.\Temperature.c **** 
+ 121:.\Temperature.c **** * Channel 0 - Reference voltage
+ 122:.\Temperature.c **** * Channel 1 - Thermistor voltage
+ 123:.\Temperature.c **** * Channel 2 - Offset voltage
+ 124:.\Temperature.c **** * 
+ 125:.\Temperature.c **** * This function removes offset via correlated double sampling and then
+ 126:.\Temperature.c **** * measures the temperature.
+ 127:.\Temperature.c **** *
+ 128:.\Temperature.c **** * Side Effects:
+ 129:.\Temperature.c **** * None
+ 130:.\Temperature.c **** *
+ 131:.\Temperature.c **** * Note:
+ 132:.\Temperature.c **** *
+ 133:.\Temperature.c **** *****************************************************************************/
+ 134:.\Temperature.c **** int32 ProcessTemperature (void)
+ 135:.\Temperature.c **** {
+  81              		.loc 1 135 0
+  82              		.cfi_startproc
+  83 0000 80B5     		push	{r7, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 7, -8
+  86              		.cfi_offset 14, -4
+  87 0002 84B0     		sub	sp, sp, #16
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 5
+
+
+  88              		.cfi_def_cfa_offset 24
+  89 0004 00AF     		add	r7, sp, #0
+  90              		.cfi_def_cfa_register 7
+ 136:.\Temperature.c ****     /* Local variables used for temperature measurement */
+ 137:.\Temperature.c ****     static float temperature = 0;
+ 138:.\Temperature.c ****     #if (SIMULATE_TEMPERATURE_SENSOR)
+ 139:.\Temperature.c ****         
+ 140:.\Temperature.c ****     int32 thermistorResistance = 0;
+  91              		.loc 1 140 0
+  92 0006 0023     		mov	r3, #0
+  93 0008 FB60     		str	r3, [r7, #12]
+ 141:.\Temperature.c ****     int16 referenceVoltage = 0;
+  94              		.loc 1 141 0
+  95 000a 0A23     		mov	r3, #10
+  96 000c FB18     		add	r3, r7, r3
+  97 000e 0022     		mov	r2, #0
+  98 0010 1A80     		strh	r2, [r3]
+ 142:.\Temperature.c ****     int16 thermistorVoltage = 0;
+  99              		.loc 1 142 0
+ 100 0012 0823     		mov	r3, #8
+ 101 0014 FB18     		add	r3, r7, r3
+ 102 0016 0022     		mov	r2, #0
+ 103 0018 1A80     		strh	r2, [r3]
+ 143:.\Temperature.c ****     int16 offsetVoltage = 0;
+ 104              		.loc 1 143 0
+ 105 001a BB1D     		add	r3, r7, #6
+ 106 001c 0022     		mov	r2, #0
+ 107 001e 1A80     		strh	r2, [r3]
+ 144:.\Temperature.c ****     
+ 145:.\Temperature.c ****     /* Check if measurement interval has expired */
+ 146:.\Temperature.c ****     if(1)
+ 147:.\Temperature.c ****     {
+ 148:.\Temperature.c ****         /* Disconnect all the pins from Amux input */
+ 149:.\Temperature.c ****         AMuxSeq_DisconnectAll();
+ 108              		.loc 1 149 0
+ 109 0020 FFF7FEFF 		bl	AMuxSeq_DisconnectAll
+ 150:.\Temperature.c ****         
+ 151:.\Temperature.c ****         /* Measure reference voltage - Channel 0 */
+ 152:.\Temperature.c ****         referenceVoltage = MeasureSensorVoltage();
+ 110              		.loc 1 152 0
+ 111 0024 FFF7FEFF 		bl	MeasureSensorVoltage
+ 112 0028 031C     		mov	r3, r0
+ 113 002a 1A1C     		mov	r2, r3
+ 114 002c 0A23     		mov	r3, #10
+ 115 002e FB18     		add	r3, r7, r3
+ 116 0030 1A80     		strh	r2, [r3]
+ 153:.\Temperature.c ****         /* Measure thermistor voltage - Channel 0 */
+ 154:.\Temperature.c ****         thermistorVoltage = MeasureSensorVoltage();
+ 117              		.loc 1 154 0
+ 118 0032 FFF7FEFF 		bl	MeasureSensorVoltage
+ 119 0036 031C     		mov	r3, r0
+ 120 0038 1A1C     		mov	r2, r3
+ 121 003a 0823     		mov	r3, #8
+ 122 003c FB18     		add	r3, r7, r3
+ 123 003e 1A80     		strh	r2, [r3]
+ 155:.\Temperature.c ****         /* Measure offset voltage - Channel 0 */
+ 156:.\Temperature.c ****         offsetVoltage = MeasureSensorVoltage();
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 6
+
+
+ 124              		.loc 1 156 0
+ 125 0040 FFF7FEFF 		bl	MeasureSensorVoltage
+ 126 0044 031C     		mov	r3, r0
+ 127 0046 1A1C     		mov	r2, r3
+ 128 0048 BB1D     		add	r3, r7, #6
+ 129 004a 1A80     		strh	r2, [r3]
+ 157:.\Temperature.c ****         
+ 158:.\Temperature.c ****         /* Measure thermistor resistance and remove offset by using correlated 
+ 159:.\Temperature.c ****         *  double sampling. */
+ 160:.\Temperature.c ****         UART_UartPutString("VT_ADC_Count=");
+ 130              		.loc 1 160 0
+ 131 004c 274B     		ldr	r3, .L5
+ 132 004e 181C     		mov	r0, r3
+ 133 0050 FFF7FEFF 		bl	UART_UartPutString
+ 161:.\Temperature.c ****         printf("%d",thermistorVoltage);
+ 134              		.loc 1 161 0
+ 135 0054 0823     		mov	r3, #8
+ 136 0056 FB18     		add	r3, r7, r3
+ 137 0058 0022     		mov	r2, #0
+ 138 005a 9B5E     		ldrsh	r3, [r3, r2]
+ 139 005c 244A     		ldr	r2, .L5+4
+ 140 005e 101C     		mov	r0, r2
+ 141 0060 191C     		mov	r1, r3
+ 142 0062 FFF7FEFF 		bl	tfp_printf
+ 162:.\Temperature.c ****         UART_UartPutString("  ");
+ 143              		.loc 1 162 0
+ 144 0066 234B     		ldr	r3, .L5+8
+ 145 0068 181C     		mov	r0, r3
+ 146 006a FFF7FEFF 		bl	UART_UartPutString
+ 163:.\Temperature.c ****         UART_UartPutString("VR_ADC_Count=");
+ 147              		.loc 1 163 0
+ 148 006e 224B     		ldr	r3, .L5+12
+ 149 0070 181C     		mov	r0, r3
+ 150 0072 FFF7FEFF 		bl	UART_UartPutString
+ 164:.\Temperature.c ****         printf("%d",referenceVoltage);
+ 151              		.loc 1 164 0
+ 152 0076 0A23     		mov	r3, #10
+ 153 0078 FB18     		add	r3, r7, r3
+ 154 007a 0022     		mov	r2, #0
+ 155 007c 9B5E     		ldrsh	r3, [r3, r2]
+ 156 007e 1C4A     		ldr	r2, .L5+4
+ 157 0080 101C     		mov	r0, r2
+ 158 0082 191C     		mov	r1, r3
+ 159 0084 FFF7FEFF 		bl	tfp_printf
+ 165:.\Temperature.c ****         UART_UartPutString("  ");
+ 160              		.loc 1 165 0
+ 161 0088 1A4B     		ldr	r3, .L5+8
+ 162 008a 181C     		mov	r0, r3
+ 163 008c FFF7FEFF 		bl	UART_UartPutString
+ 166:.\Temperature.c ****         thermistorResistance = Thermistor_GetResistance((referenceVoltage - offsetVoltage), (thermi
+ 164              		.loc 1 166 0
+ 165 0090 0A23     		mov	r3, #10
+ 166 0092 FB18     		add	r3, r7, r3
+ 167 0094 1A88     		ldrh	r2, [r3]
+ 168 0096 BB1D     		add	r3, r7, #6
+ 169 0098 1B88     		ldrh	r3, [r3]
+ 170 009a D31A     		sub	r3, r2, r3
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 7
+
+
+ 171 009c 9BB2     		uxth	r3, r3
+ 172 009e 99B2     		uxth	r1, r3
+ 173 00a0 0823     		mov	r3, #8
+ 174 00a2 FB18     		add	r3, r7, r3
+ 175 00a4 1A88     		ldrh	r2, [r3]
+ 176 00a6 BB1D     		add	r3, r7, #6
+ 177 00a8 1B88     		ldrh	r3, [r3]
+ 178 00aa D31A     		sub	r3, r2, r3
+ 179 00ac 9BB2     		uxth	r3, r3
+ 180 00ae 9BB2     		uxth	r3, r3
+ 181 00b0 0AB2     		sxth	r2, r1
+ 182 00b2 1BB2     		sxth	r3, r3
+ 183 00b4 101C     		mov	r0, r2
+ 184 00b6 191C     		mov	r1, r3
+ 185 00b8 FFF7FEFF 		bl	Thermistor_GetResistance
+ 186 00bc 031C     		mov	r3, r0
+ 187 00be FB60     		str	r3, [r7, #12]
+ 167:.\Temperature.c ****         
+ 168:.\Temperature.c ****         /* Compute temperature and remove decimal places */
+ 169:.\Temperature.c ****         temperature = Thermistor_GetTemperature(thermistorResistance);
+ 188              		.loc 1 169 0
+ 189 00c0 FB68     		ldr	r3, [r7, #12]
+ 190 00c2 181C     		mov	r0, r3
+ 191 00c4 FFF7FEFF 		bl	Thermistor_GetTemperature
+ 192 00c8 031C     		mov	r3, r0
+ 193 00ca 181C     		mov	r0, r3
+ 194 00cc FFF7FEFF 		bl	__aeabi_i2f
+ 195 00d0 021C     		add	r2, r0, #0
+ 196 00d2 0A4B     		ldr	r3, .L5+16
+ 197 00d4 1A60     		str	r2, [r3]
+ 170:.\Temperature.c ****        // temperature = temperature / 100;
+ 171:.\Temperature.c ****     }
+ 172:.\Temperature.c ****     #else
+ 173:.\Temperature.c ****     /* Check if measurement interval has expired */
+ 174:.\Temperature.c ****     //if (SystemFlag & MEASUREMENT_INTERVAL)
+ 175:.\Temperature.c ****     if(1){
+ 176:.\Temperature.c ****         temperature++;
+ 177:.\Temperature.c ****         if(temperature > 100)
+ 178:.\Temperature.c ****         {
+ 179:.\Temperature.c ****             temperature = 0;
+ 180:.\Temperature.c ****         }
+ 181:.\Temperature.c ****     }
+ 182:.\Temperature.c ****     #endif
+ 183:.\Temperature.c ****     
+ 184:.\Temperature.c ****     /* Return measured temperature */
+ 185:.\Temperature.c ****     return (temperature);
+ 198              		.loc 1 185 0
+ 199 00d6 094B     		ldr	r3, .L5+16
+ 200 00d8 1B68     		ldr	r3, [r3]
+ 201 00da 181C     		add	r0, r3, #0
+ 202 00dc FFF7FEFF 		bl	__aeabi_f2iz
+ 203 00e0 031C     		mov	r3, r0
+ 186:.\Temperature.c **** }
+ 204              		.loc 1 186 0
+ 205 00e2 181C     		mov	r0, r3
+ 206 00e4 BD46     		mov	sp, r7
+ 207 00e6 04B0     		add	sp, sp, #16
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 8
+
+
+ 208              		@ sp needed
+ 209 00e8 80BD     		pop	{r7, pc}
+ 210              	.L6:
+ 211 00ea C046     		.align	2
+ 212              	.L5:
+ 213 00ec 00000000 		.word	.LC0
+ 214 00f0 10000000 		.word	.LC2
+ 215 00f4 14000000 		.word	.LC4
+ 216 00f8 18000000 		.word	.LC6
+ 217 00fc 00000000 		.word	temperature.5396
+ 218              		.cfi_endproc
+ 219              	.LFE36:
+ 220              		.size	ProcessTemperature, .-ProcessTemperature
+ 221              		.bss
+ 222              		.align	2
+ 223              	temperature.5396:
+ 224 0000 00000000 		.space	4
+ 225              		.text
+ 226              	.Letext0:
+ 227              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 228              		.section	.debug_info,"",%progbits
+ 229              	.Ldebug_info0:
+ 230 0000 19010000 		.4byte	0x119
+ 231 0004 0400     		.2byte	0x4
+ 232 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 233 000a 04       		.byte	0x4
+ 234 000b 01       		.uleb128 0x1
+ 235 000c EB000000 		.4byte	.LASF21
+ 236 0010 01       		.byte	0x1
+ 237 0011 CD010000 		.4byte	.LASF22
+ 238 0015 51000000 		.4byte	.LASF23
+ 239 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 240 001d 00000000 		.4byte	0
+ 241 0021 00000000 		.4byte	.Ldebug_line0
+ 242 0025 02       		.uleb128 0x2
+ 243 0026 01       		.byte	0x1
+ 244 0027 06       		.byte	0x6
+ 245 0028 BB010000 		.4byte	.LASF0
+ 246 002c 02       		.uleb128 0x2
+ 247 002d 01       		.byte	0x1
+ 248 002e 08       		.byte	0x8
+ 249 002f 43000000 		.4byte	.LASF1
+ 250 0033 02       		.uleb128 0x2
+ 251 0034 02       		.byte	0x2
+ 252 0035 05       		.byte	0x5
+ 253 0036 E3010000 		.4byte	.LASF2
+ 254 003a 02       		.uleb128 0x2
+ 255 003b 02       		.byte	0x2
+ 256 003c 07       		.byte	0x7
+ 257 003d A8010000 		.4byte	.LASF3
+ 258 0041 02       		.uleb128 0x2
+ 259 0042 04       		.byte	0x4
+ 260 0043 05       		.byte	0x5
+ 261 0044 98010000 		.4byte	.LASF4
+ 262 0048 02       		.uleb128 0x2
+ 263 0049 04       		.byte	0x4
+ 264 004a 07       		.byte	0x7
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 9
+
+
+ 265 004b C2000000 		.4byte	.LASF5
+ 266 004f 02       		.uleb128 0x2
+ 267 0050 08       		.byte	0x8
+ 268 0051 05       		.byte	0x5
+ 269 0052 00000000 		.4byte	.LASF6
+ 270 0056 02       		.uleb128 0x2
+ 271 0057 08       		.byte	0x8
+ 272 0058 07       		.byte	0x7
+ 273 0059 D4000000 		.4byte	.LASF7
+ 274 005d 03       		.uleb128 0x3
+ 275 005e 04       		.byte	0x4
+ 276 005f 05       		.byte	0x5
+ 277 0060 696E7400 		.ascii	"int\000"
+ 278 0064 02       		.uleb128 0x2
+ 279 0065 04       		.byte	0x4
+ 280 0066 07       		.byte	0x7
+ 281 0067 21000000 		.4byte	.LASF8
+ 282 006b 04       		.uleb128 0x4
+ 283 006c ED010000 		.4byte	.LASF9
+ 284 0070 02       		.byte	0x2
+ 285 0071 A2       		.byte	0xa2
+ 286 0072 3A000000 		.4byte	0x3a
+ 287 0076 04       		.uleb128 0x4
+ 288 0077 DD010000 		.4byte	.LASF10
+ 289 007b 02       		.byte	0x2
+ 290 007c A5       		.byte	0xa5
+ 291 007d 33000000 		.4byte	0x33
+ 292 0081 04       		.uleb128 0x4
+ 293 0082 FD010000 		.4byte	.LASF11
+ 294 0086 02       		.byte	0x2
+ 295 0087 A6       		.byte	0xa6
+ 296 0088 41000000 		.4byte	0x41
+ 297 008c 02       		.uleb128 0x2
+ 298 008d 04       		.byte	0x4
+ 299 008e 04       		.byte	0x4
+ 300 008f C7010000 		.4byte	.LASF12
+ 301 0093 02       		.uleb128 0x2
+ 302 0094 08       		.byte	0x8
+ 303 0095 04       		.byte	0x4
+ 304 0096 A1010000 		.4byte	.LASF13
+ 305 009a 02       		.uleb128 0x2
+ 306 009b 01       		.byte	0x1
+ 307 009c 08       		.byte	0x8
+ 308 009d 85010000 		.4byte	.LASF14
+ 309 00a1 02       		.uleb128 0x2
+ 310 00a2 04       		.byte	0x4
+ 311 00a3 07       		.byte	0x7
+ 312 00a4 F4010000 		.4byte	.LASF15
+ 313 00a8 05       		.uleb128 0x5
+ 314 00a9 2E000000 		.4byte	.LASF24
+ 315 00ad 01       		.byte	0x1
+ 316 00ae 4D       		.byte	0x4d
+ 317 00af 6B000000 		.4byte	0x6b
+ 318 00b3 00000000 		.4byte	.LFB35
+ 319 00b7 2C000000 		.4byte	.LFE35-.LFB35
+ 320 00bb 01       		.uleb128 0x1
+ 321 00bc 9C       		.byte	0x9c
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 10
+
+
+ 322 00bd 06       		.uleb128 0x6
+ 323 00be 0E000000 		.4byte	.LASF25
+ 324 00c2 01       		.byte	0x1
+ 325 00c3 86       		.byte	0x86
+ 326 00c4 81000000 		.4byte	0x81
+ 327 00c8 00000000 		.4byte	.LFB36
+ 328 00cc 00010000 		.4byte	.LFE36-.LFB36
+ 329 00d0 01       		.uleb128 0x1
+ 330 00d1 9C       		.byte	0x9c
+ 331 00d2 07       		.uleb128 0x7
+ 332 00d3 79010000 		.4byte	.LASF16
+ 333 00d7 01       		.byte	0x1
+ 334 00d8 89       		.byte	0x89
+ 335 00d9 8C000000 		.4byte	0x8c
+ 336 00dd 05       		.uleb128 0x5
+ 337 00de 03       		.byte	0x3
+ 338 00df 00000000 		.4byte	temperature.5396
+ 339 00e3 07       		.uleb128 0x7
+ 340 00e4 9B000000 		.4byte	.LASF17
+ 341 00e8 01       		.byte	0x1
+ 342 00e9 8C       		.byte	0x8c
+ 343 00ea 81000000 		.4byte	0x81
+ 344 00ee 02       		.uleb128 0x2
+ 345 00ef 91       		.byte	0x91
+ 346 00f0 74       		.sleb128 -12
+ 347 00f1 07       		.uleb128 0x7
+ 348 00f2 8A000000 		.4byte	.LASF18
+ 349 00f6 01       		.byte	0x1
+ 350 00f7 8D       		.byte	0x8d
+ 351 00f8 76000000 		.4byte	0x76
+ 352 00fc 02       		.uleb128 0x2
+ 353 00fd 91       		.byte	0x91
+ 354 00fe 72       		.sleb128 -14
+ 355 00ff 07       		.uleb128 0x7
+ 356 0100 B0000000 		.4byte	.LASF19
+ 357 0104 01       		.byte	0x1
+ 358 0105 8E       		.byte	0x8e
+ 359 0106 76000000 		.4byte	0x76
+ 360 010a 02       		.uleb128 0x2
+ 361 010b 91       		.byte	0x91
+ 362 010c 70       		.sleb128 -16
+ 363 010d 07       		.uleb128 0x7
+ 364 010e 8A010000 		.4byte	.LASF20
+ 365 0112 01       		.byte	0x1
+ 366 0113 8F       		.byte	0x8f
+ 367 0114 76000000 		.4byte	0x76
+ 368 0118 02       		.uleb128 0x2
+ 369 0119 91       		.byte	0x91
+ 370 011a 6E       		.sleb128 -18
+ 371 011b 00       		.byte	0
+ 372 011c 00       		.byte	0
+ 373              		.section	.debug_abbrev,"",%progbits
+ 374              	.Ldebug_abbrev0:
+ 375 0000 01       		.uleb128 0x1
+ 376 0001 11       		.uleb128 0x11
+ 377 0002 01       		.byte	0x1
+ 378 0003 25       		.uleb128 0x25
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 11
+
+
+ 379 0004 0E       		.uleb128 0xe
+ 380 0005 13       		.uleb128 0x13
+ 381 0006 0B       		.uleb128 0xb
+ 382 0007 03       		.uleb128 0x3
+ 383 0008 0E       		.uleb128 0xe
+ 384 0009 1B       		.uleb128 0x1b
+ 385 000a 0E       		.uleb128 0xe
+ 386 000b 55       		.uleb128 0x55
+ 387 000c 17       		.uleb128 0x17
+ 388 000d 11       		.uleb128 0x11
+ 389 000e 01       		.uleb128 0x1
+ 390 000f 10       		.uleb128 0x10
+ 391 0010 17       		.uleb128 0x17
+ 392 0011 00       		.byte	0
+ 393 0012 00       		.byte	0
+ 394 0013 02       		.uleb128 0x2
+ 395 0014 24       		.uleb128 0x24
+ 396 0015 00       		.byte	0
+ 397 0016 0B       		.uleb128 0xb
+ 398 0017 0B       		.uleb128 0xb
+ 399 0018 3E       		.uleb128 0x3e
+ 400 0019 0B       		.uleb128 0xb
+ 401 001a 03       		.uleb128 0x3
+ 402 001b 0E       		.uleb128 0xe
+ 403 001c 00       		.byte	0
+ 404 001d 00       		.byte	0
+ 405 001e 03       		.uleb128 0x3
+ 406 001f 24       		.uleb128 0x24
+ 407 0020 00       		.byte	0
+ 408 0021 0B       		.uleb128 0xb
+ 409 0022 0B       		.uleb128 0xb
+ 410 0023 3E       		.uleb128 0x3e
+ 411 0024 0B       		.uleb128 0xb
+ 412 0025 03       		.uleb128 0x3
+ 413 0026 08       		.uleb128 0x8
+ 414 0027 00       		.byte	0
+ 415 0028 00       		.byte	0
+ 416 0029 04       		.uleb128 0x4
+ 417 002a 16       		.uleb128 0x16
+ 418 002b 00       		.byte	0
+ 419 002c 03       		.uleb128 0x3
+ 420 002d 0E       		.uleb128 0xe
+ 421 002e 3A       		.uleb128 0x3a
+ 422 002f 0B       		.uleb128 0xb
+ 423 0030 3B       		.uleb128 0x3b
+ 424 0031 0B       		.uleb128 0xb
+ 425 0032 49       		.uleb128 0x49
+ 426 0033 13       		.uleb128 0x13
+ 427 0034 00       		.byte	0
+ 428 0035 00       		.byte	0
+ 429 0036 05       		.uleb128 0x5
+ 430 0037 2E       		.uleb128 0x2e
+ 431 0038 00       		.byte	0
+ 432 0039 03       		.uleb128 0x3
+ 433 003a 0E       		.uleb128 0xe
+ 434 003b 3A       		.uleb128 0x3a
+ 435 003c 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 12
+
+
+ 436 003d 3B       		.uleb128 0x3b
+ 437 003e 0B       		.uleb128 0xb
+ 438 003f 49       		.uleb128 0x49
+ 439 0040 13       		.uleb128 0x13
+ 440 0041 11       		.uleb128 0x11
+ 441 0042 01       		.uleb128 0x1
+ 442 0043 12       		.uleb128 0x12
+ 443 0044 06       		.uleb128 0x6
+ 444 0045 40       		.uleb128 0x40
+ 445 0046 18       		.uleb128 0x18
+ 446 0047 9642     		.uleb128 0x2116
+ 447 0049 19       		.uleb128 0x19
+ 448 004a 00       		.byte	0
+ 449 004b 00       		.byte	0
+ 450 004c 06       		.uleb128 0x6
+ 451 004d 2E       		.uleb128 0x2e
+ 452 004e 01       		.byte	0x1
+ 453 004f 3F       		.uleb128 0x3f
+ 454 0050 19       		.uleb128 0x19
+ 455 0051 03       		.uleb128 0x3
+ 456 0052 0E       		.uleb128 0xe
+ 457 0053 3A       		.uleb128 0x3a
+ 458 0054 0B       		.uleb128 0xb
+ 459 0055 3B       		.uleb128 0x3b
+ 460 0056 0B       		.uleb128 0xb
+ 461 0057 27       		.uleb128 0x27
+ 462 0058 19       		.uleb128 0x19
+ 463 0059 49       		.uleb128 0x49
+ 464 005a 13       		.uleb128 0x13
+ 465 005b 11       		.uleb128 0x11
+ 466 005c 01       		.uleb128 0x1
+ 467 005d 12       		.uleb128 0x12
+ 468 005e 06       		.uleb128 0x6
+ 469 005f 40       		.uleb128 0x40
+ 470 0060 18       		.uleb128 0x18
+ 471 0061 9642     		.uleb128 0x2116
+ 472 0063 19       		.uleb128 0x19
+ 473 0064 00       		.byte	0
+ 474 0065 00       		.byte	0
+ 475 0066 07       		.uleb128 0x7
+ 476 0067 34       		.uleb128 0x34
+ 477 0068 00       		.byte	0
+ 478 0069 03       		.uleb128 0x3
+ 479 006a 0E       		.uleb128 0xe
+ 480 006b 3A       		.uleb128 0x3a
+ 481 006c 0B       		.uleb128 0xb
+ 482 006d 3B       		.uleb128 0x3b
+ 483 006e 0B       		.uleb128 0xb
+ 484 006f 49       		.uleb128 0x49
+ 485 0070 13       		.uleb128 0x13
+ 486 0071 02       		.uleb128 0x2
+ 487 0072 18       		.uleb128 0x18
+ 488 0073 00       		.byte	0
+ 489 0074 00       		.byte	0
+ 490 0075 00       		.byte	0
+ 491              		.section	.debug_aranges,"",%progbits
+ 492 0000 24000000 		.4byte	0x24
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 13
+
+
+ 493 0004 0200     		.2byte	0x2
+ 494 0006 00000000 		.4byte	.Ldebug_info0
+ 495 000a 04       		.byte	0x4
+ 496 000b 00       		.byte	0
+ 497 000c 0000     		.2byte	0
+ 498 000e 0000     		.2byte	0
+ 499 0010 00000000 		.4byte	.LFB35
+ 500 0014 2C000000 		.4byte	.LFE35-.LFB35
+ 501 0018 00000000 		.4byte	.LFB36
+ 502 001c 00010000 		.4byte	.LFE36-.LFB36
+ 503 0020 00000000 		.4byte	0
+ 504 0024 00000000 		.4byte	0
+ 505              		.section	.debug_ranges,"",%progbits
+ 506              	.Ldebug_ranges0:
+ 507 0000 00000000 		.4byte	.LFB35
+ 508 0004 2C000000 		.4byte	.LFE35
+ 509 0008 00000000 		.4byte	.LFB36
+ 510 000c 00010000 		.4byte	.LFE36
+ 511 0010 00000000 		.4byte	0
+ 512 0014 00000000 		.4byte	0
+ 513              		.section	.debug_line,"",%progbits
+ 514              	.Ldebug_line0:
+ 515 0000 8C000000 		.section	.debug_str,"MS",%progbits,1
+ 515      02004A00 
+ 515      00000201 
+ 515      FB0E0D00 
+ 515      01010101 
+ 516              	.LASF6:
+ 517 0000 6C6F6E67 		.ascii	"long long int\000"
+ 517      206C6F6E 
+ 517      6720696E 
+ 517      7400
+ 518              	.LASF25:
+ 519 000e 50726F63 		.ascii	"ProcessTemperature\000"
+ 519      65737354 
+ 519      656D7065 
+ 519      72617475 
+ 519      726500
+ 520              	.LASF8:
+ 521 0021 756E7369 		.ascii	"unsigned int\000"
+ 521      676E6564 
+ 521      20696E74 
+ 521      00
+ 522              	.LASF24:
+ 523 002e 4D656173 		.ascii	"MeasureSensorVoltage\000"
+ 523      75726553 
+ 523      656E736F 
+ 523      72566F6C 
+ 523      74616765 
+ 524              	.LASF1:
+ 525 0043 756E7369 		.ascii	"unsigned char\000"
+ 525      676E6564 
+ 525      20636861 
+ 525      7200
+ 526              	.LASF23:
+ 527 0051 433A5C55 		.ascii	"C:\\Users\\Lonnie\\Desktop\\AN91184\\Health Thermom"
+ 527      73657273 
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 14
+
+
+ 527      5C4C6F6E 
+ 527      6E69655C 
+ 527      4465736B 
+ 528 007f 65746572 		.ascii	"eter.cydsn\000"
+ 528      2E637964 
+ 528      736E00
+ 529              	.LASF18:
+ 530 008a 72656665 		.ascii	"referenceVoltage\000"
+ 530      72656E63 
+ 530      65566F6C 
+ 530      74616765 
+ 530      00
+ 531              	.LASF17:
+ 532 009b 74686572 		.ascii	"thermistorResistance\000"
+ 532      6D697374 
+ 532      6F725265 
+ 532      73697374 
+ 532      616E6365 
+ 533              	.LASF19:
+ 534 00b0 74686572 		.ascii	"thermistorVoltage\000"
+ 534      6D697374 
+ 534      6F72566F 
+ 534      6C746167 
+ 534      6500
+ 535              	.LASF5:
+ 536 00c2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 536      20756E73 
+ 536      69676E65 
+ 536      6420696E 
+ 536      7400
+ 537              	.LASF7:
+ 538 00d4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 538      206C6F6E 
+ 538      6720756E 
+ 538      7369676E 
+ 538      65642069 
+ 539              	.LASF21:
+ 540 00eb 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 540      4320342E 
+ 540      392E3320 
+ 540      32303135 
+ 540      30333033 
+ 541 011e 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 541      20726576 
+ 541      6973696F 
+ 541      6E203232 
+ 541      31323230 
+ 542 0151 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 542      66756E63 
+ 542      74696F6E 
+ 542      2D736563 
+ 542      74696F6E 
+ 543              	.LASF16:
+ 544 0179 74656D70 		.ascii	"temperature\000"
+ 544      65726174 
+ 544      75726500 
+ 545              	.LASF14:
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\cc271nEg.s 			page 15
+
+
+ 546 0185 63686172 		.ascii	"char\000"
+ 546      00
+ 547              	.LASF20:
+ 548 018a 6F666673 		.ascii	"offsetVoltage\000"
+ 548      6574566F 
+ 548      6C746167 
+ 548      6500
+ 549              	.LASF4:
+ 550 0198 6C6F6E67 		.ascii	"long int\000"
+ 550      20696E74 
+ 550      00
+ 551              	.LASF13:
+ 552 01a1 646F7562 		.ascii	"double\000"
+ 552      6C6500
+ 553              	.LASF3:
+ 554 01a8 73686F72 		.ascii	"short unsigned int\000"
+ 554      7420756E 
+ 554      7369676E 
+ 554      65642069 
+ 554      6E7400
+ 555              	.LASF0:
+ 556 01bb 7369676E 		.ascii	"signed char\000"
+ 556      65642063 
+ 556      68617200 
+ 557              	.LASF12:
+ 558 01c7 666C6F61 		.ascii	"float\000"
+ 558      7400
+ 559              	.LASF22:
+ 560 01cd 2E5C5465 		.ascii	".\\Temperature.c\000"
+ 560      6D706572 
+ 560      61747572 
+ 560      652E6300 
+ 561              	.LASF10:
+ 562 01dd 696E7431 		.ascii	"int16\000"
+ 562      3600
+ 563              	.LASF2:
+ 564 01e3 73686F72 		.ascii	"short int\000"
+ 564      7420696E 
+ 564      7400
+ 565              	.LASF9:
+ 566 01ed 75696E74 		.ascii	"uint16\000"
+ 566      313600
+ 567              	.LASF15:
+ 568 01f4 73697A65 		.ascii	"sizetype\000"
+ 568      74797065 
+ 568      00
+ 569              	.LASF11:
+ 570 01fd 696E7433 		.ascii	"int32\000"
+ 570      3200
+ 571              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

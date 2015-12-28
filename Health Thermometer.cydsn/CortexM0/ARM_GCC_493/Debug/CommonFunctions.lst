@@ -1,0 +1,734 @@
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"CommonFunctions.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	SystemFlag
+  18              		.bss
+  19              		.align	2
+  20              		.type	SystemFlag, %object
+  21              		.size	SystemFlag, 4
+  22              	SystemFlag:
+  23 0000 00000000 		.space	4
+  24              		.section	.text.InitializeSystem,"ax",%progbits
+  25              		.align	2
+  26              		.global	InitializeSystem
+  27              		.code	16
+  28              		.thumb_func
+  29              		.type	InitializeSystem, %function
+  30              	InitializeSystem:
+  31              	.LFB35:
+  32              		.file 1 ".\\CommonFunctions.c"
+   1:.\CommonFunctions.c **** /****************************************************************************
+   2:.\CommonFunctions.c **** * File Name: CommonFunctions.c
+   3:.\CommonFunctions.c **** *
+   4:.\CommonFunctions.c **** * Version: 1.0
+   5:.\CommonFunctions.c **** *
+   6:.\CommonFunctions.c **** * Description:
+   7:.\CommonFunctions.c **** * This file implements the common functions used by the application.
+   8:.\CommonFunctions.c **** *
+   9:.\CommonFunctions.c **** * Note:
+  10:.\CommonFunctions.c **** * 
+  11:.\CommonFunctions.c **** * Owner:
+  12:.\CommonFunctions.c **** * PMAD
+  13:.\CommonFunctions.c **** *
+  14:.\CommonFunctions.c **** ******************************************************************************
+  15:.\CommonFunctions.c **** * Copyright (2014), Cypress Semiconductor Corporation.
+  16:.\CommonFunctions.c **** ******************************************************************************
+  17:.\CommonFunctions.c **** * This software is owned by Cypress Semiconductor Corporation (Cypress) and is
+  18:.\CommonFunctions.c **** * protected by and subject to worldwide patent protection (United States and
+  19:.\CommonFunctions.c **** * foreign), United States copyright laws and international treaty provisions.
+  20:.\CommonFunctions.c **** * Cypress hereby grants to licensee a personal, non-exclusive, non-transferable
+  21:.\CommonFunctions.c **** * license to copy, use, modify, create derivative works of, and compile the
+  22:.\CommonFunctions.c **** * Cypress Source Code and derivative works for the sole purpose of creating
+  23:.\CommonFunctions.c **** * custom software in support of licensee product to be used only in conjunction
+  24:.\CommonFunctions.c **** * with a Cypress integrated circuit as specified in the applicable agreement.
+  25:.\CommonFunctions.c **** * Any reproduction, modification, translation, compilation, or representation of
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 2
+
+
+  26:.\CommonFunctions.c **** * this software except as specified above is prohibited without the express
+  27:.\CommonFunctions.c **** * written permission of Cypress.
+  28:.\CommonFunctions.c **** *
+  29:.\CommonFunctions.c **** * Disclaimer: CYPRESS MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, WITH
+  30:.\CommonFunctions.c **** * REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  31:.\CommonFunctions.c **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  32:.\CommonFunctions.c **** * Cypress reserves the right to make changes without further notice to the
+  33:.\CommonFunctions.c **** * materials described herein. Cypress does not assume any liability arising out
+  34:.\CommonFunctions.c **** * of the application or use of any product or circuit described herein. Cypress
+  35:.\CommonFunctions.c **** * does not authorize its products for use as critical components in life-support
+  36:.\CommonFunctions.c **** * systems where a malfunction or failure may reasonably be expected to result in
+  37:.\CommonFunctions.c **** * significant injury to the user. The inclusion of Cypress' product in a life-
+  38:.\CommonFunctions.c **** * support systems application implies that the manufacturer assumes all risk of
+  39:.\CommonFunctions.c **** * such use and in doing so indemnifies Cypress against all charges. Use may be
+  40:.\CommonFunctions.c **** * limited by and subject to the applicable Cypress software license agreement.
+  41:.\CommonFunctions.c **** *****************************************************************************/
+  42:.\CommonFunctions.c **** 
+  43:.\CommonFunctions.c **** 
+  44:.\CommonFunctions.c **** /*****************************************************************************
+  45:.\CommonFunctions.c **** * Included headers
+  46:.\CommonFunctions.c **** *****************************************************************************/
+  47:.\CommonFunctions.c **** #include "CommonFunctions.h"
+  48:.\CommonFunctions.c **** //#include "BLE_HTSS.h"
+  49:.\CommonFunctions.c **** 
+  50:.\CommonFunctions.c **** /*****************************************************************************
+  51:.\CommonFunctions.c **** * Macros and constants
+  52:.\CommonFunctions.c **** *****************************************************************************/
+  53:.\CommonFunctions.c **** #define             DRIVE_HIGH              (1u)
+  54:.\CommonFunctions.c **** #define             DRIVE_LOW               (0u)
+  55:.\CommonFunctions.c **** 
+  56:.\CommonFunctions.c **** /* System Flag used to indicate system status */
+  57:.\CommonFunctions.c **** uint32 SystemFlag = 0;
+  58:.\CommonFunctions.c **** 
+  59:.\CommonFunctions.c **** /*****************************************************************************
+  60:.\CommonFunctions.c **** * Function Definitions
+  61:.\CommonFunctions.c **** *****************************************************************************/
+  62:.\CommonFunctions.c **** 
+  63:.\CommonFunctions.c **** /*****************************************************************************
+  64:.\CommonFunctions.c **** * Public Functions
+  65:.\CommonFunctions.c **** *****************************************************************************/
+  66:.\CommonFunctions.c **** 
+  67:.\CommonFunctions.c **** /*****************************************************************************
+  68:.\CommonFunctions.c **** * Function Name: InitializeSystem()
+  69:.\CommonFunctions.c **** ******************************************************************************
+  70:.\CommonFunctions.c **** * Summary:
+  71:.\CommonFunctions.c **** * Initializes the complete system resources. 
+  72:.\CommonFunctions.c **** *
+  73:.\CommonFunctions.c **** * Parameters:
+  74:.\CommonFunctions.c **** * None
+  75:.\CommonFunctions.c **** *
+  76:.\CommonFunctions.c **** * Return:
+  77:.\CommonFunctions.c **** * None
+  78:.\CommonFunctions.c **** *
+  79:.\CommonFunctions.c **** * Theory:
+  80:.\CommonFunctions.c **** * Initializes the system resources - enables BLE, starts ADC, clear SW 
+  81:.\CommonFunctions.c **** * interrupt and drives the reference signals for temperature measurement. 
+  82:.\CommonFunctions.c **** *
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 3
+
+
+  83:.\CommonFunctions.c **** * Side Effects:
+  84:.\CommonFunctions.c **** * None
+  85:.\CommonFunctions.c **** *
+  86:.\CommonFunctions.c **** * Note:
+  87:.\CommonFunctions.c **** *
+  88:.\CommonFunctions.c **** *****************************************************************************/
+  89:.\CommonFunctions.c **** void InitializeSystem (void)
+  90:.\CommonFunctions.c **** {
+  33              		.loc 1 90 0
+  34              		.cfi_startproc
+  35 0000 80B5     		push	{r7, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 7, -8
+  38              		.cfi_offset 14, -4
+  39 0002 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  91:.\CommonFunctions.c ****     /* Clear wakeup pin interrupt */
+  92:.\CommonFunctions.c ****     SW_ClearInterrupt();
+  41              		.loc 1 92 0
+  42 0004 FFF7FEFF 		bl	SW_ClearInterrupt
+  93:.\CommonFunctions.c ****     
+  94:.\CommonFunctions.c ****     /* Generate reference signals for temperature measurement */
+  95:.\CommonFunctions.c ****     V_HIGH_Write(DRIVE_HIGH);
+  43              		.loc 1 95 0
+  44 0008 0120     		mov	r0, #1
+  45 000a FFF7FEFF 		bl	V_HIGH_Write
+  96:.\CommonFunctions.c ****     V_LOW_Write(DRIVE_LOW);
+  46              		.loc 1 96 0
+  47 000e 0020     		mov	r0, #0
+  48 0010 FFF7FEFF 		bl	V_LOW_Write
+  97:.\CommonFunctions.c ****     
+  98:.\CommonFunctions.c ****     /* Enable BLE and related resouces */
+  99:.\CommonFunctions.c **** //    EnableBLE();
+ 100:.\CommonFunctions.c ****     
+ 101:.\CommonFunctions.c ****     /* Enable ADC for temperature measurement */
+ 102:.\CommonFunctions.c ****     ADC_Start();
+  49              		.loc 1 102 0
+  50 0014 FFF7FEFF 		bl	ADC_Start
+ 103:.\CommonFunctions.c ****     UART_Start();
+  51              		.loc 1 103 0
+  52 0018 FFF7FEFF 		bl	UART_Start
+ 104:.\CommonFunctions.c ****     Opamp_1_Start();
+  53              		.loc 1 104 0
+  54 001c FFF7FEFF 		bl	Opamp_1_Start
+ 105:.\CommonFunctions.c ****     Opamp_2_Start();
+  55              		.loc 1 105 0
+  56 0020 FFF7FEFF 		bl	Opamp_2_Start
+ 106:.\CommonFunctions.c **** }
+  57              		.loc 1 106 0
+  58 0024 BD46     		mov	sp, r7
+  59              		@ sp needed
+  60 0026 80BD     		pop	{r7, pc}
+  61              		.cfi_endproc
+  62              	.LFE35:
+  63              		.size	InitializeSystem, .-InitializeSystem
+  64              		.section	.text.PrepareForDeepSleep,"ax",%progbits
+  65              		.align	2
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 4
+
+
+  66              		.global	PrepareForDeepSleep
+  67              		.code	16
+  68              		.thumb_func
+  69              		.type	PrepareForDeepSleep, %function
+  70              	PrepareForDeepSleep:
+  71              	.LFB36:
+ 107:.\CommonFunctions.c **** 
+ 108:.\CommonFunctions.c **** /*****************************************************************************
+ 109:.\CommonFunctions.c **** * Function Name: PrepareForDeepSleep()
+ 110:.\CommonFunctions.c **** ******************************************************************************
+ 111:.\CommonFunctions.c **** * Summary:
+ 112:.\CommonFunctions.c **** * Prepare the system for deep sleep
+ 113:.\CommonFunctions.c **** *
+ 114:.\CommonFunctions.c **** * Parameters:
+ 115:.\CommonFunctions.c **** * None
+ 116:.\CommonFunctions.c **** *
+ 117:.\CommonFunctions.c **** * Return:
+ 118:.\CommonFunctions.c **** * None
+ 119:.\CommonFunctions.c **** *
+ 120:.\CommonFunctions.c **** * Theory:
+ 121:.\CommonFunctions.c **** * Disables the block to prepare the system for deep sleep 
+ 122:.\CommonFunctions.c **** *
+ 123:.\CommonFunctions.c **** * Side Effects:
+ 124:.\CommonFunctions.c **** * None
+ 125:.\CommonFunctions.c **** *
+ 126:.\CommonFunctions.c **** * Note:
+ 127:.\CommonFunctions.c **** *
+ 128:.\CommonFunctions.c **** *****************************************************************************/
+ 129:.\CommonFunctions.c **** void PrepareForDeepSleep (void)
+ 130:.\CommonFunctions.c **** {
+  72              		.loc 1 130 0
+  73              		.cfi_startproc
+  74 0000 80B5     		push	{r7, lr}
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 7, -8
+  77              		.cfi_offset 14, -4
+  78 0002 00AF     		add	r7, sp, #0
+  79              		.cfi_def_cfa_register 7
+ 131:.\CommonFunctions.c ****     /* Disable reference signal to ensure no leakage currents */
+ 132:.\CommonFunctions.c ****     V_HIGH_Write(DRIVE_LOW);
+  80              		.loc 1 132 0
+  81 0004 0020     		mov	r0, #0
+  82 0006 FFF7FEFF 		bl	V_HIGH_Write
+ 133:.\CommonFunctions.c ****     V_LOW_Write(DRIVE_LOW);
+  83              		.loc 1 133 0
+  84 000a 0020     		mov	r0, #0
+  85 000c FFF7FEFF 		bl	V_LOW_Write
+ 134:.\CommonFunctions.c ****     
+ 135:.\CommonFunctions.c ****     /* If ADC is enabled then disable ADC */
+ 136:.\CommonFunctions.c ****     /* Note: Calling ADC_Sleep twice will disable ADC. ADC_Start function 
+ 137:.\CommonFunctions.c ****     *  should be called instead of ADC_Wakeup function to re-enable the ADC 
+ 138:.\CommonFunctions.c ****     */
+ 139:.\CommonFunctions.c ****     if (ADC_SAR_CTRL_REG  & ADC_ENABLE)
+  86              		.loc 1 139 0
+  87 0010 034B     		ldr	r3, .L4
+  88 0012 1B68     		ldr	r3, [r3]
+  89 0014 002B     		cmp	r3, #0
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 5
+
+
+  90 0016 01DA     		bge	.L2
+ 140:.\CommonFunctions.c ****     {
+ 141:.\CommonFunctions.c ****         ADC_Sleep();
+  91              		.loc 1 141 0
+  92 0018 FFF7FEFF 		bl	ADC_Sleep
+  93              	.L2:
+ 142:.\CommonFunctions.c ****     }
+ 143:.\CommonFunctions.c **** }
+  94              		.loc 1 143 0
+  95 001c BD46     		mov	sp, r7
+  96              		@ sp needed
+  97 001e 80BD     		pop	{r7, pc}
+  98              	.L5:
+  99              		.align	2
+ 100              	.L4:
+ 101 0020 00003A40 		.word	1077542912
+ 102              		.cfi_endproc
+ 103              	.LFE36:
+ 104              		.size	PrepareForDeepSleep, .-PrepareForDeepSleep
+ 105              		.section	.text.WakeupFromDeepSleep,"ax",%progbits
+ 106              		.align	2
+ 107              		.global	WakeupFromDeepSleep
+ 108              		.code	16
+ 109              		.thumb_func
+ 110              		.type	WakeupFromDeepSleep, %function
+ 111              	WakeupFromDeepSleep:
+ 112              	.LFB37:
+ 144:.\CommonFunctions.c **** 
+ 145:.\CommonFunctions.c **** /*****************************************************************************
+ 146:.\CommonFunctions.c **** * Function Name: WakeupFromDeepSleep()
+ 147:.\CommonFunctions.c **** ******************************************************************************
+ 148:.\CommonFunctions.c **** * Summary:
+ 149:.\CommonFunctions.c **** * Wakes up the system from deep sleep
+ 150:.\CommonFunctions.c **** *
+ 151:.\CommonFunctions.c **** * Parameters:
+ 152:.\CommonFunctions.c **** * None
+ 153:.\CommonFunctions.c **** *
+ 154:.\CommonFunctions.c **** * Return:
+ 155:.\CommonFunctions.c **** * None
+ 156:.\CommonFunctions.c **** *
+ 157:.\CommonFunctions.c **** * Theory:
+ 158:.\CommonFunctions.c **** * Enables the reference signal and start ADC for temperature measurement.
+ 159:.\CommonFunctions.c **** *
+ 160:.\CommonFunctions.c **** * Side Effects:
+ 161:.\CommonFunctions.c **** * None
+ 162:.\CommonFunctions.c **** *
+ 163:.\CommonFunctions.c **** * Note:
+ 164:.\CommonFunctions.c **** *
+ 165:.\CommonFunctions.c **** *****************************************************************************/
+ 166:.\CommonFunctions.c **** void WakeupFromDeepSleep (void)
+ 167:.\CommonFunctions.c **** {
+ 113              		.loc 1 167 0
+ 114              		.cfi_startproc
+ 115 0000 80B5     		push	{r7, lr}
+ 116              		.cfi_def_cfa_offset 8
+ 117              		.cfi_offset 7, -8
+ 118              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 6
+
+
+ 119 0002 00AF     		add	r7, sp, #0
+ 120              		.cfi_def_cfa_register 7
+ 168:.\CommonFunctions.c ****     /* Generate reference signals for temperature measurement */
+ 169:.\CommonFunctions.c ****     V_HIGH_Write(DRIVE_HIGH);
+ 121              		.loc 1 169 0
+ 122 0004 0120     		mov	r0, #1
+ 123 0006 FFF7FEFF 		bl	V_HIGH_Write
+ 170:.\CommonFunctions.c ****     V_LOW_Write(DRIVE_LOW);
+ 124              		.loc 1 170 0
+ 125 000a 0020     		mov	r0, #0
+ 126 000c FFF7FEFF 		bl	V_LOW_Write
+ 171:.\CommonFunctions.c ****     
+ 172:.\CommonFunctions.c ****     /* Enable ADC for temperature measurement */
+ 173:.\CommonFunctions.c ****     ADC_Wakeup();
+ 127              		.loc 1 173 0
+ 128 0010 FFF7FEFF 		bl	ADC_Wakeup
+ 174:.\CommonFunctions.c **** }
+ 129              		.loc 1 174 0
+ 130 0014 BD46     		mov	sp, r7
+ 131              		@ sp needed
+ 132 0016 80BD     		pop	{r7, pc}
+ 133              		.cfi_endproc
+ 134              	.LFE37:
+ 135              		.size	WakeupFromDeepSleep, .-WakeupFromDeepSleep
+ 136              		.text
+ 137              	.Letext0:
+ 138              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 139              		.section	.debug_info,"",%progbits
+ 140              	.Ldebug_info0:
+ 141 0000 E4000000 		.4byte	0xe4
+ 142 0004 0400     		.2byte	0x4
+ 143 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 144 000a 04       		.byte	0x4
+ 145 000b 01       		.uleb128 0x1
+ 146 000c B4000000 		.4byte	.LASF18
+ 147 0010 01       		.byte	0x1
+ 148 0011 78000000 		.4byte	.LASF19
+ 149 0015 22000000 		.4byte	.LASF20
+ 150 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 151 001d 00000000 		.4byte	0
+ 152 0021 00000000 		.4byte	.Ldebug_line0
+ 153 0025 02       		.uleb128 0x2
+ 154 0026 01       		.byte	0x1
+ 155 0027 06       		.byte	0x6
+ 156 0028 88010000 		.4byte	.LASF0
+ 157 002c 02       		.uleb128 0x2
+ 158 002d 01       		.byte	0x1
+ 159 002e 08       		.byte	0x8
+ 160 002f 42010000 		.4byte	.LASF1
+ 161 0033 02       		.uleb128 0x2
+ 162 0034 02       		.byte	0x2
+ 163 0035 05       		.byte	0x5
+ 164 0036 5E010000 		.4byte	.LASF2
+ 165 003a 02       		.uleb128 0x2
+ 166 003b 02       		.byte	0x2
+ 167 003c 07       		.byte	0x7
+ 168 003d 75010000 		.4byte	.LASF3
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 7
+
+
+ 169 0041 02       		.uleb128 0x2
+ 170 0042 04       		.byte	0x4
+ 171 0043 05       		.byte	0x5
+ 172 0044 55010000 		.4byte	.LASF4
+ 173 0048 02       		.uleb128 0x2
+ 174 0049 04       		.byte	0x4
+ 175 004a 07       		.byte	0x7
+ 176 004b 66000000 		.4byte	.LASF5
+ 177 004f 02       		.uleb128 0x2
+ 178 0050 08       		.byte	0x8
+ 179 0051 05       		.byte	0x5
+ 180 0052 00000000 		.4byte	.LASF6
+ 181 0056 02       		.uleb128 0x2
+ 182 0057 08       		.byte	0x8
+ 183 0058 07       		.byte	0x7
+ 184 0059 8C000000 		.4byte	.LASF7
+ 185 005d 03       		.uleb128 0x3
+ 186 005e 04       		.byte	0x4
+ 187 005f 05       		.byte	0x5
+ 188 0060 696E7400 		.ascii	"int\000"
+ 189 0064 02       		.uleb128 0x2
+ 190 0065 04       		.byte	0x4
+ 191 0066 07       		.byte	0x7
+ 192 0067 15000000 		.4byte	.LASF8
+ 193 006b 04       		.uleb128 0x4
+ 194 006c 0E000000 		.4byte	.LASF12
+ 195 0070 02       		.byte	0x2
+ 196 0071 A3       		.byte	0xa3
+ 197 0072 48000000 		.4byte	0x48
+ 198 0076 02       		.uleb128 0x2
+ 199 0077 04       		.byte	0x4
+ 200 0078 04       		.byte	0x4
+ 201 0079 A8010000 		.4byte	.LASF9
+ 202 007d 02       		.uleb128 0x2
+ 203 007e 08       		.byte	0x8
+ 204 007f 04       		.byte	0x4
+ 205 0080 68010000 		.4byte	.LASF10
+ 206 0084 02       		.uleb128 0x2
+ 207 0085 01       		.byte	0x1
+ 208 0086 08       		.byte	0x8
+ 209 0087 50010000 		.4byte	.LASF11
+ 210 008b 05       		.uleb128 0x5
+ 211 008c 6F010000 		.4byte	.LASF13
+ 212 0090 02       		.byte	0x2
+ 213 0091 4D01     		.2byte	0x14d
+ 214 0093 97000000 		.4byte	0x97
+ 215 0097 06       		.uleb128 0x6
+ 216 0098 6B000000 		.4byte	0x6b
+ 217 009c 02       		.uleb128 0x2
+ 218 009d 04       		.byte	0x4
+ 219 009e 07       		.byte	0x7
+ 220 009f C2010000 		.4byte	.LASF14
+ 221 00a3 07       		.uleb128 0x7
+ 222 00a4 A3000000 		.4byte	.LASF15
+ 223 00a8 01       		.byte	0x1
+ 224 00a9 59       		.byte	0x59
+ 225 00aa 00000000 		.4byte	.LFB35
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 8
+
+
+ 226 00ae 28000000 		.4byte	.LFE35-.LFB35
+ 227 00b2 01       		.uleb128 0x1
+ 228 00b3 9C       		.byte	0x9c
+ 229 00b4 07       		.uleb128 0x7
+ 230 00b5 94010000 		.4byte	.LASF16
+ 231 00b9 01       		.byte	0x1
+ 232 00ba 81       		.byte	0x81
+ 233 00bb 00000000 		.4byte	.LFB36
+ 234 00bf 24000000 		.4byte	.LFE36-.LFB36
+ 235 00c3 01       		.uleb128 0x1
+ 236 00c4 9C       		.byte	0x9c
+ 237 00c5 07       		.uleb128 0x7
+ 238 00c6 AE010000 		.4byte	.LASF17
+ 239 00ca 01       		.byte	0x1
+ 240 00cb A6       		.byte	0xa6
+ 241 00cc 00000000 		.4byte	.LFB37
+ 242 00d0 18000000 		.4byte	.LFE37-.LFB37
+ 243 00d4 01       		.uleb128 0x1
+ 244 00d5 9C       		.byte	0x9c
+ 245 00d6 08       		.uleb128 0x8
+ 246 00d7 5B000000 		.4byte	.LASF21
+ 247 00db 01       		.byte	0x1
+ 248 00dc 39       		.byte	0x39
+ 249 00dd 6B000000 		.4byte	0x6b
+ 250 00e1 05       		.uleb128 0x5
+ 251 00e2 03       		.byte	0x3
+ 252 00e3 00000000 		.4byte	SystemFlag
+ 253 00e7 00       		.byte	0
+ 254              		.section	.debug_abbrev,"",%progbits
+ 255              	.Ldebug_abbrev0:
+ 256 0000 01       		.uleb128 0x1
+ 257 0001 11       		.uleb128 0x11
+ 258 0002 01       		.byte	0x1
+ 259 0003 25       		.uleb128 0x25
+ 260 0004 0E       		.uleb128 0xe
+ 261 0005 13       		.uleb128 0x13
+ 262 0006 0B       		.uleb128 0xb
+ 263 0007 03       		.uleb128 0x3
+ 264 0008 0E       		.uleb128 0xe
+ 265 0009 1B       		.uleb128 0x1b
+ 266 000a 0E       		.uleb128 0xe
+ 267 000b 55       		.uleb128 0x55
+ 268 000c 17       		.uleb128 0x17
+ 269 000d 11       		.uleb128 0x11
+ 270 000e 01       		.uleb128 0x1
+ 271 000f 10       		.uleb128 0x10
+ 272 0010 17       		.uleb128 0x17
+ 273 0011 00       		.byte	0
+ 274 0012 00       		.byte	0
+ 275 0013 02       		.uleb128 0x2
+ 276 0014 24       		.uleb128 0x24
+ 277 0015 00       		.byte	0
+ 278 0016 0B       		.uleb128 0xb
+ 279 0017 0B       		.uleb128 0xb
+ 280 0018 3E       		.uleb128 0x3e
+ 281 0019 0B       		.uleb128 0xb
+ 282 001a 03       		.uleb128 0x3
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 9
+
+
+ 283 001b 0E       		.uleb128 0xe
+ 284 001c 00       		.byte	0
+ 285 001d 00       		.byte	0
+ 286 001e 03       		.uleb128 0x3
+ 287 001f 24       		.uleb128 0x24
+ 288 0020 00       		.byte	0
+ 289 0021 0B       		.uleb128 0xb
+ 290 0022 0B       		.uleb128 0xb
+ 291 0023 3E       		.uleb128 0x3e
+ 292 0024 0B       		.uleb128 0xb
+ 293 0025 03       		.uleb128 0x3
+ 294 0026 08       		.uleb128 0x8
+ 295 0027 00       		.byte	0
+ 296 0028 00       		.byte	0
+ 297 0029 04       		.uleb128 0x4
+ 298 002a 16       		.uleb128 0x16
+ 299 002b 00       		.byte	0
+ 300 002c 03       		.uleb128 0x3
+ 301 002d 0E       		.uleb128 0xe
+ 302 002e 3A       		.uleb128 0x3a
+ 303 002f 0B       		.uleb128 0xb
+ 304 0030 3B       		.uleb128 0x3b
+ 305 0031 0B       		.uleb128 0xb
+ 306 0032 49       		.uleb128 0x49
+ 307 0033 13       		.uleb128 0x13
+ 308 0034 00       		.byte	0
+ 309 0035 00       		.byte	0
+ 310 0036 05       		.uleb128 0x5
+ 311 0037 16       		.uleb128 0x16
+ 312 0038 00       		.byte	0
+ 313 0039 03       		.uleb128 0x3
+ 314 003a 0E       		.uleb128 0xe
+ 315 003b 3A       		.uleb128 0x3a
+ 316 003c 0B       		.uleb128 0xb
+ 317 003d 3B       		.uleb128 0x3b
+ 318 003e 05       		.uleb128 0x5
+ 319 003f 49       		.uleb128 0x49
+ 320 0040 13       		.uleb128 0x13
+ 321 0041 00       		.byte	0
+ 322 0042 00       		.byte	0
+ 323 0043 06       		.uleb128 0x6
+ 324 0044 35       		.uleb128 0x35
+ 325 0045 00       		.byte	0
+ 326 0046 49       		.uleb128 0x49
+ 327 0047 13       		.uleb128 0x13
+ 328 0048 00       		.byte	0
+ 329 0049 00       		.byte	0
+ 330 004a 07       		.uleb128 0x7
+ 331 004b 2E       		.uleb128 0x2e
+ 332 004c 00       		.byte	0
+ 333 004d 3F       		.uleb128 0x3f
+ 334 004e 19       		.uleb128 0x19
+ 335 004f 03       		.uleb128 0x3
+ 336 0050 0E       		.uleb128 0xe
+ 337 0051 3A       		.uleb128 0x3a
+ 338 0052 0B       		.uleb128 0xb
+ 339 0053 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 10
+
+
+ 340 0054 0B       		.uleb128 0xb
+ 341 0055 27       		.uleb128 0x27
+ 342 0056 19       		.uleb128 0x19
+ 343 0057 11       		.uleb128 0x11
+ 344 0058 01       		.uleb128 0x1
+ 345 0059 12       		.uleb128 0x12
+ 346 005a 06       		.uleb128 0x6
+ 347 005b 40       		.uleb128 0x40
+ 348 005c 18       		.uleb128 0x18
+ 349 005d 9642     		.uleb128 0x2116
+ 350 005f 19       		.uleb128 0x19
+ 351 0060 00       		.byte	0
+ 352 0061 00       		.byte	0
+ 353 0062 08       		.uleb128 0x8
+ 354 0063 34       		.uleb128 0x34
+ 355 0064 00       		.byte	0
+ 356 0065 03       		.uleb128 0x3
+ 357 0066 0E       		.uleb128 0xe
+ 358 0067 3A       		.uleb128 0x3a
+ 359 0068 0B       		.uleb128 0xb
+ 360 0069 3B       		.uleb128 0x3b
+ 361 006a 0B       		.uleb128 0xb
+ 362 006b 49       		.uleb128 0x49
+ 363 006c 13       		.uleb128 0x13
+ 364 006d 3F       		.uleb128 0x3f
+ 365 006e 19       		.uleb128 0x19
+ 366 006f 02       		.uleb128 0x2
+ 367 0070 18       		.uleb128 0x18
+ 368 0071 00       		.byte	0
+ 369 0072 00       		.byte	0
+ 370 0073 00       		.byte	0
+ 371              		.section	.debug_aranges,"",%progbits
+ 372 0000 2C000000 		.4byte	0x2c
+ 373 0004 0200     		.2byte	0x2
+ 374 0006 00000000 		.4byte	.Ldebug_info0
+ 375 000a 04       		.byte	0x4
+ 376 000b 00       		.byte	0
+ 377 000c 0000     		.2byte	0
+ 378 000e 0000     		.2byte	0
+ 379 0010 00000000 		.4byte	.LFB35
+ 380 0014 28000000 		.4byte	.LFE35-.LFB35
+ 381 0018 00000000 		.4byte	.LFB36
+ 382 001c 24000000 		.4byte	.LFE36-.LFB36
+ 383 0020 00000000 		.4byte	.LFB37
+ 384 0024 18000000 		.4byte	.LFE37-.LFB37
+ 385 0028 00000000 		.4byte	0
+ 386 002c 00000000 		.4byte	0
+ 387              		.section	.debug_ranges,"",%progbits
+ 388              	.Ldebug_ranges0:
+ 389 0000 00000000 		.4byte	.LFB35
+ 390 0004 28000000 		.4byte	.LFE35
+ 391 0008 00000000 		.4byte	.LFB36
+ 392 000c 24000000 		.4byte	.LFE36
+ 393 0010 00000000 		.4byte	.LFB37
+ 394 0014 18000000 		.4byte	.LFE37
+ 395 0018 00000000 		.4byte	0
+ 396 001c 00000000 		.4byte	0
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 11
+
+
+ 397              		.section	.debug_line,"",%progbits
+ 398              	.Ldebug_line0:
+ 399 0000 95000000 		.section	.debug_str,"MS",%progbits,1
+ 399      02004E00 
+ 399      00000201 
+ 399      FB0E0D00 
+ 399      01010101 
+ 400              	.LASF6:
+ 401 0000 6C6F6E67 		.ascii	"long long int\000"
+ 401      206C6F6E 
+ 401      6720696E 
+ 401      7400
+ 402              	.LASF12:
+ 403 000e 75696E74 		.ascii	"uint32\000"
+ 403      333200
+ 404              	.LASF8:
+ 405 0015 756E7369 		.ascii	"unsigned int\000"
+ 405      676E6564 
+ 405      20696E74 
+ 405      00
+ 406              	.LASF20:
+ 407 0022 433A5C55 		.ascii	"C:\\Users\\Lonnie\\Desktop\\AN91184\\Health Thermom"
+ 407      73657273 
+ 407      5C4C6F6E 
+ 407      6E69655C 
+ 407      4465736B 
+ 408 0050 65746572 		.ascii	"eter.cydsn\000"
+ 408      2E637964 
+ 408      736E00
+ 409              	.LASF21:
+ 410 005b 53797374 		.ascii	"SystemFlag\000"
+ 410      656D466C 
+ 410      616700
+ 411              	.LASF5:
+ 412 0066 6C6F6E67 		.ascii	"long unsigned int\000"
+ 412      20756E73 
+ 412      69676E65 
+ 412      6420696E 
+ 412      7400
+ 413              	.LASF19:
+ 414 0078 2E5C436F 		.ascii	".\\CommonFunctions.c\000"
+ 414      6D6D6F6E 
+ 414      46756E63 
+ 414      74696F6E 
+ 414      732E6300 
+ 415              	.LASF7:
+ 416 008c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 416      206C6F6E 
+ 416      6720756E 
+ 416      7369676E 
+ 416      65642069 
+ 417              	.LASF15:
+ 418 00a3 496E6974 		.ascii	"InitializeSystem\000"
+ 418      69616C69 
+ 418      7A655379 
+ 418      7374656D 
+ 418      00
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 12
+
+
+ 419              	.LASF18:
+ 420 00b4 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 420      4320342E 
+ 420      392E3320 
+ 420      32303135 
+ 420      30333033 
+ 421 00e7 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 421      20726576 
+ 421      6973696F 
+ 421      6E203232 
+ 421      31323230 
+ 422 011a 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 422      66756E63 
+ 422      74696F6E 
+ 422      2D736563 
+ 422      74696F6E 
+ 423              	.LASF1:
+ 424 0142 756E7369 		.ascii	"unsigned char\000"
+ 424      676E6564 
+ 424      20636861 
+ 424      7200
+ 425              	.LASF11:
+ 426 0150 63686172 		.ascii	"char\000"
+ 426      00
+ 427              	.LASF4:
+ 428 0155 6C6F6E67 		.ascii	"long int\000"
+ 428      20696E74 
+ 428      00
+ 429              	.LASF2:
+ 430 015e 73686F72 		.ascii	"short int\000"
+ 430      7420696E 
+ 430      7400
+ 431              	.LASF10:
+ 432 0168 646F7562 		.ascii	"double\000"
+ 432      6C6500
+ 433              	.LASF13:
+ 434 016f 72656733 		.ascii	"reg32\000"
+ 434      3200
+ 435              	.LASF3:
+ 436 0175 73686F72 		.ascii	"short unsigned int\000"
+ 436      7420756E 
+ 436      7369676E 
+ 436      65642069 
+ 436      6E7400
+ 437              	.LASF0:
+ 438 0188 7369676E 		.ascii	"signed char\000"
+ 438      65642063 
+ 438      68617200 
+ 439              	.LASF16:
+ 440 0194 50726570 		.ascii	"PrepareForDeepSleep\000"
+ 440      61726546 
+ 440      6F724465 
+ 440      6570536C 
+ 440      65657000 
+ 441              	.LASF9:
+ 442 01a8 666C6F61 		.ascii	"float\000"
+ 442      7400
+ARM GAS  C:\Users\Lonnie\AppData\Local\Temp\ccrBJHam.s 			page 13
+
+
+ 443              	.LASF17:
+ 444 01ae 57616B65 		.ascii	"WakeupFromDeepSleep\000"
+ 444      75704672 
+ 444      6F6D4465 
+ 444      6570536C 
+ 444      65657000 
+ 445              	.LASF14:
+ 446 01c2 73697A65 		.ascii	"sizetype\000"
+ 446      74797065 
+ 446      00
+ 447              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

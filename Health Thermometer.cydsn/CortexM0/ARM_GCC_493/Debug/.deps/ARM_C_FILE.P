@@ -1,0 +1,14 @@
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/CortexM0/ARM_GCC_493/Debug/Thermistor.o : C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/CyLib.h C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/Thermistor.c C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/Thermistor.h C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cyfitter.h C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/Thermistor.c : 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/Thermistor.h : 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+C:/Users/Lonnie/Desktop/AN91184/Health\ Thermometer.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
